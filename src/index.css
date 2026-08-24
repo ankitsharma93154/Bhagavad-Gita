@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm, editorial palette — rich parchment, crimson, and indigo, with a golden-saffron-red gradient accent. */
+  --color-paper: #fbeedf;
+  --color-paper-dim: #f5e2c9;
+  --color-surface: #fff9f0;
+  --color-surface-soft: #f6e4ce;
+
+  --color-ink: #241a12;
+  --color-ink-soft: #675340;
+  --color-ink-faint: #73604a;
+
+  --color-line: #e8d3b0;
+  --color-line-soft: #f0e2c6;
+  --color-line-strong: #93794c;
+
+  --color-clay: #b5233f;
+  --color-clay-deep: #7e1830;
+  --color-clay-soft: #f5d7dd;
+
+  --color-teal: #3b2e6b;
+  --color-teal-deep: #241c47;
+  --color-teal-soft: #e2dcf2;
+
+  --color-gold: #c99a3e;
+  --color-gold-deep: #7c5c1d;
+  --color-gold-soft: #f3e3bc;
+
+  --color-saffron: #9c4a1c;
+
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Open Sans", "Helvetica Neue", sans-serif;
+  --font-serif: "Athelas", Constantia, Georgia, serif;
+  --font-devanagari: "Noto Serif Devanagari", "Athelas", Georgia, serif;
+
+  --shadow-soft: 0 1px 2px rgba(36, 26, 18, 0.05), 0 8px 24px -12px rgba(36, 26, 18, 0.2);
+  --shadow-lift: 0 4px 8px rgba(36, 26, 18, 0.07), 0 16px 40px -16px rgba(36, 26, 18, 0.32);
+  /* Brand-tinted glow — for the one or two elements that should feel like the site's focal point on hover. */
+  --shadow-glow: 0 8px 20px -4px rgba(181, 35, 63, 0.35), 0 4px 14px -6px rgba(156, 74, 28, 0.3);
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-shine: shine 7s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes shine {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @variant sm {
+    padding-inline: 2rem;
+  }
+  @variant lg {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility reading-width {
+  max-width: 40rem;
+}
+
+/* A slow-moving gradient sheen across gold text — pair with `animate-shine motion-reduce:animate-none`. */
+@utility text-gold-shine {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-saffron) 35%,
+    var(--color-gold) 50%,
+    var(--color-saffron) 65%
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility bg-gradient-brand {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-gold-deep) 0%,
+    var(--color-saffron) 50%,
+    var(--color-clay) 100%
+  );
+}
+
+/* A gradient ring around a solid inner fill, via a two-layer background-image (fill on top, gradient underneath, clipped separately). */
+@utility gradient-border-chip {
+  background-image: linear-gradient(var(--chip-fill, var(--color-surface)), var(--chip-fill, var(--color-surface))),
+    linear-gradient(135deg, var(--color-gold-deep), var(--color-saffron), var(--color-clay));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+}
+
+@utility focus-ring {
+  outline: none;
+  &:focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: light;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: var(--color-clay-soft);
+    color: var(--color-clay-deep);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
