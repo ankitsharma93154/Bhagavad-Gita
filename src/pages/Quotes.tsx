@@ -6,7 +6,7 @@ import { themes, type Theme, type ThemeSlug } from "@/data/themes"
 import { verses } from "@/data/verses"
 import { searchVerses } from "@/lib/search"
 import { Seo } from "@/lib/seo"
-import { cn } from "@/lib/utils"
+import { cn, truncate } from "@/lib/utils"
 
 /** Kept short enough to lay out on a single line at the container's max width. */
 const quickFilterSlugs: ThemeSlug[] = [
@@ -52,7 +52,10 @@ export function Quotes() {
     <div className="container-page pt-8 sm:pt-12 pb-12 sm:pb-16">
       <Seo
         title="Bhagavad Gita Quotes"
-        description="Browse the full collection of Bhagavad Gita quotes in English and Hindi, with Sanskrit verses, plain translations, and simple meanings. Filter by theme or search by chapter and verse."
+        description={truncate(
+          "Browse the full collection of Bhagavad Gita quotes in English and Hindi, with Sanskrit verses, plain translations, and simple meanings. Filter by theme or search by chapter and verse.",
+          155,
+        )}
         path="/quotes"
       />
       <header className="mx-auto max-w-2xl text-center">
@@ -60,8 +63,8 @@ export function Quotes() {
           Browse all quotes
         </h1>
         <p className="mt-3 text-ink-soft">
-          Every verse in this collection, in one place. Search by word, theme, or chapter and
-          verse, like "2.47".
+          Every English-translated verse in this collection, in one place. Search by word,
+          theme, or chapter and verse, like "2.47".
         </p>
       </header>
 
@@ -109,7 +112,7 @@ export function Quotes() {
               className={cn(
                 "focus-ring rounded-full px-3.5 py-1.5 text-sm font-medium transition-[color,box-shadow]",
                 activeTheme === theme.slug
-                  ? "bg-gradient-brand shadow-glow border border-transparent text-surface"
+                  ? "bg-gradient-brand shadow-glow animate-pop motion-reduce:animate-none border border-transparent text-surface"
                   : "gradient-border-chip text-ink-soft hover:text-clay-deep",
               )}
             >

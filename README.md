@@ -43,8 +43,7 @@ Sanskrit, transliteration, and translations are simplified renderings intended
 for everyday reflection, not a scholarly edition — see `/about` on the site for
 details. Extending the collection means adding entries to `src/data/verses.ts`;
 the sitemap and prerendered routes are generated at build time from
-`src/routes.ts`, so no other file needs to be touched to grow from ~24 verses
-toward more.
+`src/routes.ts`, so no other file needs to be touched to grow the collection.
 
 ## Deployment
 
@@ -54,9 +53,10 @@ rewrites any unmatched path to `app-shell.html` (the SPA fallback, used only
 for `/saved` and genuinely unknown URLs) — every indexable route is served as
 its own static `index.html` file instead.
 
-Once a real domain is registered, it needs updating in exactly 3 places:
+The production domain (`bhagvadgitaquotes.com`) is wired through 3 places:
 `SITE_URL` in `src/lib/seo.tsx`, the canonical/OG URLs in `index.html`, and the
-`Sitemap:` line in `public/robots.txt`.
+`Sitemap:` line in `public/robots.txt`. Change all 3 together if the domain
+ever changes.
 
 ## SEO
 

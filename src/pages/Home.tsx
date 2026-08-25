@@ -9,6 +9,7 @@ import { ThemeGrid } from "@/components/theme/ThemeGrid"
 import { themes, type Theme, type ThemeSlug } from "@/data/themes"
 import { verses, getFeaturedVerse } from "@/data/verses"
 import { Seo, SITE_NAME, SITE_URL } from "@/lib/seo"
+import { truncate } from "@/lib/utils"
 
 /**
  * The homepage only ever shows a curated top-10, ordered by SEO priority: 4 on mobile, 6
@@ -58,7 +59,10 @@ export function Home() {
     <>
       <Seo
         title="Timeless Wisdom for Everyday Life"
-        description="A calm, beautifully presented collection of Bhagavad Gita quotes: Sanskrit verses, English translations, and simple meanings on karma, peace, purpose, and inner strength."
+        description={truncate(
+          "A calm, beautifully presented collection of Bhagavad Gita quotes: Sanskrit verses, English translations, and simple meanings on karma, peace, purpose, and inner strength.",
+          155,
+        )}
         path="/"
         structuredData={{
           "@context": "https://schema.org",

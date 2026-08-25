@@ -61,10 +61,11 @@ export function About() {
             <div className="flex-1">
               <SectionHeading>A small, curated collection</SectionHeading>
               <p className="reading-width leading-relaxed">
-                The Bhagavad Gita runs to roughly 700 verses across eighteen chapters. This site
-                intentionally covers only a small, carefully chosen set of them: the ones most
-                often read on their own, outside the context of the full dialogue. The goal is
-                depth and care over completeness, and the collection may grow over time.
+                The Bhagavad Gita runs to roughly 700 verses across eighteen chapters. This
+                site intentionally covers only a small, carefully chosen set of them: the ones
+                most often read on their own, outside the context of the full dialogue. The
+                goal is depth and care over completeness, and the collection may grow over
+                time.
               </p>
             </div>
             <div className="flex shrink-0 gap-6 rounded-2xl border border-line bg-paper px-8 py-6 text-center">
@@ -90,8 +91,8 @@ export function About() {
           <section>
             <SectionHeading>How each verse is presented</SectionHeading>
             <p className="reading-width leading-relaxed">
-              Every verse on this site is shown in four distinct parts, kept clearly separate so
-              it's always obvious what you're reading:
+              Every verse on this site is shown in four distinct parts, kept clearly separate
+              so it's always obvious what you're reading:
             </p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {verseParts.map((part) => (
@@ -120,10 +121,10 @@ export function About() {
               <h2 className="font-serif text-lg text-ink">On translation and accuracy</h2>
               <p className="mt-2 leading-relaxed">
                 Sanskrit is a dense, layered language, and any translation involves
-                interpretation. The renderings here aim to be faithful and readable for everyday
-                reflection, but they're simplified, and this isn't a scholarly edition. If you're
-                studying the Gita in depth, please cross-reference a published critical
-                translation alongside what's shown here.
+                interpretation. The renderings here aim to be faithful and readable for
+                everyday reflection, but they're simplified, and this isn't a scholarly
+                edition. If you're studying the Gita in depth, please cross-reference a
+                published critical translation alongside what's shown here.
               </p>
             </div>
           </section>

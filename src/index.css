@@ -46,7 +46,7 @@
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-fade-in: fade-in 0.4s ease-out;
   --animate-shine: shine 7s ease-in-out infinite;
-  --animate-heart-pop: heart-pop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+  --animate-pop: pop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.49);
 
   @keyframes fade-up {
     from {
@@ -66,12 +66,13 @@
       opacity: 1;
     }
   }
-  @keyframes heart-pop {
+  /* A shared "chosen" tactile signature: heart save, theme pill selection, etc. */
+  @keyframes pop {
     0% {
       transform: scale(1);
     }
     40% {
-      transform: scale(1.35);
+      transform: scale(1.18);
     }
     100% {
       transform: scale(1);

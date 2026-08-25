@@ -22,13 +22,13 @@ export const themes: Theme[] = [
     slug: "karma",
     title: "Karma",
     description:
-      "On action, duty, and letting go of the outcome: the Gita's central teaching on doing your work without being ruled by its results.",
+      "On action, duty, and letting go of the outcome: the Gita's central, inspiring teaching on doing your work without being ruled by its results.",
   },
   {
     slug: "motivation",
     title: "Motivation",
     description:
-      "Verses that steady resolve and rekindle effort, for the days willpower runs thin.",
+      "Inspiring, motivational verses that steady resolve and rekindle effort, for the days willpower runs thin.",
   },
   {
     slug: "positive-thinking",
@@ -46,7 +46,7 @@ export const themes: Theme[] = [
     slug: "peace",
     title: "Peace",
     description:
-      "Verses on stillness of mind, equanimity, and the kind of calm that isn't shaken by circumstance.",
+      "Verses on stillness of mind, equanimity, and lasting happiness: the kind of calm that isn't shaken by circumstance.",
   },
   {
     slug: "wisdom",

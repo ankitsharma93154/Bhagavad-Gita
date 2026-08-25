@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs"
 import { getThemeBySlug } from "@/data/themes"
 import { getRelatedThemes, getVersesByTheme, verseSlug } from "@/data/verses"
 import { Seo, SITE_URL, buildBreadcrumbList } from "@/lib/seo"
+import { truncate } from "@/lib/utils"
 
 export function Theme() {
   const { slug = "" } = useParams()
@@ -27,7 +28,10 @@ export function Theme() {
     <div className="container-page pt-8 sm:pt-12 pb-12 sm:pb-16">
       <Seo
         title={`${theme.title} Bhagavad Gita Quotes`}
-        description={`${theme.description} A curated set of Bhagavad Gita quotes about ${theme.title.toLowerCase()}.`}
+        description={truncate(
+          `${theme.description} A curated set of Bhagavad Gita quotes about ${theme.title.toLowerCase()}.`,
+          155,
+        )}
         path={`/themes/${slug}`}
         structuredData={[
           buildBreadcrumbList(breadcrumbItems),

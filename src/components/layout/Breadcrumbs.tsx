@@ -20,7 +20,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
                   {item.name}
                 </span>
               ) : (
-                <Link to={item.path} className="focus-ring rounded hover:text-clay-deep">
+                <Link to={item.path} className="focus-ring rounded text-clay-deep hover:underline">
                   {item.name}
                 </Link>
               )}

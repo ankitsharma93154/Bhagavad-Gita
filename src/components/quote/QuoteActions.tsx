@@ -59,7 +59,7 @@ export function QuoteActions({ verse, size = "compact" }: QuoteActionsProps) {
           <Heart
             className={cn(
               "h-4.5 w-4.5 transition-transform duration-200",
-              saved && "animate-heart-pop motion-reduce:animate-none",
+              saved && "animate-pop motion-reduce:animate-none",
             )}
             fill={saved ? "currentColor" : "none"}
             aria-hidden

@@ -15,7 +15,7 @@ export function LanguagesHindi() {
     <div className="container-page pt-8 sm:pt-12 pb-12 sm:pb-16">
       <Seo
         title="Bhagavad Gita Quotes in Hindi"
-        description="Bhagavad Gita quotes in Hindi (गीता के विचार): a curated collection of verses with Hindi renderings, alongside the original Sanskrit and an English translation."
+        description="Bhagavad Gita quotes in Hindi (गीता के विचार), with the original Sanskrit and an English translation alongside each one."
         path="/languages/hindi"
         structuredData={[
           buildBreadcrumbList(breadcrumbItems),

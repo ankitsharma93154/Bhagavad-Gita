@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { ScrollToTop } from "@/components/layout/ScrollToTop"
+import { RouteTransition } from "@/components/layout/RouteTransition"
 import { Home } from "@/pages/Home"
 import { Quotes } from "@/pages/Quotes"
 import { QuoteDetail } from "@/pages/QuoteDetail"
@@ -25,17 +26,19 @@ function App() {
       </a>
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/quotes" element={<Quotes />} />
-          <Route path="/quotes/:slug" element={<QuoteDetail />} />
-          <Route path="/themes" element={<Themes />} />
-          <Route path="/themes/:slug" element={<Theme />} />
-          <Route path="/languages/hindi" element={<LanguagesHindi />} />
-          <Route path="/saved" element={<Saved />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <RouteTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/quotes" element={<Quotes />} />
+            <Route path="/quotes/:slug" element={<QuoteDetail />} />
+            <Route path="/themes" element={<Themes />} />
+            <Route path="/themes/:slug" element={<Theme />} />
+            <Route path="/languages/hindi" element={<LanguagesHindi />} />
+            <Route path="/saved" element={<Saved />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </RouteTransition>
       </main>
       <Footer />
       <Analytics />

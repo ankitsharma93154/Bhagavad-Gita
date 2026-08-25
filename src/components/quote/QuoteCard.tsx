@@ -4,8 +4,14 @@ import type { Verse } from "@/data/verses"
 import { verseSlug } from "@/data/verses"
 import { getThemeBySlug } from "@/data/themes"
 import { Badge } from "@/components/ui/Badge"
+import { SegmentedToggle } from "@/components/ui/SegmentedToggle"
 import { QuoteActions } from "@/components/quote/QuoteActions"
 import { cn } from "@/lib/utils"
+
+const quoteLangOptions = [
+  { value: "en", label: "English" },
+  { value: "hi", label: "Hindi" },
+] as const
 
 interface QuoteCardProps {
   verse: Verse
@@ -69,34 +75,12 @@ export function QuoteCard({ verse, featured = false, defaultLang = "en" }: Quote
             featured ? "mt-6 p-5" : "mt-5 p-4",
           )}
         >
-          <div className="relative z-10 inline-flex w-fit items-center gap-0.5 rounded-full border border-line-strong bg-surface p-0.5">
-            <button
-              type="button"
-              onClick={() => setQuoteLang("en")}
-              aria-pressed={quoteLang === "en"}
-              className={cn(
-                "focus-ring cursor-pointer rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-widest uppercase transition-colors",
-                quoteLang === "en"
-                  ? "bg-clay-deep text-surface"
-                  : "text-ink-faint hover:text-ink-soft",
-              )}
-            >
-              English
-            </button>
-            <button
-              type="button"
-              onClick={() => setQuoteLang("hi")}
-              aria-pressed={quoteLang === "hi"}
-              className={cn(
-                "focus-ring cursor-pointer rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-widest uppercase transition-colors",
-                quoteLang === "hi"
-                  ? "bg-clay-deep text-surface"
-                  : "text-ink-faint hover:text-ink-soft",
-              )}
-            >
-              Hindi
-            </button>
-          </div>
+          <SegmentedToggle
+            options={quoteLangOptions}
+            value={quoteLang}
+            onChange={setQuoteLang}
+            className="z-10 w-fit"
+          />
           <p
             lang={quoteLang === "hi" ? "hi" : "en"}
             className={cn(
@@ -119,7 +103,7 @@ export function QuoteCard({ verse, featured = false, defaultLang = "en" }: Quote
             {verse.meaning}
           </p>
           {!featured && (
-            <span className="mt-1 inline-block text-xs font-semibold text-clay-deep">
+            <span className="mt-1 inline-block text-xs font-semibold text-clay-deep transition-transform duration-200 group-hover:translate-x-0.5">
               Read more…
             </span>
           )}
