@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Bookmark, BookOpen, Info, Languages, Lightbulb, Quote as QuoteIcon } from "lucide-react"
+import { BookOpen, Heart, Info, Languages, Lightbulb, Quote as QuoteIcon } from "lucide-react"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { verses } from "@/data/verses"
 import { Seo } from "@/lib/seo"
@@ -131,7 +131,7 @@ export function About() {
           <section className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-line bg-paper p-6 sm:flex-row sm:items-center sm:p-8">
             <div className="flex gap-4">
               <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-soft text-teal-deep">
-                <Bookmark className="h-5 w-5" aria-hidden />
+                <Heart className="h-5 w-5" aria-hidden />
               </span>
               <div>
                 <h3 className="font-serif text-lg text-ink">Saving quotes</h3>

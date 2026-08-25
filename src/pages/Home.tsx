@@ -6,9 +6,31 @@ import { SectionHeading } from "@/components/ui/SectionHeading"
 import { QuoteCard } from "@/components/quote/QuoteCard"
 import { QuoteGrid } from "@/components/quote/QuoteGrid"
 import { ThemeGrid } from "@/components/theme/ThemeGrid"
-import { themes } from "@/data/themes"
+import { themes, type Theme, type ThemeSlug } from "@/data/themes"
 import { verses, getFeaturedVerse } from "@/data/verses"
 import { Seo, SITE_NAME, SITE_URL } from "@/lib/seo"
+
+/**
+ * The homepage only ever shows a curated top-10, ordered by SEO priority: 4 on mobile, 6
+ * from sm, all 10 from lg (matching the grid's 2/3/5-column breakpoints, so it's always
+ * exactly two full rows). The full 11-theme list, including "heart-touching", still lives
+ * on /themes.
+ */
+const homepageThemeSlugs: ThemeSlug[] = [
+  "karma",
+  "motivation",
+  "positive-thinking",
+  "peace",
+  "success",
+  "wisdom",
+  "life",
+  "purpose",
+  "courage",
+  "detachment",
+]
+const homepageThemes = homepageThemeSlugs
+  .map((slug) => themes.find((theme) => theme.slug === slug))
+  .filter((theme): theme is Theme => theme !== undefined)
 
 /**
  * Prerendering and the first client render must agree on the featured verse, or React
@@ -84,7 +106,7 @@ export function Home() {
           </div>
         </div>
         <div className="mt-8">
-          <ThemeGrid themes={themes} />
+          <ThemeGrid themes={homepageThemes} responsiveReveal={{ base: 4, sm: 6 }} />
         </div>
       </section>
 

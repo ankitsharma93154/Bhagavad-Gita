@@ -16,10 +16,6 @@ import { NotFound } from "@/pages/NotFound"
 function App() {
   return (
     <div className="flex min-h-screen flex-col">
-      <div
-        aria-hidden
-        className="bg-gradient-brand pointer-events-none fixed left-1/2 -top-40 -z-10 h-136 w-5xl -translate-x-1/2 rounded-full opacity-[0.15] blur-3xl"
-      />
       <ScrollToTop />
       <a
         href="#main-content"

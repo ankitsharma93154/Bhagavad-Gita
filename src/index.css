@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  /* Extra breakpoint below `sm`, for grids whose 2-column mobile layout gets cramped on the smallest phones. */
+  --breakpoint-xs: 26rem;
+
   /* Warm, editorial palette — rich parchment, crimson, and indigo, with a golden-saffron-red gradient accent. */
   --color-paper: #fbeedf;
   --color-paper-dim: #f5e2c9;
@@ -43,6 +46,7 @@
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-fade-in: fade-in 0.4s ease-out;
   --animate-shine: shine 7s ease-in-out infinite;
+  --animate-heart-pop: heart-pop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.49);
 
   @keyframes fade-up {
     from {
@@ -60,6 +64,17 @@
     }
     to {
       opacity: 1;
+    }
+  }
+  @keyframes heart-pop {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.35);
+    }
+    100% {
+      transform: scale(1);
     }
   }
   @keyframes shine {
@@ -143,6 +158,14 @@
 
   body {
     background-color: var(--color-paper);
+    background-image: linear-gradient(
+      160deg,
+      var(--color-clay-soft) 0%,
+      var(--color-paper) 30%,
+      var(--color-paper) 70%,
+      var(--color-gold-soft) 100%
+    );
+    background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;

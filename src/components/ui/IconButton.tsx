@@ -15,9 +15,9 @@ export function IconButton({ icon, label, active, className, ...props }: IconBut
       aria-label={label}
       title={label}
       className={cn(
-        "focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-soft transition-[color,background-color,transform] duration-200",
+        "focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full transition-[color,background-color,transform] duration-200",
         "hover:bg-surface-soft hover:text-ink active:scale-90",
-        active && "text-clay",
+        active ? "text-clay" : "text-ink-soft",
         className,
       )}
       {...props}

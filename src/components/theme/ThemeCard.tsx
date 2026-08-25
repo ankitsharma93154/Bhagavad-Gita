@@ -54,9 +54,10 @@ const toneClasses = {
 
 interface ThemeCardProps {
   theme: Theme
+  className?: string
 }
 
-export function ThemeCard({ theme }: ThemeCardProps) {
+export function ThemeCard({ theme, className }: ThemeCardProps) {
   const Icon = themeIcons[theme.slug]
   const tone = toneClasses[themeTones[theme.slug]]
   const count = getVersesByTheme(theme.slug).length
@@ -64,7 +65,10 @@ export function ThemeCard({ theme }: ThemeCardProps) {
   return (
     <Link
       to={`/themes/${theme.slug}`}
-      className="focus-ring group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+      className={cn(
+        "focus-ring group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-lift",
+        className,
+      )}
     >
       <span className={cn("block h-1.5 w-full", tone.bar)} aria-hidden />
       <div className="flex flex-col p-7">

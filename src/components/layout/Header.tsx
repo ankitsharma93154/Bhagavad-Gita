@@ -1,6 +1,6 @@
 import { useId, useState } from "react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import { Menu, Search, Bookmark, X } from "lucide-react"
+import { Menu, Search, Heart, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSavedQuotes } from "@/hooks/useSavedQuotes"
 
@@ -89,14 +89,16 @@ export function Header() {
           <Link
             to="/saved"
             aria-label={`Saved quotes${savedIds.length ? ` (${savedIds.length})` : ""}`}
-            className="focus-ring relative inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-soft hover:text-ink"
-          >
-            <Bookmark className="h-[18px] w-[18px]" aria-hidden />
-            {savedIds.length > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-clay px-1 text-[10px] font-semibold text-surface">
-                {savedIds.length}
-              </span>
+            className={cn(
+              "focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full hover:text-ink",
+              savedIds.length > 0 ? "text-clay" : "text-ink-soft",
             )}
+          >
+            <Heart
+              className="h-4.5 w-4.5"
+              fill={savedIds.length > 0 ? "currentColor" : "none"}
+              aria-hidden
+            />
           </Link>
         </div>
 

@@ -1,4 +1,4 @@
-import { Bookmark } from "lucide-react"
+import { Heart } from "lucide-react"
 import { QuoteGrid } from "@/components/quote/QuoteGrid"
 import { Button } from "@/components/ui/Button"
 import { useSavedQuotes } from "@/hooks/useSavedQuotes"
@@ -31,11 +31,11 @@ export function Saved() {
         ) : (
           <div className="mx-auto flex max-w-sm flex-col items-center py-12 text-center">
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-teal-soft text-teal-deep">
-              <Bookmark className="h-5 w-5" aria-hidden />
+              <Heart className="h-5 w-5" aria-hidden />
             </span>
             <p className="mt-5 font-serif text-xl text-ink">Your saved wisdom will appear here.</p>
             <p className="mt-2 text-ink-soft">
-              Tap the bookmark icon on any quote to keep it close for next time.
+              Tap the heart icon on any quote to keep it close for next time.
             </p>
             <div className="mt-6">
               <Button href="/quotes" variant="secondary">
