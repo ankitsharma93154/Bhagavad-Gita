@@ -6,9 +6,12 @@ export function Footer() {
     <footer className="border-t border-line bg-paper-dim">
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-2">
-          <Link to="/" className="focus-ring font-serif text-lg text-ink">
-            Bhagavad Gita{" "}
-            <span className="bg-gradient-brand bg-clip-text text-transparent">Quotes</span>
+          <Link to="/" className="focus-ring flex items-center gap-2 font-serif text-lg text-ink">
+            <img src="/logo-mark.webp" alt="" width={28} height={28} className="h-7 w-7" />
+            <span>
+              Bhagavad Gita{" "}
+              <span className="bg-gradient-brand bg-clip-text text-transparent">Quotes</span>
+            </span>
           </Link>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">
             A small, calm collection of verses from the Bhagavad Gita, presented with

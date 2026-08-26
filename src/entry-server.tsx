@@ -2,7 +2,7 @@ import { StrictMode } from "react"
 import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router-dom"
 import App from "./App"
-import { SITE_NAME } from "./lib/seo"
+import { SITE_NAME, SITE_URL } from "./lib/seo"
 
 export interface RenderInput {
   url: string
@@ -21,11 +21,19 @@ export function render({ url, cssHref, scriptSrc }: RenderInput): string {
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/favicon-192.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#fbeedf" />
         <meta property="og:site_name" content={SITE_NAME} />
-        <meta name="twitter:card" content="summary" />
+        <meta property="og:image" content={`${SITE_URL}/og-image.jpg`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="800" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`${SITE_URL}/og-image.jpg`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link

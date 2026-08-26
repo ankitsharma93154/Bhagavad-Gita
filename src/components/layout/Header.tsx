@@ -38,10 +38,13 @@ export function Header() {
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Link
           to="/"
-          className="focus-ring shrink-0 rounded-md font-serif text-xl tracking-tight text-ink"
+          className="focus-ring flex shrink-0 items-center gap-2 rounded-md font-serif text-xl tracking-tight text-ink"
         >
-          Bhagavad Gita{" "}
-          <span className="bg-gradient-brand bg-clip-text text-transparent">Quotes</span>
+          <img src="/logo-mark.webp" alt="" width={48} height={48} className="h-12 w-12" />
+          <span>
+            Bhagavad Gita{" "}
+            <span className="bg-gradient-brand bg-clip-text text-transparent">Quotes</span>
+          </span>
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
