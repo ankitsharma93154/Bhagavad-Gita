@@ -735,6 +735,326 @@ export const verses: Verse[] = [
     quoteHindi: "जहां ज्ञान और दृढ़ कर्म मिलते हैं, वहां सफलता स्वाभाविक रूप से आती है।",
     categories: ["success", "motivation", "positive-thinking"],
   },
+  {
+    id: "2-11",
+    chapter: 2,
+    verse: 11,
+    sanskrit:
+      "अशोच्यानन्वशोचस्त्वं प्रज्ञावादांश्च भाषसे। गतासूनगतासूंश्च नानुशोचन्ति पण्डिताः॥",
+    transliteration:
+      "aśocyān anvaśocas tvaṁ prajñā-vādāṁś ca bhāṣase, gatāsūn agatāsūṁś ca nānuśocanti paṇḍitāḥ",
+    english:
+      "You grieve for those who should not be grieved for, and yet you speak words of wisdom. The wise grieve neither for the living nor for the dead.",
+    meaning:
+      "Krishna's first real teaching opens by naming the gap between what Arjuna says and what he does. You can know that everything changes and still spend your days grieving things you were never able to hold onto. Clear thinking means letting that knowledge actually reach the way you live.",
+    quote: "You keep grieving what you were never able to hold onto. The wise don't.",
+    quoteHindi: "आप उस चीज़ का शोक करते रहते हैं जिसे आप कभी थाम ही नहीं सकते थे। ज्ञानी ऐसा नहीं करते।",
+    categories: ["wisdom", "peace", "life", "heart-touching"],
+  },
+  {
+    id: "2-15",
+    chapter: 2,
+    verse: 15,
+    sanskrit:
+      "यं हि न व्यथयन्त्येते पुरुषं पुरुषर्षभ। समदुःखसुखं धीरं सोऽमृतत्वाय कल्पते॥",
+    transliteration:
+      "yaṁ hi na vyathayanty ete puruṣaṁ puruṣarṣabha, sama-duḥkha-sukhaṁ dhīraṁ so 'mṛtatvāya kalpate",
+    english:
+      "The person whom these do not trouble, who stays steady in pain and pleasure alike, that wise one is fit for immortality.",
+    meaning:
+      "The same events hit everyone. What changes is whether they knock you over. Someone who stays level through both a good day and a bad one isn't suppressing anything. They've just stopped handing their stability over to whatever the day brings.",
+    quote: "Stay level through the good days and the bad ones. That steadiness is what lasts.",
+    quoteHindi: "अच्छे दिनों और बुरे दिनों में एक जैसा बने रहें। यही स्थिरता टिकती है।",
+    categories: ["peace", "wisdom", "courage"],
+  },
+  {
+    id: "2-37",
+    chapter: 2,
+    verse: 37,
+    sanskrit:
+      "हतो वा प्राप्स्यसि स्वर्गं जित्वा वा भोक्ष्यसे महीम्। तस्मादुत्तिष्ठ कौन्तेय युद्धाय कृतनिश्चयः॥",
+    transliteration:
+      "hato vā prāpsyasi svargaṁ jitvā vā bhokṣyase mahīm, tasmād uttiṣṭha kaunteya yuddhāya kṛta-niścayaḥ",
+    english:
+      "If you are killed you will attain heaven, and if you win you will enjoy the earth. So rise up, Arjuna, resolved to act.",
+    meaning:
+      "This is Krishna cutting through the paralysis with plain arithmetic. Arjuna is frozen because he's staring at the outcome, so Krishna walks both outcomes forward and shows that neither one is the disaster he fears. Once the result stops being the thing that decides everything, it's possible to just stand up and act.",
+    quote: "Stop weighing the outcome. Stand up and do what's in front of you.",
+    quoteHindi: "नतीजे को तौलना बंद करें। उठें और जो सामने है वह करें।",
+    categories: ["courage", "motivation"],
+  },
+  {
+    id: "2-50",
+    chapter: 2,
+    verse: 50,
+    sanskrit:
+      "बुद्धियुक्तो जहातीह उभे सुकृतदुष्कृते। तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम्॥",
+    transliteration:
+      "buddhi-yukto jahātīha ubhe sukṛta-duṣkṛte, tasmād yogāya yujyasva yogaḥ karmasu kauśalam",
+    english:
+      "One settled in evenness of mind lets go, in this life, of both good and bad deeds. So devote yourself to yoga. Yoga is skill in action.",
+    meaning:
+      "Skill here isn't about doing the task faster or better than everyone else. It's the ability to work without being jerked around by how it turns out. When your calm doesn't depend on the result, you can give the work your full attention instead of splitting it with anxiety about the score.",
+    quote: "Skill in action is doing the work without being ruled by how it turns out.",
+    quoteHindi: "कर्म में कुशलता यही है, काम करना पर नतीजे के वश में न होना।",
+    categories: ["karma", "success", "wisdom"],
+  },
+  {
+    id: "2-56",
+    chapter: 2,
+    verse: 56,
+    sanskrit:
+      "दुःखेष्वनुद्विग्नमनाः सुखेषु विगतस्पृहः। वीतरागभयक्रोधः स्थितधीर्मुनिरुच्यते॥",
+    transliteration:
+      "duḥkheṣv anudvigna-manāḥ sukheṣu vigata-spṛhaḥ, vīta-rāga-bhaya-krodhaḥ sthita-dhīr munir ucyate",
+    english:
+      "One whose mind is untroubled in sorrow, free from craving amid pleasures, and free from attachment, fear, and anger, is called a sage of steady wisdom.",
+    meaning:
+      "A steady mind isn't one that never feels anything. It's one that doesn't get dragged under by sadness or strung out by pleasure. Attachment, fear, and anger are what usually do the dragging, and loosening their grip is what leaves you actually settled rather than just performing calm.",
+    quote: "Not dragged under by sorrow, not strung out by pleasure. That's a steady mind.",
+    quoteHindi: "न दुख में डूबना, न सुख में बहक जाना। यही स्थिर मन है।",
+    categories: ["peace", "wisdom", "detachment"],
+  },
+  {
+    id: "2-66",
+    chapter: 2,
+    verse: 66,
+    sanskrit:
+      "नास्ति बुद्धिरयुक्तस्य न चायुक्तस्य भावना। न चाभावयतः शान्तिरशान्तस्य कुतः सुखम्॥",
+    transliteration:
+      "nāsti buddhir ayuktasya na cāyuktasya bhāvanā, na cābhāvayataḥ śāntir aśāntasya kutaḥ sukham",
+    english:
+      "The undisciplined mind has no clear understanding and no steady reflection. Without reflection there is no peace, and without peace, where is happiness?",
+    meaning:
+      "This traces a chain most people feel but never name. A mind pulled in ten directions can't think clearly, and without clear thinking there's no steadiness. Without steadiness there's no peace, and a restless mind never quite reaches happiness no matter how hard it chases it.",
+    quote: "A scattered mind finds no peace. And without peace, where would happiness even come from?",
+    quoteHindi: "बिखरा हुआ मन शांति नहीं पाता। और शांति के बिना, सुख कहां से आएगा?",
+    categories: ["peace", "wisdom", "life"],
+  },
+  {
+    id: "3-8",
+    chapter: 3,
+    verse: 8,
+    sanskrit:
+      "नियतं कुरु कर्म त्वं कर्म ज्यायो ह्यकर्मणः। शरीरयात्रापि च ते न प्रसिद्ध्येदकर्मणः॥",
+    transliteration:
+      "niyataṁ kuru karma tvaṁ karma jyāyo hy akarmaṇaḥ, śarīra-yātrāpi ca te na prasiddhyed akarmaṇaḥ",
+    english:
+      "Do the work you are meant to do, for action is better than inaction. Even keeping your body going would not be possible without it.",
+    meaning:
+      "Waiting for motivation to show up before you act usually means nothing happens. Krishna's point is blunt: doing something is better than doing nothing, and even staying alive takes action. The bar isn't inspiration. It's just starting the work that's yours to do.",
+    quote: "Doing something beats doing nothing. Start the work that's yours.",
+    quoteHindi: "कुछ करना, कुछ न करने से बेहतर है। जो काम आपका है, उसे शुरू करें।",
+    categories: ["motivation", "karma", "success"],
+  },
+  {
+    id: "3-25",
+    chapter: 3,
+    verse: 25,
+    sanskrit:
+      "सक्ताः कर्मण्यविद्वांसो यथा कुर्वन्ति भारत। कुर्याद्विद्वांस्तथासक्तश्चिकीर्षुर्लोकसंग्रहम्॥",
+    transliteration:
+      "saktāḥ karmaṇy avidvāṁso yathā kurvanti bhārata, kuryād vidvāṁs tathāsaktaś cikīrṣur loka-saṅgraham",
+    english:
+      "As the unwise act with attachment to their work, so the wise should act without attachment, seeking the good of the world.",
+    meaning:
+      "Most people work with a tight grip on what they'll get out of it. This verse asks for the same effort with a looser hold, aimed at something larger than your own return. The work doesn't get less serious. What changes is that it's no longer only about you.",
+    quote: "Put in the same effort, but aim it at more than your own gain.",
+    quoteHindi: "वही मेहनत करें, पर उसे सिर्फ़ अपने फ़ायदे से आगे की ओर लगाएं।",
+    categories: ["karma", "purpose", "motivation"],
+  },
+  {
+    id: "3-37",
+    chapter: 3,
+    verse: 37,
+    sanskrit:
+      "काम एष क्रोध एष रजोगुणसमुद्भवः। महाशनो महापाप्मा विद्ध्येनमिह वैरिणम्॥",
+    transliteration:
+      "kāma eṣa krodha eṣa rajo-guṇa-samudbhavaḥ, mahāśano mahā-pāpmā viddhy enam iha vairiṇam",
+    english:
+      "It is desire, it is anger, born of the mode of passion, all-consuming and deeply harmful. Know this to be the enemy here.",
+    meaning:
+      "When something keeps going wrong in your life, it's worth checking what's driving it. Krishna names desire and anger as the usual engine: the wanting that's never satisfied, and the resentment that follows when it's blocked. It's not a comfortable answer, but knowing where the trouble starts is the only way to deal with it.",
+    quote: "Unfilled wanting, and the anger when it's blocked. That's the enemy, and it's inside.",
+    quoteHindi: "अधूरी चाहत, और उसके रुकने पर आया गुस्सा। यही असली दुश्मन है, और यह भीतर ही है।",
+    categories: ["wisdom", "courage", "life"],
+  },
+  {
+    id: "4-20",
+    chapter: 4,
+    verse: 20,
+    sanskrit:
+      "त्यक्त्वा कर्मफलासङ्गं नित्यतृप्तो निराश्रयः। कर्मण्यभिप्रवृत्तोऽपि नैव किञ्चित्करोति सः॥",
+    transliteration:
+      "tyaktvā karma-phalāsaṅgaṁ nitya-tṛpto nirāśrayaḥ, karmaṇy abhipravṛtto 'pi naiva kiñcit karoti saḥ",
+    english:
+      "Having let go of attachment to the fruits of action, ever content and needing no support, such a person does nothing at all even while fully engaged in work.",
+    meaning:
+      "There's a way of working hard that doesn't leave you drained, and it comes from not needing the outcome to be a certain way. When you're already content and not leaning your whole weight on the result, the effort stops feeling like a gamble. You act fully, but nothing is riding on it the way it used to be.",
+    quote: "Work fully, need nothing from it. That's when the effort stops draining you.",
+    quoteHindi: "पूरे मन से काम करें, उससे कुछ न मांगें। तभी मेहनत थकाना बंद करती है।",
+    categories: ["detachment", "peace", "purpose"],
+  },
+  {
+    id: "4-42",
+    chapter: 4,
+    verse: 42,
+    sanskrit:
+      "तस्मादज्ञानसम्भूतं हृत्स्थं ज्ञानासिनात्मनः। छित्त्वैनं संशयं योगमातिष्ठोत्तिष्ठ भारत॥",
+    transliteration:
+      "tasmād ajñāna-sambhūtaṁ hṛt-sthaṁ jñānāsinātmanaḥ, chittvainaṁ saṁśayaṁ yogam ātiṣṭhottiṣṭha bhārata",
+    english:
+      "So with the sword of knowledge cut down this doubt in your heart, born of not seeing clearly. Take refuge in yoga, and rise up, Arjuna.",
+    meaning:
+      "Doubt that sits in you unaddressed will keep you stuck longer than any outside obstacle. Krishna's instruction is direct: cut through it with what you actually know to be true, and then get up. Endless deliberation isn't the same as being careful. At some point you have to stand and move.",
+    quote: "Cut through the doubt with what you know is true. Then get up.",
+    quoteHindi: "जो सच आप जानते हैं, उससे संदेह को काट दें। फिर उठ खड़े हों।",
+    categories: ["courage", "motivation", "positive-thinking"],
+  },
+  {
+    id: "5-10",
+    chapter: 5,
+    verse: 10,
+    sanskrit:
+      "ब्रह्मण्याधाय कर्माणि सङ्गं त्यक्त्वा करोति यः। लिप्यते न स पापेन पद्मपत्रमिवाम्भसा॥",
+    transliteration:
+      "brahmaṇy ādhāya karmāṇi saṅgaṁ tyaktvā karoti yaḥ, lipyate na sa pāpena padma-patram ivāmbhasā",
+    english:
+      "One who acts offering all actions to the divine, letting go of attachment, is untouched by wrong, as a lotus leaf is untouched by water.",
+    meaning:
+      "You can be fully involved in your work and still not get stained by it. The move is to offer the results outward instead of clutching them, so success doesn't inflate you and failure doesn't crush you. The lotus leaf sits in the water without getting wet. Same idea.",
+    quote: "Be in the work without being stained by how it turns out. Like a lotus leaf in water.",
+    quoteHindi: "काम में रहें, पर उसके नतीजे से बेदाग़ रहें। जैसे पानी में कमल का पत्ता।",
+    categories: ["karma", "detachment", "peace"],
+  },
+  {
+    id: "5-22",
+    chapter: 5,
+    verse: 22,
+    sanskrit:
+      "ये हि संस्पर्शजा भोगा दुःखयोनय एव ते। आद्यन्तवन्तः कौन्तेय न तेषु रमते बुधः॥",
+    transliteration:
+      "ye hi saṁsparśa-jā bhogā duḥkha-yonaya eva te, ādy-antavantaḥ kaunteya na teṣu ramate budhaḥ",
+    english:
+      "The pleasures that come from contact with the senses are themselves sources of pain. They have a beginning and an end, Arjuna, so the wise do not delight in them.",
+    meaning:
+      "The hit you get from wanting something and finally getting it always fades, and often it leaves you worse off than before. Every pleasure that depends on the outside has a start and a finish built into it. Knowing that doesn't mean refusing to enjoy anything. It means not building your life around the next hit.",
+    quote: "Every pleasure that comes from outside has an expiry date. Don't build your life on the next one.",
+    quoteHindi: "बाहर से मिलने वाला हर सुख कुछ देर में ख़त्म हो जाता है। अगली ख़ुराक पर अपनी ज़िंदगी मत टिकाएं।",
+    categories: ["detachment", "wisdom", "life"],
+  },
+  {
+    id: "6-7",
+    chapter: 6,
+    verse: 7,
+    sanskrit:
+      "जितात्मनः प्रशान्तस्य परमात्मा समाहितः। शीतोष्णसुखदुःखेषु तथा मानापमानयोः॥",
+    transliteration:
+      "jitātmanaḥ praśāntasya paramātmā samāhitaḥ, śītoṣṇa-sukha-duḥkheṣu tathā mānāpamānayoḥ",
+    english:
+      "For one who has mastered the mind and is at peace, the Supreme Self stays steady and present, through cold and heat, pleasure and pain, honor and dishonor alike.",
+    meaning:
+      "Once the mind is actually under your control, the outside stuff loses its power to swing you around. Heat and cold, a good week and a bad one, praise and insult all land on steadier ground. It's not that any of it stops happening. It just stops running the show.",
+    quote: "When your mind is steady, praise and insult land the same way. Neither one runs you.",
+    quoteHindi: "जब मन स्थिर हो, तो तारीफ़ और अपमान एक जैसे लगते हैं। कोई भी आप पर हावी नहीं होता।",
+    categories: ["peace", "wisdom", "success"],
+  },
+  {
+    id: "6-26",
+    chapter: 6,
+    verse: 26,
+    sanskrit:
+      "यतो यतो निश्चरति मनश्चञ्चलमस्थिरम्। ततस्ततो नियम्यैतदात्मन्येव वशं नयेत्॥",
+    transliteration:
+      "yato yato niścarati manaś cañcalam asthiram, tatas tato niyamyaitad ātmany eva vaśaṁ nayet",
+    english:
+      "Wherever the restless, unsteady mind wanders off to, one should draw it back each time and bring it under the control of the self.",
+    meaning:
+      "The mind wandering off isn't a failure. It's just what minds do. The instruction is simple, and you repeat it as many times as needed: notice it's gone, and bring it back. Done steadily instead of with frustration, that returning is the whole practice.",
+    quote: "The mind wanders. You notice, and you bring it back. That's the practice, repeated.",
+    quoteHindi: "मन भटकता है। आप ध्यान देते हैं, और उसे वापस लाते हैं। यही साधना है, बार-बार।",
+    categories: ["peace", "motivation", "positive-thinking"],
+  },
+  {
+    id: "6-32",
+    chapter: 6,
+    verse: 32,
+    sanskrit:
+      "आत्मौपम्येन सर्वत्र समं पश्यति योऽर्जुन। सुखं वा यदि वा दुःखं स योगी परमो मतः॥",
+    transliteration:
+      "ātmaupamyena sarvatra samaṁ paśyati yo 'rjuna, sukhaṁ vā yadi vā duḥkhaṁ sa yogī paramo mataḥ",
+    english:
+      "One who sees all beings as like themselves, Arjuna, and feels their pleasure and their pain as their own, is regarded as the highest yogi.",
+    meaning:
+      "The highest mark of practice here isn't a state you reach alone on a cushion. It's being able to feel someone else's pain and joy with the same weight as your own. When the line between your wellbeing and theirs gets thin, that's the sign something real has shifted.",
+    quote: "Feel someone else's pain and joy as if they were your own. That's the real measure.",
+    quoteHindi: "किसी और के दुख और सुख को अपना समझकर महसूस करें। यही असली पैमाना है।",
+    categories: ["heart-touching", "wisdom", "life", "peace"],
+  },
+  {
+    id: "9-30",
+    chapter: 9,
+    verse: 30,
+    sanskrit:
+      "अपि चेत्सुदुराचारो भजते मामनन्यभाक्। साधुरेव स मन्तव्यः सम्यग्व्यवसितो हि सः॥",
+    transliteration:
+      "api cet su-durācāro bhajate mām ananya-bhāk, sādhur eva sa mantavyaḥ samyag vyavasito hi saḥ",
+    english:
+      "Even if someone of very bad conduct turns to me with undivided devotion, they should be considered righteous, for they have resolved rightly.",
+    meaning:
+      "A sincere turn in the right direction counts from the moment you make it, not after you've proven yourself for years. Krishna says even someone with a bad track record, if they've genuinely committed, should be regarded as on the right path already. The resolve is what matters. The rest follows.",
+    quote: "The moment you sincerely turn things around, you're already on the right path.",
+    quoteHindi: "जिस पल आप सच्चे मन से ख़ुद को बदलते हैं, आप उसी पल सही राह पर होते हैं।",
+    categories: ["positive-thinking", "courage", "heart-touching"],
+  },
+  {
+    id: "17-3",
+    chapter: 17,
+    verse: 3,
+    sanskrit:
+      "सत्त्वानुरूपा सर्वस्य श्रद्धा भवति भारत। श्रद्धामयोऽयं पुरुषो यो यच्छ्रद्धः स एव सः॥",
+    transliteration:
+      "sattvānurūpā sarvasya śraddhā bhavati bhārata, śraddhā-mayo 'yaṁ puruṣo yo yac-chraddhaḥ sa eva saḥ",
+    english:
+      "Each person's faith matches their nature, Arjuna. A person is made of their faith. As their faith is, so are they.",
+    meaning:
+      "What you genuinely believe about yourself and the world quietly sets the shape of your life. Krishna puts it plainly: a person is made of their faith, and whatever they put their trust in is what they become. It's worth checking, then, what you've actually placed your faith in.",
+    quote: "You are made of what you believe. Whatever you put your faith in is what you become.",
+    quoteHindi: "आप वही हैं जो आप मानते हैं। जिस पर आप विश्वास रखते हैं, वही आप बन जाते हैं।",
+    categories: ["positive-thinking", "motivation", "purpose"],
+  },
+  {
+    id: "18-48",
+    chapter: 18,
+    verse: 48,
+    sanskrit:
+      "सहजं कर्म कौन्तेय सदोषमपि न त्यजेत्। सर्वारम्भा हि दोषेण धूमेनाग्निरिवावृताः॥",
+    transliteration:
+      "sahajaṁ karma kaunteya sa-doṣam api na tyajet, sarvārambhā hi doṣeṇa dhūmenāgnir ivāvṛtāḥ",
+    english:
+      "One should not give up the work suited to one's nature, Arjuna, even if it is flawed. Every undertaking is clouded by some flaw, as fire is covered by smoke.",
+    meaning:
+      "Waiting for the flawless version of your work before you commit to it means waiting forever. Every effort has something wrong with it, the same way any fire gives off smoke. That's not a reason to walk away from the work that's genuinely yours. Do it, flaws and all.",
+    quote: "Every effort has a flaw in it, like fire has smoke. Do your work anyway.",
+    quoteHindi: "हर काम में कोई न कोई कमी होती है, जैसे आग में धुआं। फिर भी अपना काम करें।",
+    categories: ["motivation", "courage", "purpose", "karma"],
+  },
+  {
+    id: "18-58",
+    chapter: 18,
+    verse: 58,
+    sanskrit:
+      "मच्चित्तः सर्वदुर्गाणि मत्प्रसादात्तरिष्यसि। अथ चेत्त्वमहङ्कारान्न श्रोष्यसि विनङ्क्ष्यसि॥",
+    transliteration:
+      "mac-cittaḥ sarva-durgāṇi mat-prasādāt tariṣyasi, atha cet tvam ahaṅkārān na śroṣyasi vinaṅkṣyasi",
+    english:
+      "With your mind fixed on me, you will cross over every obstacle by my grace. But if out of ego you will not listen, you will be lost.",
+    meaning:
+      "With your attention steady on what matters, obstacles that looked impossible turn out to be crossable. The warning attached is just as plain: if your ego won't let you listen and adjust, you're the thing that sinks you. It's the same choice most hard moments come down to.",
+    quote: "Focus on what matters and you'll get through. Let ego stop you from listening, and you won't.",
+    quoteHindi: "जो मायने रखता है उस पर ध्यान रखें, तो आप पार हो जाएंगे। अहंकार को सुनने से रोकने दें, तो नहीं।",
+    categories: ["courage", "motivation", "success"],
+  },
 ]
 
 export function verseSlug(v: Pick<Verse, "chapter" | "verse">): string {
