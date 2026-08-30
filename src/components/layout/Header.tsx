@@ -40,7 +40,15 @@ export function Header() {
           to="/"
           className="focus-ring flex shrink-0 items-center gap-2 rounded-md font-serif text-xl tracking-tight text-ink"
         >
-          <img src="/logo-mark.webp" alt="" width={48} height={48} className="h-12 w-12" />
+          <img
+            src="/logo-mark.webp"
+            alt=""
+            width={48}
+            height={48}
+            fetchPriority="high"
+            decoding="async"
+            className="h-12 w-12"
+          />
           <span>
             Bhagavad Gita{" "}
             <span className="bg-gradient-brand bg-clip-text text-transparent">Quotes</span>

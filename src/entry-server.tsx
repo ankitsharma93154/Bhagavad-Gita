@@ -1,7 +1,8 @@
 import { StrictMode } from "react"
 import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router-dom"
-import App from "./App"
+import { AppLayout } from "./AppLayout"
+import { AppRoutesServer } from "./AppRoutes.server"
 import { SITE_NAME, SITE_URL } from "./lib/seo"
 
 export interface RenderInput {
@@ -34,11 +35,12 @@ export function render({ url, cssHref, scriptSrc }: RenderInput): string {
         <meta property="og:image:height" content="800" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={`${SITE_URL}/og-image.jpg`} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Devanagari:wght@400;500&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          href="/fonts/inter-latin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
         />
         <link rel="stylesheet" href={cssHref} />
       </head>
@@ -46,7 +48,9 @@ export function render({ url, cssHref, scriptSrc }: RenderInput): string {
         <div id="root">
           <StrictMode>
             <StaticRouter location={url}>
-              <App />
+              <AppLayout>
+                <AppRoutesServer />
+              </AppLayout>
             </StaticRouter>
           </StrictMode>
         </div>

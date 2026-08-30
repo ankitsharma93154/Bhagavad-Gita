@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+/*
+ * Self-hosted, subset fonts. Replaces the render-blocking Google Fonts <link> (two extra
+ * TLS handshakes + ~200 KB on the critical path). Files live in public/fonts and are
+ * generated from the Google woff2 sources, subset to the glyphs this site actually uses:
+ *   - Inter: variable (wght 400-600), Latin only
+ *   - Noto Serif Devanagari: weight 400, only the Devanagari codepoints in src/data/verses.ts
+ */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Noto Serif Devanagari";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/noto-serif-devanagari-400.woff2") format("woff2");
+  /* Only fetched when Devanagari text is on the page (verse Sanskrit), never for plain UI pages. */
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC,
+    U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+
 @theme {
   /* Extra breakpoint below `sm`, for grids whose 2-column mobile layout gets cramped on the smallest phones. */
   --breakpoint-xs: 26rem;

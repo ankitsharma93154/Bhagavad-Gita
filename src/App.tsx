@@ -1,48 +1,12 @@
-import { Route, Routes } from "react-router-dom"
-import { Analytics } from "@vercel/analytics/react"
-import { Header } from "@/components/layout/Header"
-import { Footer } from "@/components/layout/Footer"
-import { ScrollToTop } from "@/components/layout/ScrollToTop"
-import { RouteTransition } from "@/components/layout/RouteTransition"
-import { Home } from "@/pages/Home"
-import { Quotes } from "@/pages/Quotes"
-import { QuoteDetail } from "@/pages/QuoteDetail"
-import { Themes } from "@/pages/Themes"
-import { Theme } from "@/pages/Theme"
-import { LanguagesHindi } from "@/pages/LanguagesHindi"
-import { Saved } from "@/pages/Saved"
-import { About } from "@/pages/About"
-import { NotFound } from "@/pages/NotFound"
+import { AppLayout } from "@/AppLayout"
+import { AppRoutes } from "@/AppRoutes"
 
+/** Client app: shared chrome + lazy, per-route code-split page chunks. */
 function App() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <ScrollToTop />
-      <a
-        href="#main-content"
-        className="focus:bg-clay sr-only rounded-full px-4 py-2 text-sm font-medium text-surface focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
-      >
-        Skip to content
-      </a>
-      <Header />
-      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-        <RouteTransition>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/quotes" element={<Quotes />} />
-            <Route path="/quotes/:slug" element={<QuoteDetail />} />
-            <Route path="/themes" element={<Themes />} />
-            <Route path="/themes/:slug" element={<Theme />} />
-            <Route path="/languages/hindi" element={<LanguagesHindi />} />
-            <Route path="/saved" element={<Saved />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </RouteTransition>
-      </main>
-      <Footer />
-      <Analytics />
-    </div>
+    <AppLayout>
+      <AppRoutes />
+    </AppLayout>
   )
 }
 

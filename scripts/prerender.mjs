@@ -8,6 +8,29 @@ import { render, getStaticRoutePaths } from "../dist-ssr/entry-server.js"
 
 const DIST = path.resolve("dist")
 
+// Which lazy page chunk (src/pages/lazy.ts) backs each route, so we can inject a
+// <link rel="modulepreload"> for it (and its shared imports) into that route's HTML —
+// otherwise the split-out chunk only starts downloading after the main bundle parses.
+function pageModuleForRoute(routePath) {
+  if (routePath === "/") return "src/pages/Home.tsx"
+  if (routePath === "/quotes") return "src/pages/Quotes.tsx"
+  if (routePath === "/themes") return "src/pages/Themes.tsx"
+  if (routePath === "/languages/hindi") return "src/pages/LanguagesHindi.tsx"
+  if (routePath === "/about") return "src/pages/About.tsx"
+  if (routePath.startsWith("/quotes/")) return "src/pages/QuoteDetail.tsx"
+  if (routePath.startsWith("/themes/")) return "src/pages/Theme.tsx"
+  return null
+}
+
+/** Collect a manifest entry's output file plus every file it transitively static-imports. */
+function collectChunks(manifest, key, seen = new Set()) {
+  const entry = manifest[key]
+  if (!entry || seen.has(key)) return seen
+  seen.add(key)
+  for (const dep of entry.imports ?? []) collectChunks(manifest, dep, seen)
+  return seen
+}
+
 async function main() {
   const shellPath = path.join(DIST, "index.html")
   const shell = await readFile(shellPath, "utf-8")
@@ -23,9 +46,24 @@ async function main() {
     throw new Error(`Could not locate built asset tags in ${shellPath}`)
   }
 
+  const manifest = JSON.parse(await readFile(path.join(DIST, ".vite", "manifest.json"), "utf-8"))
+  const entryKey = Object.keys(manifest).find((k) => manifest[k].isEntry)
+  // Imports the browser would otherwise only discover after fetching+parsing the entry chunk.
+  const entryDeps = [...collectChunks(manifest, entryKey)]
+    .filter((k) => k !== entryKey)
+    .map((k) => manifest[k].file)
+
   const routes = getStaticRoutePaths()
   for (const { path: routePath } of routes) {
-    const html = render({ url: routePath, cssHref, scriptSrc })
+    let html = render({ url: routePath, cssHref, scriptSrc })
+
+    const pageKey = pageModuleForRoute(routePath)
+    const routeChunks = pageKey ? [...collectChunks(manifest, pageKey)].map((k) => manifest[k].file) : []
+    const preloads = [...new Set([...entryDeps, ...routeChunks])]
+      .map((file) => `<link rel="modulepreload" href="/${file}">`)
+      .join("")
+    if (preloads) html = html.replace("</head>", `${preloads}</head>`)
+
     const outDir = routePath === "/" ? DIST : path.join(DIST, routePath)
     await mkdir(outDir, { recursive: true })
     await writeFile(path.join(outDir, "index.html"), html, "utf-8")
