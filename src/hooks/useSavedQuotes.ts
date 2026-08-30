@@ -25,9 +25,12 @@ function writeSaved(ids: string[]) {
 
 /** Saved-quote ids persisted to localStorage, kept in sync across components in the same tab. */
 export function useSavedQuotes() {
-  const [savedIds, setSavedIds] = useState<string[]>(() => readSaved())
+  // Starts empty so the first client render matches the prerendered HTML (which had no
+  // localStorage); the real list is read in the effect below, right after mount.
+  const [savedIds, setSavedIds] = useState<string[]>([])
 
   useEffect(() => {
+    setSavedIds(readSaved())
     const sync = () => setSavedIds(readSaved())
     window.addEventListener(STORAGE_EVENT, sync)
     window.addEventListener("storage", sync)

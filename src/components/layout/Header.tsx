@@ -93,7 +93,7 @@ export function Header() {
               aria-label="Search quotes"
               className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-soft hover:text-ink"
             >
-              <Search className="h-[18px] w-[18px]" aria-hidden />
+              <Search className="h-4.5 w-4.5" aria-hidden />
             </button>
           </form>
 
@@ -144,7 +144,7 @@ export function Header() {
                 className="w-full bg-transparent py-2.5 text-sm text-ink outline-none placeholder:text-ink-faint"
               />
               <button type="submit" aria-label="Search" className="focus-ring text-ink-soft">
-                <Search className="h-[18px] w-[18px]" aria-hidden />
+                <Search className="h-4.5 w-4.5" aria-hidden />
               </button>
             </form>
 
