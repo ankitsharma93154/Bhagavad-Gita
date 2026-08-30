@@ -46,6 +46,12 @@ async function main() {
     throw new Error(`Could not locate built asset tags in ${shellPath}`)
   }
 
+  // The one stylesheet is small (~8 KB gzipped) and render-blocking. Inline it into each
+  // prerendered page so first paint doesn't wait on a separate request. Client-side
+  // navigation reuses the same document, so there's nothing to re-download.
+  const cssText = await readFile(path.join(DIST, cssHref.replace(/^\//, "")), "utf-8")
+  const linkTag = new RegExp(`<link rel="stylesheet"[^>]*href="${cssHref}"[^>]*>`)
+
   const manifest = JSON.parse(await readFile(path.join(DIST, ".vite", "manifest.json"), "utf-8"))
   const entryKey = Object.keys(manifest).find((k) => manifest[k].isEntry)
   // Imports the browser would otherwise only discover after fetching+parsing the entry chunk.
@@ -63,6 +69,8 @@ async function main() {
       .map((file) => `<link rel="modulepreload" href="/${file}">`)
       .join("")
     if (preloads) html = html.replace("</head>", `${preloads}</head>`)
+
+    html = html.replace(linkTag, `<style>${cssText}</style>`)
 
     const outDir = routePath === "/" ? DIST : path.join(DIST, routePath)
     await mkdir(outDir, { recursive: true })
