@@ -1,33 +1,31 @@
-import { useState } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import { ChevronLeft, ChevronRight, Flower2, Quote } from "lucide-react"
 import { VerseDisplay } from "@/components/quote/VerseDisplay"
+import { VerseExplanation } from "@/components/quote/VerseExplanation"
 import { QuoteActions } from "@/components/quote/QuoteActions"
-import { SegmentedToggle } from "@/components/ui/SegmentedToggle"
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs"
-import { DiamondDivider, PavilionArt } from "@/components/quote/decorative"
-import { getAdjacentVerses, getRelatedVerses, getVerseBySlug, verseSlug } from "@/data/verses"
+import { DiamondDivider } from "@/components/quote/decorative"
+import {
+  getAdjacentVerses,
+  getRelatedVersesFor,
+  getVerseBySlug,
+  verseSlug,
+} from "@/data/verses"
 import { getThemeBySlug } from "@/data/themes"
 import { getChapterTitle } from "@/data/chapters"
 import { Seo, buildBreadcrumbList } from "@/lib/seo"
 import { truncate } from "@/lib/utils"
 
-const readingViewOptions = [
-  { value: "plain", label: "In plain words" },
-  { value: "literal", label: "Literal" },
-] as const
-
 export function QuoteDetail() {
   const { slug = "" } = useParams()
   const verse = getVerseBySlug(slug)
   const reference = verse ? `Bhagavad Gita ${verse.chapter}.${verse.verse}` : "Bhagavad Gita Quotes"
-  const [view, setView] = useState<"literal" | "plain">("plain")
 
   if (!verse) {
     return <Navigate to="/quotes" replace />
   }
 
-  const related = getRelatedVerses(verse, 4)
+  const related = getRelatedVersesFor(verse, 4)
   const { previous, next } = getAdjacentVerses(verse)
   const chapterTitle = getChapterTitle(verse.chapter)
   const breadcrumbItems = [
@@ -36,14 +34,14 @@ export function QuoteDetail() {
     { name: `Chapter ${verse.chapter}, Verse ${verse.verse}`, path: `/quotes/${slug}` },
   ]
 
-  // A search-result title/description sized for real SERP display: embedding the full quote
-  // (up to ~90 characters) plus the full literal translation blew both past Google's practical
-  // truncation point on every quote page. This keeps titles under ~60 chars and descriptions
-  // under ~155 by construction, however long the underlying verse content is.
+  // Search-result title/description sized for real SERP display. Titles stay under ~60 chars
+  // and descriptions under ~155 by construction, however long the verse content is. "Meaning"
+  // is worked into the title because that's the intent people actually search for on a verse
+  // number; the primary theme still varies it so the set doesn't read as 60 identical titles.
   const primaryTheme = getThemeBySlug(verse.categories[0])
-  const seoTitle = primaryTheme ? `${reference} · ${primaryTheme.title}` : reference
+  const seoTitle = primaryTheme ? `${reference} Meaning · ${primaryTheme.title}` : `${reference} Meaning`
   const seoDescription = truncate(
-    `${reference}, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" Read the Sanskrit verse and meaning.`,
+    `${reference} meaning, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" With the Sanskrit, its translation, and a plain-English explanation.`,
     155,
   )
 
@@ -59,7 +57,7 @@ export function QuoteDetail() {
             "@type": "CreativeWork",
             name: reference,
             text: verse.quote,
-            description: verse.meaning,
+            description: verse.simpleMeaning ?? verse.meaning,
             inLanguage: "en",
             isPartOf: {
               "@type": "Book",
@@ -71,7 +69,7 @@ export function QuoteDetail() {
       />
       <Breadcrumbs items={breadcrumbItems} />
 
-      <header className="mt-8 text-center">
+      <header className="mt-6 text-center sm:mt-8">
         <h1 className="inline-flex items-center gap-3 font-serif text-4xl text-ink sm:text-5xl">
           Chapter {verse.chapter}
           <Flower2 className="h-7 w-7 shrink-0 text-clay sm:h-8 sm:w-8" aria-hidden />
@@ -100,45 +98,50 @@ export function QuoteDetail() {
         </div>
       </header>
 
-      <div className="mt-10">
+      <div className="mt-6 sm:mt-10">
         <VerseDisplay verse={verse} />
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="flex flex-col gap-6 lg:col-span-3">
-          <div className="shadow-soft relative overflow-hidden rounded-2xl border-l-4 border-clay bg-paper p-6 sm:p-8">
-            <div>
-              <h2 className="font-serif text-xl text-ink">Meaning</h2>
-              <span className="mt-0.5 block h-0.5 w-8 bg-clay" aria-hidden />
-            </div>
-            <div className="mt-5">
-              <SegmentedToggle options={readingViewOptions} value={view} onChange={setView} />
-            </div>
-            <p className="relative mt-4 leading-relaxed text-ink-soft">
-              {view === "literal" ? verse.english : verse.meaning}
+      <div className="mt-6 grid gap-6 sm:mt-8 sm:gap-8 lg:grid-cols-5 lg:gap-10">
+        <div className="flex flex-col gap-8 lg:col-span-3">
+          <div>
+            <p className="text-xs font-semibold tracking-[0.15em] text-gold-deep uppercase">
+              Translation
             </p>
-            <PavilionArt className="pointer-events-none absolute -bottom-3 left-1/2 h-20 w-44 -translate-x-1/2 text-clay/10" />
+            <p className="mt-3 font-serif text-lg leading-relaxed text-ink sm:text-xl">
+              {verse.english}
+            </p>
           </div>
 
-          <div className="shadow-soft rounded-2xl border-l-4 border-clay bg-paper-dim p-6 sm:p-7">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <span className="text-xs font-semibold tracking-wide text-clay-deep uppercase">
-                  Reflection
-                </span>
-                <span className="mt-0.5 block h-0.5 w-8 bg-clay" aria-hidden />
+          <div>
+            <div className="shadow-soft rounded-2xl border-l-4 border-clay bg-paper-dim p-6 sm:p-7">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <span className="text-xs font-semibold tracking-wide text-clay-deep uppercase">
+                    Reflection
+                  </span>
+                  <span className="mt-0.5 block h-0.5 w-8 bg-clay" aria-hidden />
+                </div>
+                <Quote className="h-8 w-8 shrink-0 text-clay/20" fill="currentColor" aria-hidden />
               </div>
-              <Quote className="h-8 w-8 shrink-0 text-clay/20" fill="currentColor" aria-hidden />
+              <p className="mt-4 font-serif text-lg leading-snug text-ink italic">{verse.quote}</p>
             </div>
-            <p className="mt-4 font-serif text-lg leading-snug text-ink italic">{verse.quote}</p>
+            <div className="mt-6 flex justify-center">
+              <QuoteActions verse={verse} size="expanded" />
+            </div>
           </div>
+
+          <VerseExplanation verse={verse} />
         </div>
 
         {related.length > 0 && (
-          <div className="lg:col-span-2">
-            <h2 className="font-serif text-lg text-ink">Related quotes</h2>
-            <span className="mt-0.5 block h-0.5 w-8 bg-clay" aria-hidden />
-            <div className="mt-3 grid gap-3">
+          <aside
+            aria-label="Related verses"
+            className="lg:col-span-2 lg:sticky lg:top-20 lg:self-start"
+          >
+            <h2 className="font-serif text-xl text-ink">Related verses</h2>
+            <span className="mt-2 block h-0.5 w-8 bg-clay" aria-hidden />
+            <div className="mt-4 grid gap-3">
               {related.map((r) => (
                 <Link
                   key={r.id}
@@ -152,12 +155,8 @@ export function QuoteDetail() {
                 </Link>
               ))}
             </div>
-          </div>
+          </aside>
         )}
-      </div>
-
-      <div className="mt-10 flex justify-center">
-        <QuoteActions verse={verse} size="expanded" />
       </div>
 
       <nav
