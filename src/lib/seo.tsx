@@ -24,7 +24,9 @@ export interface SeoProps {
  * for prerendering and for normal client navigation, unlike the old useEffect-based version.
  */
 export function Seo({ title, description, path, structuredData, noindex }: SeoProps) {
-  const fullTitle = title === SITE_NAME ? title : `${title}: ${SITE_NAME}`
+  // Skip the site-name suffix when the title already contains it, so keyword-led titles like
+  // "Bhagavad Gita Quotes on Karma" don't end up repeating the phrase.
+  const fullTitle = title.includes(SITE_NAME) ? title : `${title}: ${SITE_NAME}`
   const url = path ? `${SITE_URL}${path}` : undefined
   const jsonLd = Array.isArray(structuredData)
     ? structuredData

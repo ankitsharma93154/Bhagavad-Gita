@@ -58,9 +58,9 @@ export function Home() {
   return (
     <>
       <Seo
-        title="Timeless Wisdom for Everyday Life"
+        title="Bhagavad Gita Quotes in English, with Meaning"
         description={truncate(
-          "A calm, beautifully presented collection of Bhagavad Gita quotes: Sanskrit verses, English translations, and simple meanings on karma, peace, purpose, and inner strength.",
+          "Bhagavad Gita quotes in English with meaning: Sanskrit, translation, and a simple explanation, on karma, life, peace, and detachment. A new quote daily.",
           155,
         )}
         path="/"
@@ -80,14 +80,15 @@ export function Home() {
         <div className="text-center">
           <span className="bg-gradient-brand inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide text-surface uppercase">
             <Sparkles className="h-3.5 w-3.5" aria-hidden />
-            A verse for today
+            Bhagavad Gita quote of the day
           </span>
           <h1 className="bg-gradient-brand mt-5 bg-clip-text font-serif text-5xl leading-tight text-transparent sm:text-6xl">
-            Timeless wisdom for everyday life.
+            Bhagavad Gita quotes for everyday life.
           </h1>
           <p className="reading-width mx-auto mt-4 text-lg leading-relaxed text-ink-soft">
-            A small, unhurried collection of verses from the Bhagavad Gita. Read one, sit
-            with it, and come back tomorrow for another.
+            A small, unhurried collection of verses from the Bhagavad Gita, in Sanskrit and
+            English, each with its meaning. Read one, sit with it, and come back tomorrow for
+            another.
           </p>
           <div className="mt-7 flex items-center justify-center gap-3">
             <Button href="/quotes">Explore quotes</Button>
@@ -138,9 +139,9 @@ export function Home() {
 
       <section className="container-page py-10">
         <div className="bg-gradient-brand rounded-3xl px-6 py-10 text-center text-surface shadow-soft sm:px-12">
-          <h2 className="font-serif text-2xl sm:text-3xl">One verse a day</h2>
+          <h2 className="font-serif text-2xl sm:text-3xl">A Gita quote every day</h2>
           <p className="mx-auto mt-3 max-w-md text-surface">
-            The featured verse changes daily. Save the ones that stay with you, and build your
+            The quote of the day changes daily. Save the ones that stay with you, and build your
             own quiet collection over time.
           </p>
           <div className="mt-6">

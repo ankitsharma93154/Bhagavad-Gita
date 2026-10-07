@@ -1,6 +1,7 @@
 import { Navigate, useParams } from "react-router-dom"
 import { QuoteGrid } from "@/components/quote/QuoteGrid"
 import { Badge } from "@/components/ui/Badge"
+import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs"
 import { getThemeBySlug } from "@/data/themes"
 import { getRelatedThemes, getVersesByTheme, verseSlug } from "@/data/verses"
@@ -27,11 +28,14 @@ export function Theme() {
   return (
     <div className="container-page pt-8 sm:pt-12 pb-12 sm:pb-16">
       <Seo
-        title={`${theme.title} Bhagavad Gita Quotes`}
-        description={truncate(
-          `${theme.description} A curated set of Bhagavad Gita quotes about ${theme.title.toLowerCase()}.`,
-          155,
-        )}
+        title={theme.seoTitle ?? `${theme.title} Bhagavad Gita Quotes`}
+        description={
+          theme.seoDescription ??
+          truncate(
+            `${theme.description} A curated set of Bhagavad Gita quotes about ${theme.title.toLowerCase()}.`,
+            155,
+          )
+        }
         path={`/themes/${slug}`}
         structuredData={[
           buildBreadcrumbList(breadcrumbItems),
@@ -46,6 +50,19 @@ export function Theme() {
               name: `Bhagavad Gita ${v.chapter}.${v.verse}`,
             })),
           },
+          ...(theme.faqs
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: theme.faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: { "@type": "Answer", text: faq.answer },
+                  })),
+                },
+              ]
+            : []),
         ]}
       />
       <Breadcrumbs items={breadcrumbItems} />
@@ -61,6 +78,32 @@ export function Theme() {
       <div className="mt-10">
         <QuoteGrid verses={themeVerses} />
       </div>
+
+      {(theme.intro || theme.faqs) && (
+        <section className="reading-width mx-auto mt-16 space-y-10 text-ink-soft">
+          {theme.intro && (
+            <div className="space-y-4">
+              <SectionHeading>{theme.title} in the Bhagavad Gita</SectionHeading>
+              {theme.intro.map((paragraph) => (
+                <p key={paragraph} className="leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          )}
+          {theme.faqs && (
+            <div className="space-y-6">
+              <SectionHeading>Common questions</SectionHeading>
+              {theme.faqs.map((faq) => (
+                <div key={faq.question}>
+                  <h3 className="font-serif text-lg text-ink">{faq.question}</h3>
+                  <p className="mt-2 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       {relatedThemes.length > 0 && (
         <div className="mt-16 border-t border-line pt-10 text-center">

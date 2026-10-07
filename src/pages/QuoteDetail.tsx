@@ -41,7 +41,7 @@ export function QuoteDetail() {
   const primaryTheme = getThemeBySlug(verse.categories[0])
   const seoTitle = primaryTheme ? `${reference} Meaning · ${primaryTheme.title}` : `${reference} Meaning`
   const seoDescription = truncate(
-    `${reference} meaning, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" With the Sanskrit, its translation, and a plain-English explanation.`,
+    `${reference} (BG ${verse.chapter}.${verse.verse}) meaning, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" With the Sanskrit, translation, and a plain-English explanation.`,
     155,
   )
 
@@ -70,6 +70,9 @@ export function QuoteDetail() {
       <Breadcrumbs items={breadcrumbItems} />
 
       <header className="mt-6 text-center sm:mt-8">
+        <p className="mb-3 text-xs font-semibold tracking-[0.15em] text-ink-faint uppercase sm:text-sm">
+          {reference} · BG {verse.chapter}.{verse.verse}
+        </p>
         <h1 className="inline-flex items-center gap-3 font-serif text-4xl text-ink sm:text-5xl">
           Chapter {verse.chapter}
           <Flower2 className="h-7 w-7 shrink-0 text-clay sm:h-8 sm:w-8" aria-hidden />
