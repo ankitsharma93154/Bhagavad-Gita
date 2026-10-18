@@ -9,6 +9,8 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fbeedf" />
+    <!-- Applies the saved/OS theme before first paint. Keep in sync with THEME_INIT_SCRIPT in src/lib/theme.ts. -->
+    <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",t==="dark"?"#17120e":"#fbeedf")})()</script>
 
     <title>Bhagavad Gita Quotes: Timeless Wisdom for Everyday Life</title>
     <meta

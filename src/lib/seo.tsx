@@ -15,7 +15,11 @@ export interface SeoProps {
   structuredData?: Record<string, unknown> | Record<string, unknown>[]
   /** Excludes the page from indexing (and skips the canonical) without hiding it from users. */
   noindex?: boolean
+  /** Link-preview image (site-relative path) and its pixel size. Defaults to the site-wide card. */
+  image?: { path: string; width: number; height: number }
 }
+
+const DEFAULT_IMAGE = { path: "/og-image.jpg", width: 1200, height: 800 }
 
 /**
  * Renders document title, meta description, canonical URL, social tags, and structured
@@ -23,7 +27,7 @@ export interface SeoProps {
  * both on the client and during server-side renderToString — so this works identically
  * for prerendering and for normal client navigation, unlike the old useEffect-based version.
  */
-export function Seo({ title, description, path, structuredData, noindex }: SeoProps) {
+export function Seo({ title, description, path, structuredData, noindex, image = DEFAULT_IMAGE }: SeoProps) {
   // Skip the site-name suffix when the title already contains it, so keyword-led titles like
   // "Bhagavad Gita Quotes on Karma" don't end up repeating the phrase.
   const fullTitle = title.includes(SITE_NAME) ? title : `${title}: ${SITE_NAME}`
@@ -45,9 +49,13 @@ export function Seo({ title, description, path, structuredData, noindex }: SeoPr
       <meta property="og:description" content={description} />
       {url && <meta property="og:url" content={url} />}
       <meta property="og:type" content={path === "/" ? "website" : "article"} />
+      <meta property="og:image" content={`${SITE_URL}${image.path}`} />
+      <meta property="og:image:width" content={String(image.width)} />
+      <meta property="og:image:height" content={String(image.height)} />
 
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={`${SITE_URL}${image.path}`} />
 
       {jsonLd.map((data, i) => (
         // eslint-disable-next-line react/no-array-index-key -- static, order-stable list per page

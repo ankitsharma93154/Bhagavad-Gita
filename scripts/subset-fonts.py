@@ -10,6 +10,9 @@ adds a new Devanagari glyph:
 It downloads the current Google Fonts woff2 sources and subsets them:
   - Inter            -> variable (wght 400-600), Latin only
   - Noto Serif Devanagari 400 -> only the Devanagari codepoints used in src/data/verses.ts
+  - Crimson Pro 500  -> Latin only. Not used by the site's CSS: it's the serif the share
+                        images (src/lib/shareImage.ts) are drawn in, so they look the same on
+                        every device instead of falling back to whatever serif the phone has.
 
 The matching @font-face rules live in src/index.css.
 """
@@ -22,6 +25,7 @@ OUT = ROOT / "public" / "fonts"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/151.0.0.0 Safari/537.36"}
 
 INTER_SRC = "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+CRIMSON_SRC = "https://fonts.gstatic.com/s/crimsonpro/v28/q5uUsoa5M_tv7IihmnkabC5XiXCAlXGks1WZ_G1MP5s-.woff2"
 NSD_SRC = (
     "https://fonts.gstatic.com/s/notoserifdevanagari/v34/"
     "x3dNcl3IZKmUqiMk48ZHXJ5jwU-DZGRSaQ4Hh2dGyFzPLcQPVbnRH-xEMqTN.woff2"
@@ -62,8 +66,10 @@ def main() -> None:
 
     fetch(INTER_SRC, tmp / "inter.woff2")
     fetch(NSD_SRC, tmp / "nsd.woff2")
+    fetch(CRIMSON_SRC, tmp / "crimson.woff2")
     do(tmp / "inter.woff2", OUT / "inter-latin.woff2", LATIN)
     do(tmp / "nsd.woff2", OUT / "noto-serif-devanagari-400.woff2", deva)
+    do(tmp / "crimson.woff2", OUT / "crimson-pro-500-latin.woff2", LATIN)
 
 
 if __name__ == "__main__":

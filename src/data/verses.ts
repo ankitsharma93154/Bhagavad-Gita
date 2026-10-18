@@ -8,13 +8,20 @@ import type { ThemeSlug } from "./themes"
  * quote-friendly interpretation for everyday reading, not a literal
  * translation. These three are kept distinct in the UI, see the About page.
  *
- * `simpleMeaning`, `deeperMeaning`, and `lifeApplication` are the optional
- * "layers of understanding" the verse detail page reveals below the quote:
- * a plain-English restatement for someone new to the Gita, the philosophical
- * idea the verse turns on, and how that principle plays out in ordinary
- * modern life. They're optional so verses without them written yet still
- * render cleanly (the page just shows fewer layers). Split paragraphs with
- * a blank line.
+ * `moment`, `simpleMeaning`, `deeperMeaning`, and `lifeApplication` are the
+ * optional sections of the verse detail page's reading path: where the verse
+ * sits in the conversation (who's speaking, what was just asked; real
+ * Mahabharata context, never invented), what the verse is getting at in
+ * plain words (an interpretation, not a second translation, shown in place
+ * of `meaning`, which is the short card version), one idea the verse turns
+ * on that the other sections don't cover (collapsed by default), and one
+ * concrete thing to try in ordinary life. Each should add something the
+ * others and the translation don't. They're optional so unwritten verses
+ * still render cleanly. Split paragraphs with a blank line. All of it follows
+ * voice_rules.md.
+ *
+ * Each verse's illustration lives in scripts/verse-art/drawings.mjs, keyed by
+ * the same id.
  *
  * `relatedVerses` is an optional hand-picked list of verse ids. When omitted,
  * the detail page falls back to shared-theme matching (see getRelatedVersesFor).
@@ -39,6 +46,7 @@ export interface Verse {
   quote: string
   quoteHindi?: string
   categories: ThemeSlug[]
+  moment?: string
   simpleMeaning?: string
   deeperMeaning?: string
   lifeApplication?: string
@@ -55,18 +63,20 @@ export const verses: Verse[] = [
     transliteration:
       "karmaṇy-evādhikāras te mā phaleṣu kadācana, mā karma-phala-hetur bhūr mā te saṅgo 'stv akarmaṇi",
     english:
-      "You have a right to perform your prescribed duty, but never to the fruits of your actions. Never consider yourself the cause of the results, and never be attached to inaction.",
+      "Your right is to action alone, never to its fruits. Don't let the fruits of action be your motive, and don't be attached to not acting either.",
     meaning:
       "Give your full effort to the work itself. The outcome is never fully in your hands, so anchoring your peace to it only creates anxiety. This isn't motivation to give up. It's freedom to act wholeheartedly.",
     quote: "You have the right to your actions, never to the fruits of those actions.",
     quoteHindi: "आपका अधिकार केवल अपने कर्म पर है, कभी उसके फल पर नहीं।",
     categories: ["karma", "purpose", "detachment"],
+    moment:
+      "Krishna has finished arguing from Arjuna's duty as a warrior and switched to teaching the yoga of action. He's just warned against people who perform rituals only for the rewards they promise.",
     simpleMeaning:
-      "Krishna is telling Arjuna to put himself fully into the work and stop fixating on what he'll get out of it. You control the effort. You don't control how it lands, so pinning your peace of mind to the result just sets you up for anxiety. He isn't saying results don't matter or that you should stop caring. He's saying they aren't the part that's yours to command.",
+      "Your job is the effort, not the outcome. The result depends on too many things outside you to be the measure of whether you acted well. That isn't permission to stop caring. It's a way to care about the right part.",
     deeperMeaning:
-      "The verse draws a clean line between an action and its outcome. The action is yours. The fruit of it depends on countless other things, timing, other people, chance, none of which take orders from you. Treating yourself as the sole cause of results is both inaccurate and exhausting. The last line guards against the opposite overcorrection: using all this as a reason to do nothing. Detachment here isn't withdrawal. It's dropping the anxious grip on the scoreboard so your full attention is free for the work itself.",
+      "The verse makes four separate moves in two lines. Act. Don't claim the fruit. Don't let the fruit be your motive. Don't fall back on doing nothing.\n\nThe last one matters because it blocks the easy misreading. Letting go of results isn't a reason to stop working. It's what frees all of your attention for the work.",
     lifeApplication:
-      "Think about preparing for an interview or an exam. The preparation is in your hands, how many hours you put in, how honestly you practice. The result depends partly on things you'll never see: who else applied, what mood the examiner is in, which questions come up. If your calm depends entirely on the outcome, you'll be miserable through the wait and shaky during the work itself. Prepare as well as you can, then let the outcome be what it is.",
+      "Before an interview or an exam, write down what's actually in your hands: the hours, the practice, how honestly you prepare. Put everything into that list. Then treat the result as information when it arrives, not as a verdict you spent weeks bracing for.",
   },
   {
     id: "2-22",
@@ -83,12 +93,14 @@ export const verses: Verse[] = [
     quote: "The body is worn like clothing. What's underneath it doesn't end.",
     quoteHindi: "शरीर वस्त्र की तरह पहना जाता है। उसके भीतर जो है, वह कभी समाप्त नहीं होता।",
     categories: ["wisdom", "peace", "life", "heart-touching"],
+    moment:
+      "Arjuna is grieving at the thought of killing his teachers and relatives. Krishna's first answer is about what death actually touches, and this image comes in the middle of it.",
     simpleMeaning:
-      "This is the famous line comparing the body to clothing. When a shirt wears out you replace it, and you don't think the real you has ended. Krishna is saying death works the same way for what he calls the self. The body is the garment. What wears it carries on.",
+      "Death isn't the end of you, only of the body you're wearing. Krishna uses the most ordinary comparison he can find to make that feel less frightening.",
     deeperMeaning:
-      "The verse rests on a distinction between the body and the self that occupies it. In the Gita's framework the self isn't produced by the body and doesn't end when the body does, and changing bodies is treated as ordinary, closer to changing clothes than to being destroyed. Whether or not you accept the metaphysics, the move it's making is worth noticing: it asks you to locate your identity somewhere other than the physical form that's always aging and breaking down. That's what takes some of the terror out of the change.",
+      "The image is ordinary on purpose. Nobody mourns an old shirt or thinks they ended when it was thrown out. By choosing clothing, Krishna moves death out of the category of destruction and into the category of change.\n\nYou don't have to accept rebirth to notice the question underneath it: where do you actually place your identity?",
     lifeApplication:
-      "Most fear of death is really fear of the body failing, the diagnosis, the decline, the ending. This verse doesn't argue you out of that with logic. It offers a different place to stand: if what you most fundamentally are isn't the body, then the body wearing out is a change of clothes, not the end of you. People who sit with this idea often find it loosens the grip of that fear, even a little, when a parent gets old or a scan comes back wrong.",
+      "When someone you love is aging or ill, try holding this image alongside the grief rather than instead of it. The change you're watching is real and so is the loss. The verse just offers a place to stand where that change isn't the whole story.",
   },
   {
     id: "18-66",
@@ -99,18 +111,20 @@ export const verses: Verse[] = [
     transliteration:
       "sarva-dharmān parityajya mām ekaṁ śaraṇaṁ vraja, ahaṁ tvāṁ sarva-pāpebhyo mokṣayiṣyāmi mā śucaḥ",
     english:
-      "Abandon all varieties of duty and take refuge in me alone. I will free you from all misfortune; do not fear.",
+      "Abandon all duties and take refuge in me alone. I will free you from all sins. Do not grieve.",
     meaning:
       "One of the Gita's most quoted lines: an offer of rest for anyone who's been carrying every responsibility alone. It's safe to let go and trust.",
     quote: "Let go of what you're carrying alone. Surrender, and don't be afraid.",
-    quoteHindi: "जो बोझ आप अकेले उठा रहे हैं, उसे छोड़ दें। समर्पण करें, और भयभीत न हों।",
+    quoteHindi: "जो बोझ आप अकेले उठा रहे हैं, उसे छोड़ दें। समर्पण करें, और चिंता न करें।",
     categories: ["peace", "courage", "detachment", "heart-touching"],
+    moment:
+      "This is near the very end of the conversation. Krishna has just told Arjuna to think it all over and choose for himself. Then, because Arjuna is dear to him, he gives one last and most personal teaching, and this is its heart.",
     simpleMeaning:
-      "After seventeen chapters of instruction, Krishna gives Arjuna the simplest version. Stop trying to carry every rule and every responsibility on your own, and trust me instead. Let go, take refuge, and don't be afraid. It's an offer of rest for someone who's been holding everything alone.",
+      "You don't have to carry everything alone. After all the instructions, the last one is to trust, and to let go of the fear that comes from trying to get every duty exactly right by yourself.",
     deeperMeaning:
-      "This is often called the final teaching of the Gita, the essence saved for last. 'Abandon all varieties of duty' doesn't mean stop acting. It means stop treating your web of obligations as something you have to manage perfectly by sheer personal effort. The instruction is to hand that weight to something larger and act from trust rather than fear. The promise attached, 'I will free you from all misfortune, do not fear,' is what makes letting go possible. It reframes surrender as safety, not defeat.",
+      "It's usually called the Gita's final teaching, and it's notable for what it doesn't ask. After seventeen chapters of practices and paths, the last word is about trust rather than technique.\n\n'Abandon all duties' doesn't mean stop acting, since Arjuna goes on to fight. It means stop treating the whole weight of right and wrong as something you have to carry and calculate alone.",
     lifeApplication:
-      "There's a specific exhaustion that comes from feeling personally responsible for every outcome in your family, your job, your future, as if the whole structure collapses the moment you stop straining. This verse speaks to that state. It's permission to loosen the grip, to act because something is right rather than because you're terrified of what happens if you slip. That shift, from carrying everything to trusting that you don't have to, is where the fear starts to drain out.",
+      "If you're the person who feels everything collapses the moment you stop straining, notice that feeling the next time it peaks. Pick one thing you're gripping, do your part of it, and consciously hand the rest over. Then see whether anything actually falls.",
   },
   {
     id: "2-3",
@@ -124,15 +138,17 @@ export const verses: Verse[] = [
       "Do not give in to this weakness, Arjuna. It doesn't suit you. Cast off this small-hearted faintness and rise up, conqueror of enemies.",
     meaning:
       "This is Krishna's first response to Arjuna's despair on the battlefield, and it's blunt. Not comfort, but a direct call to stand back up. Sometimes what's needed isn't sympathy. It's someone telling you plainly that you're better than the moment you're stuck in.",
-    quote: "Don't give in to this weakness. Rise up, it doesn't suit you.",
+    quote: "Don't give in to this weakness. Rise up. It doesn't suit you.",
     quoteHindi: "इस कमज़ोरी के आगे न झुकें। उठ खड़े हों, यह आप पर शोभा नहीं देती।",
     categories: ["courage", "motivation"],
+    moment:
+      "At the end of chapter one, Arjuna dropped his bow and sat down in the chariot, weeping. These are among Krishna's very first words to him, and they aren't gentle.",
     simpleMeaning:
-      "Arjuna has frozen up on the battlefield, overwhelmed and ready to quit. This is Krishna's first real response, and it's blunt. Don't collapse into this weakness. It isn't who you are. Shake off the smallness and stand back up.",
+      "Arjuna's collapse isn't who he is. It's a passing weakness, and Krishna's first move is to say so plainly and tell him to stand up.",
     deeperMeaning:
-      "Krishna doesn't open with comfort or sympathy. He names Arjuna's state as a small-hearted faintness, a temporary shrinking, and calls him back to a fuller version of himself. The verse assumes the person in front of him is capable and that the paralysis is a passing condition, not a verdict. Sometimes the useful thing isn't validation of how hard the moment feels. It's someone who clearly sees your capacity and refuses to let you settle into the smaller story.",
+      "Krishna opens with a challenge, not comfort. The long teaching comes later. He calls Arjuna's state 'kshudram hridaya-daurbalyam', a petty weakness of the heart, which treats it as a temporary shrinking rather than his real character.\n\nArjuna doesn't stand up yet. He argues back, and that argument is what opens the rest of the Gita.",
     lifeApplication:
-      "There are moments, before a hard conversation, a deadline, a decision you've been dreading, when the honest thing a friend can say isn't 'that sounds really tough.' It's 'this isn't like you, get up.' Said with contempt it just wounds. Said by someone who genuinely believes you're bigger than the moment, it can be the thing that gets you moving. This verse is that second kind of push.",
+      "Sometimes the kind thing to say to a friend who's stuck isn't 'that sounds hard.' It's 'This isn't you. Get up.' It only works coming from someone who clearly believes in them, so check which one you're offering before you say it.",
   },
   {
     id: "2-14",
@@ -143,18 +159,20 @@ export const verses: Verse[] = [
     transliteration:
       "mātrā-sparśās tu kaunteya śītoṣṇa-sukha-duḥkha-dāḥ, āgamāpāyino 'nityās tāṁs titikṣasva bhārata",
     english:
-      "The contact between the senses and their objects gives rise to fleeting experiences of heat and cold, pleasure and pain. They come and go and do not last, so learn to tolerate them.",
+      "The contact between the senses and their objects gives rise to heat and cold, pleasure and pain. They come and go and do not last, so bear them patiently, Arjuna.",
     meaning:
       "Sensation and circumstance are always in motion. Neither discomfort nor pleasure is permanent, and steadiness comes from not over-identifying with either while it passes through.",
     quote: "This too shall pass. Meet both joy and sorrow with the same steady heart.",
     quoteHindi: "यह भी बीत जाएगा। सुख और दुख दोनों को एक ही स्थिर मन से स्वीकार करें।",
     categories: ["peace", "wisdom", "life", "heart-touching"],
+    moment:
+      "Krishna has just told Arjuna that the self passes through childhood, youth and old age without being troubled. Now he brings it down from death to the everyday: the sensations that come and go all day long.",
     simpleMeaning:
-      "Krishna is pointing out that heat and cold, comfort and pain, all come from the senses meeting the world, and none of them stick around. They show up, they pass. His advice is to learn to sit through them without letting each one throw you.",
+      "Every feeling that comes through the senses is temporary, the pleasant ones as much as the painful ones. Steadiness comes from letting them pass instead of being swept along by each one.",
     deeperMeaning:
-      "The key idea is impermanence. The verse isn't denying that discomfort is real or that pleasure is nice. It's noting that both are temporary by nature, arising from contact and then fading. 'Learn to tolerate them' points at a skill rather than a mood. Steadiness comes from not over-identifying with whatever sensation is passing through right now, from treating it as weather rather than climate. That applies as much to a good feeling you want to cling to as to a bad one you want gone.",
+      "The word Krishna uses is 'titikshasva', bear it patiently. It's a skill word, not a feeling word. He calls these experiences 'agamapayinah', things whose nature is to arrive and leave.\n\nThe verse works on pleasure as much as pain. The good stretch is just as temporary as the bad one.",
     lifeApplication:
-      "A rough week at work, a stretch of loneliness, a run of things going well, all of it feels total while you're inside it. This verse is a reminder that the feeling has an expiry date built in. That's not an excuse to numb out or refuse to enjoy the good stretches. It's a way to keep your footing: when you're low, it will lift, and when you're high, hold it a little loosely, because that passes too.",
+      "In a rough week, try telling yourself plainly that this is weather, not climate. Then do the same in a great week. Holding the good stretch a little loosely is what keeps the next bad one from feeling like a fall.",
   },
   {
     id: "6-30",
@@ -171,12 +189,14 @@ export const verses: Verse[] = [
     quote: "Once you see the same thread running through everything, nothing can fully cut you off.",
     quoteHindi: "जब आप हर चीज़ में एक ही धागा देखने लगते हैं, तो कुछ भी आपको पूरी तरह अलग नहीं कर सकता।",
     categories: ["peace", "wisdom", "heart-touching"],
+    moment:
+      "In chapter six Krishna has been teaching meditation in detail. Here he describes where that practice leads: a person who sees the same presence in everyone and everything.",
     simpleMeaning:
-      "Krishna is describing a way of seeing where you notice the same underlying presence in everything, and everything as held within it. Someone who sees like that is never really cut off from it, and it's never cut off from them. The connection stops depending on circumstances.",
+      "Once you see the same presence in everything, being truly cut off stops being possible. The connection doesn't depend on where you are or what's happening.",
     deeperMeaning:
-      "The verse describes a shift in perception rather than a set of beliefs. Once you start seeing one continuous thread running through people, events, and yourself, the sense of being isolated or abandoned loses its grip, because separateness was the thing that made those states possible. The phrasing is mutual: 'I am never separated from them' either. It isn't a connection you have to maintain by effort. It's closer to something you stop being able to un-see.",
+      "The promise runs both ways. It isn't only that the seer stays connected. Krishna says he never loses them either.\n\nThat changes what the connection is. It isn't something you keep alive by effort. It's a fact you start seeing, and once you've seen it, it's hard to unsee.",
     lifeApplication:
-      "Loneliness often isn't about being physically alone. It's the feeling of being fundamentally separate, walled off from everyone else. This verse points at an experience some people describe after long practice or a hard loss: a sense that the wall was never as solid as it looked, that the same life running through them runs through everything else. You don't get there by arguing yourself into it. But knowing others have found that ground can make it easier to keep looking.",
+      "Next time you feel cut off from everyone, pick one ordinary moment, a stranger's kindness or a shared joke, and look at it as evidence of the same thread rather than a lucky exception. You're not forcing a belief. You're checking whether the wall is as solid as it feels.",
   },
   {
     id: "2-20",
@@ -187,18 +207,68 @@ export const verses: Verse[] = [
     transliteration:
       "na jāyate mriyate vā kadācin nāyaṁ bhūtvā bhavitā vā na bhūyaḥ, ajo nityaḥ śāśvato 'yaṁ purāṇo na hanyate hanyamāne śarīre",
     english:
-      "The soul is never born, nor does it ever die. It does not come into being, nor will it ever cease to be. Unborn, eternal, ever-existing and primeval, it is not destroyed when the body is destroyed.",
+      "The self is never born, and it never dies. It did not come into being, and it will not cease to be. Unborn, eternal, everlasting and ancient, it is not killed when the body is killed.",
     meaning:
       "What you most fundamentally are is described here as untouched by birth and death, deeper and steadier than any single chapter of a life.",
     quote: "What is truly you was never born, and will never die.",
     quoteHindi: "जो सच में आप हैं, वह कभी जन्मा नहीं और कभी मरेगा भी नहीं।",
     categories: ["wisdom", "peace", "life"],
+    moment:
+      "This is part of Krishna's first long answer to Arjuna's grief, explaining why the self can't be killed. A nearly identical verse appears in the Katha Upanishad, so Krishna is drawing on teaching that was already old.",
     simpleMeaning:
-      "Krishna is saying that the real you, the self, was never born and will never die. It doesn't come and go the way a life does. It's older and steadier than any single lifetime, and it isn't touched when the body is.",
+      "What you really are doesn't begin at birth or end at death. Those happen to the body. Krishna is telling Arjuna that the self he's afraid of destroying can't be destroyed.",
     deeperMeaning:
-      "The verse stacks up negations, not born, not dying, not coming into being, not ceasing, to point at something the ordinary categories don't fit. In the Gita's view the self isn't an event on a timeline. Birth and death happen to the body. The instruction underneath the description is to stop identifying so completely with the part of you that's temporary. The verse doesn't ask you to prove this. It asks you to consider standing somewhere other than the fear that follows from assuming you're only the body.",
+      "The verse is built almost entirely out of negations: not born, not dying, not coming to be, not ceasing. That's deliberate.\n\nWhatever the self is, it doesn't fit the categories we use for events on a timeline, so the verse describes it by ruling those out. Birth and death are left to the body.",
     lifeApplication:
-      "When you're gripped by the fear of dying, or watching someone you love near the end, this verse offers a different frame rather than a consolation. If what you most deeply are isn't the thing that ages and stops, then the ending you're bracing for isn't the total erasure it feels like. People carry this idea into hospital rooms and funerals, not as a slogan, but as a quieter place to stand while everything else is hard.",
+      "When fear of death gets loud, notice what exactly it's fear of: pain, decline, leaving people behind. Those are real, and the verse doesn't wave them away. It separates them from the idea that you'll be erased, which is often the part doing most of the damage.",
+  },
+  {
+    id: "2-23",
+    chapter: 2,
+    verse: 23,
+    sanskrit:
+      "नैनं छिन्दन्ति शस्त्राणि नैनं दहति पावकः। न चैनं क्लेदयन्त्यापो न शोषयति मारुतः॥",
+    transliteration:
+      "nainaṁ chindanti śastrāṇi nainaṁ dahati pāvakaḥ, na cainaṁ kledayanty āpo na śoṣayati mārutaḥ",
+    english:
+      "Weapons cannot cut the self, and fire cannot burn it. Water cannot wet it, and wind cannot dry it.",
+    meaning:
+      "Whatever the deepest part of you is, nothing in the physical world can reach it. Not blades, fire, water or wind.",
+    quote: "No weapon can cut what you truly are, and no fire can burn it.",
+    quoteHindi: "जो आप सच में हैं, उसे न कोई शस्त्र काट सकता है, न कोई आग जला सकती है।",
+    categories: ["wisdom", "courage", "peace"],
+    moment:
+      "Krishna is explaining to a grieving Arjuna why the self can't be killed. He's just compared the body to clothes that wear out, and now he lists the things that can't touch the self.",
+    simpleMeaning:
+      "Cutting, burning, drowning and drying out can all destroy a body. None of them touches the self, because it's outside the reach of anything physical.",
+    deeperMeaning:
+      "The four things named line up with four of the five classical elements in Indian thought: earth (the metal of a weapon), fire, water and air.\n\nBetween them they stand for the whole physical world. So the point isn't a random list of dangers. It's that nothing made of matter can act on the self.",
+    lifeApplication:
+      "When you feel damaged by something, a failure or a harsh word or a loss, ask what exactly was damaged. Your plans, your reputation, maybe your body. The verse suggests there's a part of you none of those reach, and it's worth knowing where it is.",
+  },
+  {
+    id: "11-32",
+    chapter: 11,
+    verse: 32,
+    sanskrit:
+      "कालोऽस्मि लोकक्षयकृत्प्रवृद्धो लोकान्समाहर्तुमिह प्रवृत्तः। ऋतेऽपि त्वां न भविष्यन्ति सर्वे येऽवस्थिताः प्रत्यनीकेषु योधाः॥",
+    transliteration:
+      "kālo 'smi loka-kṣaya-kṛt pravṛddho lokān samāhartum iha pravṛttaḥ, ṛte 'pi tvāṁ na bhaviṣyanti sarve ye 'vasthitāḥ pratyanīkeṣu yodhāḥ",
+    english:
+      "I am time, the mighty destroyer of worlds, come here to bring these people to their end. Even without you, none of the warriors lined up against you will survive.",
+    meaning:
+      "Time ends everything, and it doesn't wait for anyone's permission. Arjuna's choice was never whether the outcome happens, only what part he plays in it.",
+    quote: "Time ends everything. The only question is how you act while it runs.",
+    quoteHindi: "समय हर चीज़ का अंत करता है। सवाल सिर्फ़ इतना है कि उसके चलते आप कैसे कर्म करते हैं।",
+    categories: ["life", "wisdom", "courage"],
+    moment:
+      "Arjuna is staring at Krishna's universal form and has just watched the warriors of both armies rushing into its mouths. Terrified, he asks who Krishna really is. This is the answer.",
+    simpleMeaning:
+      "Krishna reveals himself as time itself, the force that eventually destroys everything. The warriors facing Arjuna are already doomed, with or without his help.",
+    deeperMeaning:
+      "This is the verse Oppenheimer famously rendered as 'Now I am become death, the destroyer of worlds.' The word he translated as death is 'kāla', which more exactly means time.\n\nIn context, the point isn't to frighten Arjuna. It's to free him from thinking he's the one who decides who lives. In the next verse Krishna tells him to be simply the instrument.",
+    lifeApplication:
+      "When you feel like everything depends on you, remember how much is already moving without you: time, other people, events that were in motion long before you arrived. Your part still matters. It just isn't the whole of it.",
   },
   {
     id: "2-38",
@@ -209,18 +279,20 @@ export const verses: Verse[] = [
     transliteration:
       "sukha-duḥkhe same kṛtvā lābhālābhau jayājayau, tato yuddhāya yujyasva naivaṁ pāpam avāpsyasi",
     english:
-      "Treat pleasure and pain, gain and loss, victory and defeat as the same. Then prepare for action. Acting this way, you bring no wrongdoing on yourself.",
+      "Treat pleasure and pain, gain and loss, victory and defeat as the same, and then get ready for battle. Fighting this way, you will incur no sin.",
     meaning:
       "This is practical advice before a practical task. Don't wait for the odds to feel fair or the outcome to feel certain. Treat both directions of the result the same way, and then simply do the work in front of you.",
     quote: "Treat winning and losing the same. Then just do the work in front of you.",
     quoteHindi: "जीत और हार को एक समान समझें। फिर बस अपना काम करें।",
     categories: ["success", "courage", "peace"],
+    moment:
+      "Krishna has spent several verses appealing to Arjuna's duty and honor as a warrior. This verse wraps up that argument, and right after it he moves on to the deeper teaching about action.",
     simpleMeaning:
-      "Krishna tells Arjuna to stop waiting for the situation to feel fair or the outcome to look certain. Hold winning and losing, gain and loss, as the same, and then just do the task in front of you. Acting that way, he says, you take on no blame.",
+      "Stop letting the possible outcome decide whether you act. Accept that it could go either way, then do what's right in front of you.",
     deeperMeaning:
-      "This comes right before the Gita turns to its teaching on action. The point is that Arjuna is paralyzed by staring at outcomes, and the fix is to stop letting the result decide whether he moves. 'Treat them as the same' isn't indifference to whether you succeed. It's refusing to let the forecast run you. Once the outcome stops being load-bearing, action becomes possible again.",
+      "There's an order here that's easy to miss. Evenness comes first, then action.\n\nKrishna isn't asking Arjuna to stop caring who wins. He's asking him to stop letting the forecast decide whether he moves. It's the first hint of the idea the rest of chapter two builds out.",
     lifeApplication:
-      "Think of a decision you keep circling because you can't tell how it'll land, taking the job, having the hard talk, submitting the work. The circling itself is the problem. This verse says to accept that it could go either way, that you can handle either way, and then act. The stuckness usually isn't caused by the situation being genuinely impossible. It's caused by needing to know the ending first.",
+      "If there's a decision you keep circling, write down both outcomes and how you'd handle each one. Once you've accepted that you can live with either, the circling usually loses its grip.",
   },
   {
     id: "4-7",
@@ -237,12 +309,38 @@ export const verses: Verse[] = [
     quote: "Wherever goodness fades, the strength to restore it rises again.",
     quoteHindi: "जहां भी अच्छाई कमज़ोर पड़ती है, उसे फिर से जगाने की शक्ति भी वहीं उठती है।",
     categories: ["courage", "motivation", "positive-thinking"],
+    moment:
+      "Krishna has just said he taught this yoga to the sun god in ancient times. Arjuna objects that Krishna was born recently, so how could that be? Krishna answers that he takes birth again and again, and this verse says when.",
     simpleMeaning:
-      "Krishna says that whenever goodness and right order fade and wrongdoing takes over, he shows up to set things right. It's a promise that balance which has been lost doesn't stay lost. The conditions for its return keep coming back around.",
+      "Whenever the world tips badly out of balance, the divine steps in to set it right. Krishna is explaining why he, the eternal, takes birth at all.",
     deeperMeaning:
-      "In its own context this is Krishna describing why he takes form across the ages. Read more broadly, it's a statement about how decline works: things fall out of balance, and something rises to correct them, again and again, as a pattern rather than a one-time rescue. The verse doesn't promise the correction is instant or painless. It promises it's reliable. Whatever has gone wrong isn't the permanent state of things.",
+      "This is the verse behind the idea of the avatar, the divine taking form in different ways across the ages.\n\nIt describes a pattern, not a single rescue. Things tip out of balance, and something rises to correct them, again and again. The next verse says what for.",
     lifeApplication:
-      "When a workplace turns toxic, or a community loses its decency, or your own habits slide, it can feel like that's just how things are now. This verse pushes back on the permanence. The slide isn't the end of the story, and the turn usually starts small, one person deciding to hold a line. You can be part of what rises to correct it rather than waiting for someone else to.",
+      "When a workplace, a community or your own habits have slid, it's easy to treat the slide as permanent. The verse argues against that. The correction usually starts small, often with one person deciding to hold a line, and that person can be you.",
+  },
+  {
+    id: "4-24",
+    chapter: 4,
+    verse: 24,
+    sanskrit:
+      "ब्रह्मार्पणं ब्रह्म हविर्ब्रह्माग्नौ ब्रह्मणा हुतम्। ब्रह्मैव तेन गन्तव्यं ब्रह्मकर्मसमाधिना॥",
+    transliteration:
+      "brahmārpaṇaṁ brahma havir brahmāgnau brahmaṇā hutam, brahmaiva tena gantavyaṁ brahma-karma-samādhinā",
+    english:
+      "The act of offering is Brahman, the offering is Brahman, poured by Brahman into the fire of Brahman. Whoever sees Brahman in every action reaches Brahman.",
+    meaning:
+      "Many families say this verse as a prayer before meals. It sees the sacred in every part of an act: the giver, the gift, the fire and the giving.",
+    quote: "The giver, the gift and the giving are all sacred. See it that way, and every act becomes worship.",
+    quoteHindi: "देने वाला, भेंट और देना, सब पवित्र हैं। ऐसे देखें, तो हर कर्म पूजा बन जाता है।",
+    categories: ["wisdom", "karma", "peace"],
+    moment:
+      "Krishna is explaining how the wise can act without being bound by their actions. He describes action done as an offering, and this verse shows what that looks like from the inside.",
+    simpleMeaning:
+      "In a fire offering, everything involved is the divine: the act of offering, the offering itself, the fire, and the person making it. Someone who sees every action that way reaches the divine through it.",
+    deeperMeaning:
+      "This is one of the best-known verses in the Gita, because many families recite it before eating. Food becomes the offering, the body becomes the fire, and the meal becomes a small act of worship.\n\nThe idea underneath is that nothing sits outside the sacred. A meal, a chore or a day's work can be seen the same way as a temple ritual.",
+    lifeApplication:
+      "Try saying a short line of thanks before your next meal, this verse or anything else that means something to you. It takes ten seconds. The point is to notice that eating, like most of what you do, can be done with attention instead of on autopilot.",
   },
   {
     id: "2-13",
@@ -259,12 +357,14 @@ export const verses: Verse[] = [
     quote: "You've already changed bodies once, from child to now. Death is just the next change.",
     quoteHindi: "आप पहले भी शरीर बदल चुके हैं, बचपन से अब तक। मृत्यु बस अगला बदलाव है।",
     categories: ["wisdom", "peace", "life"],
+    moment:
+      "This is close to the start of Krishna's teaching. He's just told Arjuna there was never a time when either of them, or the kings on the field, didn't exist. Now he gives his first example.",
     simpleMeaning:
-      "Krishna points out that you've already lived through big changes of body, from child to teenager to adult, without being destroyed by any of them. Death, he says, is the next change of that kind. The steady person doesn't panic about it.",
+      "You've already lived through one big change of body after another without losing yourself. Death, Krishna says, is one more change of that kind, so there's no need to be thrown by it.",
     deeperMeaning:
-      "The argument works by analogy. You accept that the child you were is gone and you aren't in mourning about it, because you experience yourself as continuous through those changes. The verse asks you to extend that same sense of continuity across the largest change. 'The wise are not troubled' doesn't mean they feel nothing. It means they've stopped treating each transformation of the body as the end of the self that moves through them.",
+      "The argument works by pointing at something you've already accepted. You aren't the child you were, and you don't mourn that child as dead, because you experience yourself as continuous through the change.\n\nKrishna asks you to extend that same sense of continuity across one more change. The word 'dhira', steady, is about not being thrown, not about feeling nothing.",
     lifeApplication:
-      "Look at an old photo of yourself at seven. That body is gone, most of those cells long since replaced, and yet there's an unbroken thread of you connecting then to now. Aging is already a slow series of these departures, and you've made peace with most of them without noticing. This verse asks you to bring that same unpanicked steadiness to thinking about the last one.",
+      "Look at a photo of yourself at seven. Almost nothing about that body is still here, and yet there's an unbroken thread from that child to you. Sit with that for a minute, and notice how calmly you already hold that change.",
   },
   {
     id: "9-22",
@@ -281,12 +381,14 @@ export const verses: Verse[] = [
     quote: "What you truly need has a way of arriving when your focus is whole.",
     quoteHindi: "जब आपका ध्यान पूरी तरह एकाग्र होता है, तो जो सच में ज़रूरी है वह अपने आप मिल जाता है।",
     categories: ["peace", "purpose", "life"],
+    moment:
+      "Krishna has just described people who worship for heavenly rewards. They get them, but when the reward runs out they come back. Then he turns to those who rely on him alone.",
     simpleMeaning:
-      "Krishna says that for people whose focus on him is steady and undivided, he takes care of the gaps, carrying what they lack and protecting what they have. The sense is that when your attention is genuinely whole, what you actually need tends to arrive.",
+      "When your attention is wholly turned to the divine, you're looked after on both ends. What you lack comes, and what you have is kept safe.",
     deeperMeaning:
-      "The two phrases often translated as acquiring what you lack and preserving what you have describe being looked after on both ends. The condition attached is single-minded, steady devotion, not intensity in bursts. The verse isn't a transaction where worship buys supplies. It's describing what happens when a scattered mind becomes an undivided one: the constant anxious managing of provision quiets down, and there's a trust that the essentials are handled.",
+      "The phrase here is 'yoga-kshemam vahamy aham', I carry their yoga and kshema. Yoga is gaining what you lack, and kshema is keeping what you've got. It's familiar in India for another reason: it's the motto of the Life Insurance Corporation of India.\n\nThe verse isn't a deal, though. It describes what happens when attention stops splitting itself across every possible shortfall.",
     lifeApplication:
-      "A lot of daily stress is low-grade resource anxiety, will there be enough time, money, energy, help. This verse describes a state where that background hum settles, not because the future is guaranteed, but because your attention has stopped fragmenting across every possible shortfall. When you're fully committed to the thing in front of you, the needful things have a way of showing up, and the frantic accounting eases.",
+      "Notice how much background energy goes into worrying whether there'll be enough time, money or help. For one task this week, give it your whole attention and deliberately leave the worrying for later. See what the work is like without that noise.",
   },
   {
     id: "2-40",
@@ -303,12 +405,14 @@ export const verses: Verse[] = [
     quote: "No sincere effort is ever wasted. Even a little of it protects you.",
     quoteHindi: "कोई भी सच्चा प्रयास व्यर्थ नहीं जाता। थोड़ा सा प्रयास भी आपकी रक्षा करता है।",
     categories: ["motivation", "courage", "positive-thinking"],
+    moment:
+      "Krishna has just told Arjuna he's moving from theory to practice, the yoga of action. This is the first thing he says about it, and it's a reassurance.",
     simpleMeaning:
-      "Krishna reassures Arjuna that in this kind of effort, nothing you put in is wasted and there's no penalty for trying. Even a small amount of the practice gives real protection. You don't have to do it perfectly for it to count.",
+      "In this practice, no sincere effort is ever wasted, no matter how small or unfinished. Even a little of it helps.",
     deeperMeaning:
-      "The verse addresses a specific fear: that partial effort is pointless, that if you can't do the whole thing you may as well not start. Krishna says this domain doesn't work like that. Progress here isn't lost when it's incomplete, and there's no worse-off state for having attempted it. 'Even a small amount protects you from great fear' sets a very low bar for entry. The point is to remove the excuse that you're not ready enough to begin.",
+      "The verse is aimed at the fear of starting badly. In a ritual, a mistake can spoil the whole thing, and a half-finished ceremony gets you nothing.\n\nKrishna says this practice doesn't work like that. Partial effort isn't lost, and there's no penalty for having tried. The bar for starting is set as low as it can go.",
     lifeApplication:
-      "People put off starting things, meditation, exercise, a hard project, because they can't commit to doing it fully and assume a half-version is worthless. This verse says the half-version still counts, still builds something, still steadies you against the worst of the fear. Ten minutes is not nothing. The effort banks even when the session was short or the attempt fell short.",
+      "Pick something you've put off because you can't do it properly yet: meditation, exercise, a hard project. Do ten minutes of it today. The verse says those ten minutes count, so test it.",
   },
   {
     id: "4-18",
@@ -319,18 +423,20 @@ export const verses: Verse[] = [
     transliteration:
       "karmaṇy akarma yaḥ paśyed akarmaṇi ca karma yaḥ, sa buddhimān manuṣyeṣu sa yuktaḥ kṛtsna-karma-kṛt",
     english:
-      "One who sees inaction within action, and action within inaction, is wise among people. Such a person has, in truth, understood how to work.",
+      "Whoever sees inaction in action, and action in inaction, is wise among people. Such a person is a yogi, even while doing every kind of work.",
     meaning:
       "There's busywork that accomplishes nothing, and there's quiet stillness that accomplishes a great deal. This verse points at the difference and says real wisdom is being able to tell them apart.",
     quote: "Busy isn't the same as effective. Learn to tell the two apart.",
     quoteHindi: "व्यस्त होना असरदार होने के बराबर नहीं है। इन दोनों में फर्क पहचानना सीखें।",
     categories: ["wisdom", "karma", "success"],
+    moment:
+      "Krishna has just admitted that even wise people get confused about what action and inaction really are. This verse is his answer, and it's deliberately a riddle.",
     simpleMeaning:
-      "Krishna says the wise person can spot when a lot of busy activity is actually accomplishing nothing, and when apparent stillness is doing a great deal. Being able to tell those two apart is what he means by really understanding how to work.",
+      "Being busy and doing something real aren't the same. Wisdom is being able to tell which one you're looking at, in others and in yourself.",
     deeperMeaning:
-      "The verse plays with the words for action and inaction to break the assumption that visible motion equals productivity. Frantic activity driven by ego or anxiety can leave nothing behind. A calm, unattached person can be fully engaged and, in the sense the Gita cares about, not be doing anything at all, because they're not entangled in it. The wisdom being praised is discernment: seeing what a given effort is actually made of, rather than judging by how busy it looks.",
+      "The riddle breaks the assumption that visible motion equals doing. A person working hard without ego or grasping isn't entangled in anything, so there's inaction in their action.\n\nAnd someone who sits out, avoiding a duty, is still making a choice with consequences. That's the action in their inaction.",
     lifeApplication:
-      "Think of a workday spent answering messages and sitting in meetings where, by evening, nothing real moved. Then think of an hour of quiet, focused thought that actually solved the problem. The first looked like work and wasn't. The second looked like idleness and was the whole job. This verse is the reminder to measure by what's actually shifting, not by how full the calendar was.",
+      "At the end of a busy day, ask what actually moved, not how full the calendar was. Hours of meetings can change nothing, and one quiet hour of thinking can solve the real problem. Plan tomorrow around the second kind.",
   },
   {
     id: "6-5",
@@ -341,18 +447,20 @@ export const verses: Verse[] = [
     transliteration:
       "uddhared ātmanātmānaṁ nātmānam avasādayet, ātmaiva hy ātmano bandhur ātmaiva ripur ātmanaḥ",
     english:
-      "Let a person lift themselves by their own mind, and not degrade themselves. The mind alone is one's friend, and the mind alone is one's enemy.",
+      "Lift yourself up by your own self, and don't let yourself sink. The self alone is your friend, and the self alone is your enemy.",
     meaning:
       "You carry both your greatest support and your biggest obstacle in the same place: how you direct your own mind.",
     quote: "Lift yourself by your own mind. It can be your closest friend or your fiercest enemy.",
     quoteHindi: "अपने ही मन के सहारे स्वयं को ऊपर उठाएं। यह आपका सबसे करीबी मित्र भी हो सकता है और सबसे बड़ा शत्रु भी।",
     categories: ["motivation", "courage", "positive-thinking", "heart-touching"],
+    moment:
+      "Chapter six opens with Krishna explaining that real renunciation isn't giving up work. Then, before teaching meditation, he puts the responsibility where it belongs.",
     simpleMeaning:
-      "Krishna says you have to lift yourself up using your own mind, and not let yourself sink. The same mind can be your closest ally or your worst enemy, depending on how you handle it. Nobody else can do this part for you.",
+      "Nobody else can do your inner work for you. Your own mind can lift you up or pull you down, so the responsibility and the power both sit with you.",
     deeperMeaning:
-      "The striking claim is that your biggest support and your biggest obstacle live in the same place, and it's how you direct your mind that decides which one shows up. This isn't a call to grit your teeth alone forever. It's naming where the real work happens: not in changing circumstances, but in whether the mind is trained toward helping you or left to sabotage you. The responsibility is uncomfortable because it can't be handed off, but it's also where the leverage is.",
+      "The Sanskrit keeps reusing one word, atman, which can mean self and also mind. 'Uddhared atmanatmanam' is literally 'lift the self by the self.'\n\nThe one doing the lifting is the one being lifted. That's uncomfortable, because it means nobody can do it for you. It's also where the leverage is.",
     lifeApplication:
-      "On a bad day the mind runs a case against you, replaying failures, forecasting disaster. The same mind, deliberately turned, can list what's actually true, what's in your control, and the next small step. Encouragement from other people helps, but it doesn't stick unless your own mind picks it up and repeats it. This verse points at that inner talk as the thing to get on your side.",
+      "On a bad day, write down what your mind is saying about you. Then write down what's actually true, what's in your control and the next small step. That second list is the friend version of the same mind.",
   },
   {
     id: "2-62",
@@ -369,12 +477,14 @@ export const verses: Verse[] = [
     quote: "Anger doesn't start with anger. It starts with dwelling on something too long.",
     quoteHindi: "क्रोध की शुरुआत क्रोध से नहीं होती। यह किसी चीज़ पर बहुत देर तक ठहरने से शुरू होता है।",
     categories: ["wisdom", "life"],
+    moment:
+      "Arjuna asked how someone with steady wisdom behaves. Krishna has been describing it, and here he shows what happens to a mind that isn't steady.",
     simpleMeaning:
-      "Krishna traces how trouble starts. You dwell on something you want. The dwelling turns into attachment. Attachment becomes craving. And blocked craving turns into anger. It doesn't begin with anger. It begins with letting your mind linger too long on the thing.",
+      "Anger doesn't start as anger. It starts with letting your mind dwell on something, which grows into attachment, then craving, then frustration.",
     deeperMeaning:
-      "This is the first half of a two-verse chain that ends in ruin. What's useful is where it locates the start: not at the dramatic end, the outburst, but at the quiet beginning, the mind circling an object of desire. Each step is small and feels harmless. By naming the sequence, the verse gives you earlier places to catch it, long before you're angry. The intervention point is the dwelling, not the explosion.",
+      "This is the first half of a chain that runs across two verses, and it starts somewhere very quiet: 'dhyayatah', just dwelling on something.\n\nNo one decides to become angry. The chain makes the earliest step visible, and that's the only point where it's easy to stop.",
     lifeApplication:
-      "Notice how a minor irritation can escalate over a day. Someone gets a promotion you wanted. You think about it on the commute, at lunch, before bed. By the next morning you're resentful and short with people who had nothing to do with it. The anger didn't come from nowhere. It came from the hours your mind spent circling. Catching it at the circling stage is far easier than managing it once it's heat.",
+      "Notice the next time something keeps replaying in your head, a promotion someone else got or a remark that stung. That replaying is the first link. Turning your attention elsewhere at that point is far easier than dealing with the anger a day later.",
   },
   {
     id: "2-63",
@@ -391,12 +501,14 @@ export const verses: Verse[] = [
     quote: "Anger left unchecked slowly clouds the mind. Notice it before it grows.",
     quoteHindi: "बिना रोका गया क्रोध धीरे-धीरे मन को धुंधला कर देता है। इसे बढ़ने से पहले पहचानें।",
     categories: ["wisdom", "courage", "life"],
+    moment:
+      "This continues straight on from the previous verse. It picks up the chain at the point where desire has turned into anger.",
     simpleMeaning:
-      "This picks up where the last verse left off. Anger clouds your judgment. Clouded judgment scrambles your memory of what matters. That scrambling wrecks your ability to reason. And without reason, you come undone. Krishna is showing that anger does its damage well before it's visible on the surface.",
+      "Once anger takes hold, it knocks out your clarity, then your memory of what matters, then your judgment. The damage is done inside long before it shows.",
     deeperMeaning:
-      "The verse is a step-by-step account of how a person unravels from the inside. Each link is the loss of a specific faculty: clarity, then memory, then discernment, then the capacity to function at all. The important claim is about timing. By the time anger shows up in your behavior, several of these internal steps have already happened. Understanding the sequence is what lets you treat anger as an early warning rather than a late one.",
+      "Each step is the loss of a specific capacity: clear sight, then memory of what matters, then 'buddhi', the faculty that decides well.\n\nThe important point is timing. By the time anger shows in what you do, several of these losses have already happened inside. That's why you can feel so sure of yourself when you're wrong.",
     lifeApplication:
-      "Think of a time you sent a message while furious and regretted it within the hour. In the moment it felt justified and clear. Looking back, you can see your judgment was already gone, you'd forgotten what you actually wanted from the situation, and you argued yourself into something that cost you. This verse is the case for building in a delay: once anger is running, the parts of you that would catch the mistake are already offline.",
+      "Make a rule for yourself: no messages or decisions while you're angry, and wait at least an hour. Once anger is running, the part of you that would catch the mistake is switched off. The delay is how you get it back.",
   },
   {
     id: "2-48",
@@ -413,12 +525,14 @@ export const verses: Verse[] = [
     quote: "Do your work in balance. That steadiness of mind is the real practice.",
     quoteHindi: "अपना काम संतुलन के साथ करें। मन की यही स्थिरता असली साधना है।",
     categories: ["karma", "success", "peace"],
+    moment:
+      "This comes right after the famous verse about having a right to action but not its fruits. Here Krishna gives his first definition of yoga.",
     simpleMeaning:
-      "Krishna defines yoga here, and it isn't a posture. It's doing your work while staying even, letting go of the grip on results, and staying level whether things succeed or fail. That evenness of mind, he says, is what the word actually means.",
+      "Yoga, in the Gita's sense, is staying balanced while you act. You give your full effort and don't let success or failure throw you.",
     deeperMeaning:
-      "This is one of the Gita's working definitions of yoga: samatva, evenness or balance of mind. It reframes the practice away from ritual or physical discipline and toward an inner stance you hold while acting. Letting go of attachment is the mechanism, and staying even-minded in success and failure is the visible result. The verse pairs full engagement with non-attachment on purpose. You're meant to do the work completely, just without your stability riding on how it lands.",
+      "'Samatvam yoga uchyate', evenness is called yoga. It moves yoga away from posture and ritual toward an inner stance you hold while working.\n\nFull effort and non-attachment are paired on purpose. You do all the work. Your stability just doesn't ride on how it lands.",
     lifeApplication:
-      "Two people can do the same job to the same standard. One is wrecked by every setback and inflated by every win, so their focus is always half on the scoreboard. The other does the work just as hard but doesn't hand their mood to the result, so all of their attention stays on the task. The Gita calls that second stance the actual practice, and you build it by noticing, each time, where your calm is currently anchored.",
+      "Each time a result comes in this week, good or bad, notice where your calm was anchored. If it rose and fell with the result, that's the anchor to move. Building this is mostly noticing, over and over.",
   },
   {
     id: "2-70",
@@ -431,16 +545,18 @@ export const verses: Verse[] = [
     english:
       "As rivers flow into the ocean, which remains ever still and full, so do desires flow into the one who is unmoved by them. That person alone finds peace, not the one who chases desire.",
     meaning:
-      "Desires will keep arriving; that isn't the problem. Peace belongs to whoever can let them arrive without being swept out to sea by each one.",
+      "Desires will keep arriving, and that isn't the problem. Peace belongs to whoever can let them arrive without being swept out to sea by each one.",
     quote: "Be like the ocean. Let desires arrive without disturbing your depth.",
     quoteHindi: "समुद्र जैसे बनें। इच्छाओं को आने दें, पर अपनी गहराई को अशांत न होने दें।",
     categories: ["peace", "detachment", "wisdom"],
+    moment:
+      "This is the second-to-last verse of chapter two, near the end of Krishna's portrait of the person with steady wisdom.",
     simpleMeaning:
-      "Krishna uses the image of the ocean. Rivers pour into it constantly and it stays full and still, not overflowing, not disturbed. Peace belongs to the person who can let desires arrive like that, without being swept away by each one. Chasing after them is what breaks the calm.",
+      "Desires will always keep coming. Peace belongs to the person who can let them arrive without being carried off by each one.",
     deeperMeaning:
-      "The verse doesn't say desires stop coming. The ocean keeps receiving rivers. The distinction is between receiving and chasing. The person at peace isn't free of desire, they're unmoved, able to let wanting arise and pass without reorganizing their life around it. 'Not the one who chases desire' is the contrast: restlessness isn't caused by having desires, it's caused by treating each one as something you must run after. Depth is what lets you absorb them without churning.",
+      "The ocean never stops receiving rivers, and that's the detail that matters. The verse doesn't promise desires will stop arriving.\n\nIt describes a depth that can take them in without rising or churning. The problem isn't wanting things. It's running after each want as soon as it shows up.",
     lifeApplication:
-      "You'll always want things, a better phone, a different job, someone's approval. The wanting isn't the problem. The problem is when each want immediately becomes a plan, a purchase, a preoccupation. Practice letting a desire show up and just noticing it, without acting on it that minute. Some pass on their own. The ones that stay, you can act on from a steadier place, not because the craving was driving.",
+      "When a want shows up this week, a purchase, a message to check, a bit of approval to chase, try noticing it without acting on it for an hour. Some will pass on their own. The ones that stay, you can act on from a steadier place.",
   },
   {
     id: "2-71",
@@ -457,12 +573,14 @@ export const verses: Verse[] = [
     quote: "Let go of craving and ego, and peace has room to arrive.",
     quoteHindi: "लालसा और अहंकार को छोड़ दें, तभी शांति के लिए जगह बनती है।",
     categories: ["peace", "detachment", "purpose"],
+    moment:
+      "This comes right after the ocean image, at the very end of Krishna's portrait of the person with steady wisdom.",
     simpleMeaning:
-      "Krishna says the person who stops running after desires, and moves through life without the constant pull of 'I want' and 'that's mine', reaches peace. He names ownership and ego as the two quiet things that keep us restless. Loosen them and there's room for calm.",
+      "Peace comes when you stop living from craving, possessiveness and ego. Let those go, and there's room for calm.",
     deeperMeaning:
-      "Three things get dropped in this verse: longing, the sense of 'mine', and the sense of 'I' as the center of everything. The Gita treats these as the machinery of restlessness. 'Mine' turns things into stakes you can lose. 'I' makes every event a referendum on your worth. Longing keeps the mind leaning forward into what isn't here. The claim is that peace isn't something you add. It's what's left when that machinery quiets down.",
+      "Three things get dropped here: longing, 'mine' and 'I'. Each is a place the world can hook you. 'Mine' turns things into stakes you can lose. 'I' turns events into verdicts on your worth. Longing keeps the mind leaning toward what isn't here.\n\nPeace isn't added at the end. It's what's left when those quiet down.",
     lifeApplication:
-      "Notice how much daily agitation traces back to possessiveness and ego, my parking spot, my idea, my turn, how this makes me look. Each one is a place the world can poke you. You don't fix this by force, but you can catch yourself mid-grip and ask whether the thing is worth the disturbance. Most aren't. The loosening is gradual, and each time you let one go, there's a little more quiet.",
+      "Count how many small irritations in a day come from 'mine': my parking spot, my idea, my turn. You won't drop them by force. But when you catch yourself gripping one, ask whether it's worth the disturbance. Most aren't.",
   },
   {
     id: "3-21",
@@ -473,18 +591,20 @@ export const verses: Verse[] = [
     transliteration:
       "yad yad ācarati śreṣṭhas tat tad evetaro janaḥ, sa yat pramāṇaṁ kurute lokas tad anuvartate",
     english:
-      "Whatever action a great person performs, others follow. Whatever standard they set, the world pursues.",
+      "Whatever a great person does, others do too. Whatever standard they set, the world follows.",
     meaning:
       "People learn far more from what you do than from what you say, a reason to hold your own actions to the standard you'd want reflected back.",
     quote: "Lead by example. The world follows what you do, not what you say.",
     quoteHindi: "उदाहरण बनकर आगे बढ़ें। संसार वही करता है जो आप करते हैं, जो आप कहते हैं वह नहीं।",
     categories: ["purpose", "motivation", "karma"],
+    moment:
+      "Krishna has just pointed to King Janaka, who reached perfection while still ruling, and told Arjuna to act for the good of the world. Here he explains why leaders especially can't sit out.",
     simpleMeaning:
-      "Krishna points out that whatever a respected person does, others copy, and whatever standard they set becomes the standard everyone follows. People learn from what you do far more than from what you tell them.",
+      "People copy what respected people do, far more than what they say. If others look up to you, your actions set the standard.",
     deeperMeaning:
-      "The verse is about influence through example, and it's aimed particularly at people in visible positions. The claim is that behavior propagates: your actions set a reference point that others quietly calibrate to, whether or not you intended to lead. That raises the stakes on private conduct, because it isn't really private if people can see it. The implied instruction is to hold your own actions to the standard you'd actually want reflected back through everyone watching.",
+      "The verse is about influence through example, and it's aimed at Arjuna as a famous warrior. If he walks off the battlefield, others will take it as permission.\n\nYour actions set a reference point whether you meant to lead or not. That makes private conduct less private than it feels.",
     lifeApplication:
-      "A manager who says the right things about work-life balance and then emails at midnight has set the real policy, and it isn't the one in the handbook. Kids absorb how their parents handle frustration, not the lecture about patience. If you're in any position where people watch you, the useful question isn't what you're telling them to do. It's what you're modeling, because that's what actually spreads.",
+      "If people watch you, at work or at home, the useful question isn't what you're telling them to do. It's what you're showing them. Pick one thing you'd like the people around you to do, and make sure you're visibly doing it first.",
   },
   {
     id: "3-27",
@@ -495,18 +615,20 @@ export const verses: Verse[] = [
     transliteration:
       "prakṛteḥ kriyamāṇāni guṇaiḥ karmāṇi sarvaśaḥ, ahaṅkāra-vimūḍhātmā kartāham iti manyate",
     english:
-      "All actions, without exception, are carried out by the workings of nature. But the one confused by ego believes, 'I am the doer.'",
+      "All actions, without exception, are carried out by the qualities of nature. But someone confused by ego thinks, 'I am the doer.'",
     meaning:
       "A useful check on how much credit or blame any one person can really claim. So much of what happens comes from circumstances larger than you. Holding that loosely tends to make both success and failure easier to carry.",
     quote: "So much of what happens comes from more than just you. Hold both success and failure loosely.",
     quoteHindi: "जो कुछ होता है, उसमें आपसे कहीं ज़्यादा शामिल होता है। सफलता और असफलता दोनों को हल्के से थामें।",
     categories: ["wisdom", "detachment", "karma"],
+    moment:
+      "Krishna is explaining how the three qualities of nature drive all action. This verse names the mistake that gets layered on top.",
     simpleMeaning:
-      "Krishna says that actions are actually carried out by the workings of nature, the forces and conditions you're made of and surrounded by. It's the ego, confused, that says 'I did that' as if it were the sole author. So much of what happens runs on causes larger than you.",
+      "Far more goes into every action than your own will. Believing you're the sole doer of everything is the ego's confusion.",
     deeperMeaning:
-      "The verse questions how much any single person authors their own actions. In the Gita's picture, what you do emerges from a web of prior causes: temperament, upbringing, circumstance, the state of the body and mind in that moment. The ego's mistake is claiming exclusive credit. This isn't an argument that you have no responsibility. It's a corrective to the inflation, and to the crushing weight, that both come from believing you alone caused every result.",
+      "'Ahankara', the ego, literally means 'I-maker'. Its mistake is claiming sole authorship of something that came from a huge web of causes: temperament, upbringing, the state of your body, other people, chance.\n\nThis isn't an argument that you have no responsibility. It corrects both the pride and the crushing guilt that come from thinking you alone caused every result.",
     lifeApplication:
-      "When something goes well, the ego wants full credit. When it goes badly, the same ego takes the full hit and calls it proof you're a failure. Both are distortions. The win drew on luck, timing, other people's work, and a version of you that circumstances shaped. So did the loss. Holding your role in either one a little more loosely makes success less inflating and failure less devastating.",
+      "Next time something goes very well or very badly, list three things that contributed besides you. It doesn't make the result less yours. It makes success less inflating and failure less devastating.",
   },
   {
     id: "3-35",
@@ -517,18 +639,20 @@ export const verses: Verse[] = [
     transliteration:
       "śreyān sva-dharmo viguṇaḥ para-dharmāt sv-anuṣṭhitāt, sva-dharme nidhanaṁ śreyaḥ para-dharmo bhayāvahaḥ",
     english:
-      "It is better to perform one's own duty imperfectly than to perform another's duty well. It is better to fail at one's own path than to succeed at one that was never truly yours.",
+      "It is better to do your own duty imperfectly than to do another's duty well. Even death in your own duty is better. Another's duty is full of danger.",
     meaning:
-      "A reminder to trust your own path rather than a borrowed or imitated one. Even walked imperfectly, it fits you in a way another's cannot.",
+      "A reminder to trust your own path rather than a borrowed or imitated one. Even walked imperfectly, it fits you in a way another's can't.",
     quote: "Better your own path walked imperfectly than someone else's walked perfectly.",
     quoteHindi: "अपने रास्ते पर अपूर्ण चलना, किसी और के रास्ते पर पूर्ण चलने से बेहतर है।",
     categories: ["purpose", "courage", "karma"],
+    moment:
+      "Earlier, Arjuna said he'd rather live on alms than fight, taking up a path that wasn't his. Krishna ends this part of chapter three by addressing exactly that.",
     simpleMeaning:
-      "Krishna says it's better to do your own work imperfectly than to do someone else's work well. Better to stumble on the path that's actually yours than to succeed on one that was never a fit. A borrowed life doesn't become yours just because you're good at it.",
+      "It's better to live your own path, even clumsily, than to imitate someone else's perfectly. What fits you matters more than how impressive it looks.",
     deeperMeaning:
-      "The word usually translated 'duty' here, sva-dharma, means something closer to the role and nature that genuinely belong to you. The verse makes a strong claim: fit matters more than performance. Another person's path, even walked skillfully, is called dangerous, because living against your own grain has a cost that competence doesn't cancel. This isn't romanticizing failure. It's saying the question 'is this mine?' comes before the question 'am I doing it well?'",
+      "'Svadharma' means the duty or way that genuinely belongs to you, by your nature and situation. The verse makes a strong claim: fit matters more than performance.\n\nBeing skilled at a path that isn't yours has a cost the skill doesn't cancel. The question 'is this mine?' comes before 'am I good at it?'",
     lifeApplication:
-      "People end up successful in careers that were chosen for them, by family, by prestige, by momentum, and feel a persistent wrongness they can't explain. This verse names it. Being good at something isn't proof it's yours. It can be worth trading a smoother version of the wrong life for a rougher version of the right one. That choice looks reckless from outside and often isn't.",
+      "If you're successful at something that was chosen for you, by family or prestige or momentum, and it still feels wrong, take that feeling seriously. Being good at it isn't proof it's yours. Spend some time on what you'd do if nobody was watching.",
   },
   {
     id: "4-8",
@@ -545,12 +669,14 @@ export const verses: Verse[] = [
     quote: "To protect what's good and restore balance. That renewal happens again and again.",
     quoteHindi: "जो अच्छा है उसकी रक्षा करने और संतुलन लौटाने के लिए। यह नवीनीकरण बार-बार होता है।",
     categories: ["purpose", "courage", "motivation"],
+    moment:
+      "This follows straight on from the previous verse. Krishna has said when he takes form, and now he says why.",
     simpleMeaning:
-      "Krishna says he appears in every age to protect the good, put a stop to wrongdoing, and set what's right back on a firm footing. It's a statement that the work of protecting goodness and restoring balance keeps happening, generation after generation.",
+      "Krishna comes into the world for three reasons: to protect the good, to stop the harmful and to re-establish what's right. And he keeps doing it, in every age.",
     deeperMeaning:
-      "This continues the previous verse's idea and makes the purpose explicit: protection of the decent, an end to the destructive, re-establishment of dharma. Read within the tradition it's about divine incarnation across the ages. Read more widely, it describes a recurring pattern rather than a single rescue. The correction shows up again and again, in different forms, whenever things tip far enough out of balance. The renewal is framed as dependable, not occasional.",
+      "'Sambhavami yuge yuge', I come into being age after age, is one of the most quoted lines in the Gita. The weight falls on the repetition.\n\nProtecting the good and correcting the harmful aren't framed as one dramatic event at the end of history. They're a recurring job, done in every era, in whatever form that era needs.",
     lifeApplication:
-      "When things are going badly in an institution or a society, it's easy to assume the decline just continues indefinitely. History and this verse both suggest otherwise. The correction tends to arrive, often carried by ordinary people who decide to hold a line. That's not a reason to wait passively for rescue. It's a reason to believe the effort of restoring something good is worth making, because that's how the turn has always come.",
+      "If you're in a long effort for something decent, a healthier team or a fairer rule or a kinder household, this is a reminder that the work is meant to be repeated. Having to do it again doesn't mean it failed last time. It's how the job has always worked.",
   },
   {
     id: "4-11",
@@ -561,18 +687,20 @@ export const verses: Verse[] = [
     transliteration:
       "ye yathā māṁ prapadyante tāṁs tathaiva bhajāmy aham, mama vartmānuvartante manuṣyāḥ pārtha sarvaśaḥ",
     english:
-      "As people come to me, so I receive them. In every way, everyone walks a path that eventually leads back to me.",
+      "However people come to me, that is how I receive them. Everyone, in every way, follows my path, Arjuna.",
     meaning:
       "A generous verse about how many different roads can lead to the same place. It doesn't ask everyone to arrive the same way, only acknowledges that however they come, they're met.",
     quote: "Whatever road you take, however you arrive, you are met.",
     quoteHindi: "आप चाहे किसी भी रास्ते से आएं, आप स्वीकार किए जाते हैं।",
     categories: ["peace", "purpose", "life"],
+    moment:
+      "Krishna has just said that people who understand his birth and work reach him, freed from fear and anger. Then he widens it to everyone.",
     simpleMeaning:
-      "Krishna says he meets people however they come to him, and that all paths, in the end, lead back to the same place. It doesn't demand that everyone arrive the same way. It just says that however you come, you're received.",
+      "Krishna meets every person in the way they come to him. All sincere paths lead toward the same place, different as they look.",
     deeperMeaning:
-      "This is one of the Gita's more generous verses, often read as an early statement of religious pluralism. The point isn't that all approaches are identical, but that sincerity of approach is met in kind, and that the many roads aren't in competition. 'As people come to me, so I receive them' puts the emphasis on being met where you are rather than on passing a single correct entry test.",
+      "This is often read as one of the Gita's most generous verses, an early statement that many roads can lead to the same place.\n\nThe emphasis is on being met where you are. Sincerity is answered in kind, rather than everyone having to pass the same entrance test.",
     lifeApplication:
-      "People reach the same steadiness, or meaning, or peace by routes that look nothing alike, through service, through study, through devotion, through plain hard work on themselves. This verse is a caution against deciding your route is the only valid one and everyone else is lost. If someone's approach is sincere and it's carrying them somewhere good, the difference in method probably matters less than it seems.",
+      "Notice when you're tempted to decide your way of finding meaning is the only real one. Someone else's route, through service or study or prayer or plain hard work, might look nothing like yours and still be carrying them somewhere good.",
   },
   {
     id: "4-34",
@@ -589,12 +717,14 @@ export const verses: Verse[] = [
     quote: "Approach wisdom with humility, honest questions, and an open hand.",
     quoteHindi: "ज्ञान के पास विनम्रता, सच्चे सवालों और खुले मन से जाएं।",
     categories: ["wisdom", "purpose", "life"],
+    moment:
+      "Krishna has just listed many kinds of sacrifice and said the sacrifice of knowledge is the best. Here he tells Arjuna how to actually get that knowledge.",
     simpleMeaning:
-      "Krishna tells Arjuna to seek out real understanding by approaching people who have it with humility, asking honest questions, and being willing to serve. Those who've actually realized the truth will pass it on. It usually moves person to person, not from certainty but from asking.",
+      "Deep understanding comes through humility, honest questions and service, usually from someone who's lived it. You can't demand it or fake your way into it.",
     deeperMeaning:
-      "The verse names three conditions for genuine learning: humble approach, sincere inquiry, and service. All three run against the ego's preferred stance of already knowing. It also frames deep understanding as something transmitted through relationship with people who've seen it directly, rather than assembled alone from books. The word for the honest question suggests real inquiry, not a challenge dressed up as one. Humility isn't a nicety here, it's a precondition for anything getting through.",
+      "The three conditions are pranipata (humble approach), pariprashna (real questioning) and seva (service). All three cut against the ego's preference for already knowing.\n\nThe knowledge is pictured as passing from person to person, from those who've seen it, not assembled alone from books.",
     lifeApplication:
-      "The fastest way to stop learning from someone is to approach them needing to prove you already get it. Real questions, the kind where you might have to change your mind, tend to come from people willing to look a little ignorant for a moment. This verse is a case for that posture: find people further along than you, ask honestly, be useful to them, and stay open enough for the answer to actually land.",
+      "Find someone further along than you in something you care about. Ask a real question, the kind where you might have to change your mind, and offer to help them with something. Then actually listen to the answer.",
   },
   {
     id: "6-6",
@@ -605,18 +735,20 @@ export const verses: Verse[] = [
     transliteration:
       "bandhur ātmātmanas tasya yenātmaivātmanā jitaḥ, anātmanas tu śatrutve vartetātmaiva śatru-vat",
     english:
-      "For one who has mastered the mind, the mind is the best of friends; but for one who has not, it behaves like an enemy.",
+      "For someone who has conquered themselves, the self is their friend. For someone who hasn't, the self acts like an enemy.",
     meaning:
       "The same mind can work for you or against you. The difference is whether it's been trained or left to run unchecked.",
     quote: "A mastered mind is your best friend. An unmastered one, your worst enemy.",
     quoteHindi: "वश में किया गया मन सबसे अच्छा मित्र है। अनियंत्रित मन सबसे बड़ा शत्रु।",
     categories: ["courage", "wisdom", "motivation", "success"],
+    moment:
+      "This follows straight on from the previous verse, where Krishna said the self is its own friend and its own enemy. Here he says which one you get.",
     simpleMeaning:
-      "Krishna says the same mind is your best friend if you've mastered it and behaves like an enemy if you haven't. It's the same instrument either way. What decides which one you get is whether it's been trained or left to run loose.",
+      "Your mind is never neutral. Trained, it works for you. Left to itself, it works against you.",
     deeperMeaning:
-      "This follows directly from the previous verse about lifting yourself by your own mind. The claim is that the mind isn't neutral, it actively helps or actively undermines, and there's no third option of it just sitting there. An untrained mind doesn't stay still, it works against you, generating fear, distraction, and self-attack. Training it isn't about domination so much as no longer leaving your most powerful tool pointed at yourself.",
+      "The verse leaves no neutral option. An untrained mind doesn't sit quietly waiting. It actively produces worry, distraction and self-attack.\n\nSo training it isn't about adding something extra to your life. It's about turning your most powerful tool so it isn't pointed at you.",
     lifeApplication:
-      "The same mind that can talk you through a crisis calmly, one step at a time, is the mind that at 3am builds elaborate catastrophes out of nothing. Same equipment, opposite effect. The difference is largely practice: attention you've trained to return to what's true and useful, versus attention left to wander wherever anxiety takes it. This verse frames that training as deciding whether the mind is on your side.",
+      "The mind that builds disasters at 3am is the same one that can walk you through a crisis calmly in daylight. When it starts at night, try one plain question: what do I actually know right now? It's a small way of putting it back on your side.",
   },
   {
     id: "6-16",
@@ -633,12 +765,14 @@ export const verses: Verse[] = [
     quote: "Discipline isn't extremity in either direction. Balance is the practice.",
     quoteHindi: "अनुशासन का मतलब किसी भी दिशा में अति करना नहीं है। संतुलन ही साधना है।",
     categories: ["peace", "life", "wisdom"],
+    moment:
+      "Krishna has just described how to sit for meditation: a clean seat, a steady posture, a calm mind. Then he adds that the rest of your life has to support it.",
     simpleMeaning:
-      "Krishna says this practice isn't for someone who eats too much or someone who eats too little, or for someone who oversleeps or barely sleeps at all. Going to extremes in either direction throws you off. Depriving yourself is treated as just as unbalanced as overindulging.",
+      "Spiritual discipline doesn't mean punishing the body. Too much and too little both get in the way.",
     deeperMeaning:
-      "The verse rules out harsh asceticism as a path, which is notable, given how often spiritual seriousness gets equated with severe self-denial. Both poles, excess and deprivation, are named as obstacles because both disturb the steadiness the practice needs. The framing is that the body and its basic rhythms are part of the work, not an enemy to be starved into submission. Moderation here isn't a compromise. It's the actual requirement.",
+      "This rules out harsh self-denial as a path, which stands out given how often seriousness gets measured by suffering.\n\nThe Gita treats starving and overeating as the same kind of problem. Both disturb the steadiness the practice depends on, so moderation isn't a compromise. It's the requirement.",
     lifeApplication:
-      "People trying to get serious about something often swing to a punishing extreme, the crash diet, the four-hours-of-sleep grind, the total cutoff from rest and enjoyment, and then collapse back. This verse says that swing was never the path. Whatever you're building, discipline that ignores your body's real needs isn't more virtuous, it's just less sustainable. The middle is where it holds.",
+      "If you're about to get serious about something, watch for the urge to swing to an extreme, the crash diet or the four-hour nights. That swing usually ends in a collapse. Start with a version you could keep up in your worst week.",
   },
   {
     id: "6-17",
@@ -655,12 +789,14 @@ export const verses: Verse[] = [
     quote: "Balance across your ordinary days is the real practice, not a side detail.",
     quoteHindi: "आपके सामान्य दिनों में संतुलन ही असली साधना है, कोई छोटी बात नहीं।",
     categories: ["peace", "life", "success"],
+    moment:
+      "Right after ruling out the extremes, Krishna states the positive version of the same rule.",
     simpleMeaning:
-      "Following on from the last verse, Krishna says that for the person who's balanced in eating, in recreation, in effort, and in sleep, this practice becomes the thing that ends suffering. Balance across the ordinary parts of a day isn't a minor detail. It's the practice itself.",
+      "Getting ordinary things in proportion, food and rest and work and sleep, is the practice. It's what lets the practice actually ease suffering.",
     deeperMeaning:
-      "The previous verse ruled out the extremes. This one states the positive version: balanced, well-joined, across food, activity, work, and rest. The claim is strong, that this balance is what makes the practice the destroyer of suffering. It locates the spiritual work in the mundane management of a day rather than in dramatic gestures. How you eat and sleep and pace yourself isn't preliminary to the real practice. It substantially is the real practice.",
+      "The verse makes a big claim about small things. It names meals, play, work and sleep, and says getting them in proportion is what makes yoga 'duhkha-ha', the destroyer of sorrow.\n\nThe spiritual work is placed inside the ordinary running of a day, not above it.",
     lifeApplication:
-      "It's tempting to think the meaningful work is the meditation session or the big project, and the rest, meals, sleep, downtime, is just logistics around it. This verse flips that. The way you handle the ordinary rhythm of your days is doing most of the work, for better or worse. Steady sleep, reasonable food, a sane pace, real rest, that's not the boring part around the practice. It's a lot of what actually reduces the suffering.",
+      "Pick the one rhythm in your day that's most out of balance right now, which for most people is sleep. Fix just that one for two weeks before you add any new practice on top. Everything else rests on it.",
   },
   {
     id: "6-19",
@@ -677,12 +813,14 @@ export const verses: Verse[] = [
     quote: "A steady mind is a lamp that doesn't flicker, even in the wind.",
     quoteHindi: "स्थिर मन वह दीपक है जो हवा में भी नहीं कांपता।",
     categories: ["peace", "wisdom", "life"],
+    moment:
+      "Krishna is describing the meditator whose mind has become steady. This is the image he picks, and it's one of the best known in the Gita.",
     simpleMeaning:
-      "Krishna compares a disciplined mind to a lamp flame in a place with no wind. It doesn't flicker. Not because nothing is happening around it, but because it's sheltered enough, and steady enough, that the drafts don't reach it.",
+      "A trained mind is steady like a sheltered flame. It's still fully alive. It just isn't shaken by every passing draft.",
     deeperMeaning:
-      "The image is precise. A flame flickers when air moves across it. A trained mind is likened to a flame that's been placed out of the wind, so it burns straight and still. The stillness isn't the absence of a world full of disturbances. It's the result of practice that keeps those disturbances from reaching the flame. The verse is describing an achievable inner condition, not a magical one, and the word for it is steadiness under conditions that would normally cause wavering.",
+      "The image is careful. The flame is still burning. Only the flicker is gone, and the reason is shelter, not the absence of a world outside.\n\nThe steady mind isn't empty or numb. It's out of the wind.",
     lifeApplication:
-      "Two people get the same piece of bad news. One is visibly rattled for the rest of the day, snapping at people, unable to focus. The other registers it, feels it, and stays largely level. The difference usually isn't that the second person cares less. It's that they've built some shelter around the flame through practice, so the gust moves the air without putting the light out.",
+      "When bad news lands, you'll still feel it. The practice is in what happens next: does it replay all day, or does it pass through? A few quiet minutes each morning build the shelter, and they work even on days when they feel like nothing.",
   },
   {
     id: "6-35",
@@ -699,12 +837,14 @@ export const verses: Verse[] = [
     quote: "The restless mind can be tamed through patient practice and letting go.",
     quoteHindi: "अस्थिर मन को धैर्यपूर्ण अभ्यास और त्याग के माध्यम से वश में किया जा सकता है।",
     categories: ["courage", "motivation", "positive-thinking", "success"],
+    moment:
+      "Arjuna has just objected that this kind of steady mind sounds impossible. He says controlling the mind is as hard as controlling the wind. Krishna doesn't argue with him.",
     simpleMeaning:
-      "Arjuna admits the mind is restless and almost impossible to control, and Krishna agrees, it really is hard. Then he adds that it can still be done, through steady practice and through letting go of what keeps pulling it. The honesty about the difficulty comes with reassurance that it isn't hopeless.",
+      "Krishna agrees the mind is hard to control, but he doesn't agree it's impossible. Repeated practice and loosening your attachments will get you there.",
     deeperMeaning:
-      "What's valuable here is the structure of the answer: full acknowledgment of the problem, then a concrete path. Krishna doesn't pretend a calm mind comes easily to anyone. The two tools he names are abhyasa, repeated practice, and vairagya, the gradual loosening of the cravings that keep the mind agitated. Neither is a quick fix. Together they're presented as sufficient. The mind is trainable, just not by wishing.",
+      "The answer has two parts, and the second matters as much as the first. 'Abhyasa' is practice, coming back over and over. 'Vairagya' is dispassion, slowly loosening the wants that keep pulling the mind away.\n\nPractice without dispassion is a constant fight. Dispassion without practice has nothing to stand on.",
     lifeApplication:
-      "Anyone who's tried to meditate knows the first honest discovery is how uncontrolled the mind is. This verse meets that discovery without discouragement. The restlessness is normal and shared. The way through is unglamorous: show up to the practice repeatedly, and slowly reduce the grip of the wants that keep the mind spinning. Progress is real but slow, and expecting it to be slow is part of not quitting.",
+      "If you've tried meditating and found your mind all over the place, that's not failure. Arjuna said the same thing to Krishna. Expect progress to be slow, so slowness doesn't become your reason to stop.",
   },
   {
     id: "7-7",
@@ -721,12 +861,14 @@ export const verses: Verse[] = [
     quote: "Everything that looks separate is strung on the same thread.",
     quoteHindi: "जो कुछ भी अलग दिखता है, वह एक ही धागे में पिरोया हुआ है।",
     categories: ["wisdom", "peace"],
+    moment:
+      "Chapter seven opens with Krishna promising to teach both knowledge and its direct experience. He's just described his two natures, the material world and the life within it. Now he says what holds them together.",
     simpleMeaning:
-      "Krishna says nothing stands above him, and that everything in existence is held together by him the way pearls are held on a single string. The pearls look separate. The thread runs through all of them.",
+      "Everything that looks separate is held together by one underlying reality. The differences are real, and so is what runs through them.",
     deeperMeaning:
-      "The image is doing careful work. Pearls on a thread are genuinely distinct, you can count them, and they're also not really separate, because one thing passes through every one of them. The verse points at a unity that doesn't erase differences. Things stay themselves while still being connected at a level you don't usually see. The claim that nothing is higher frames that underlying thread as the most basic fact about reality, not a nice add-on.",
+      "In a necklace the pearls really are separate. You can count them, and each one is itself. And yet one thread passes through every one of them, hidden inside, holding the shape.\n\nThe image allows for difference and unity at the same time, which is harder to picture than either one alone.",
     lifeApplication:
-      "It's easy to move through a day experiencing everything as disconnected fragments, separate people, separate problems, separate you. This verse offers the opposite starting assumption: that the separateness is the surface and something continuous runs underneath it. You don't have to accept the metaphysics to test the shift in attention. Looking for what connects a situation to the rest of your life, instead of treating it as an isolated crisis, tends to lower the panic.",
+      "When a problem feels isolated and huge, ask what connects it to the rest of your life: the people, the history, the bigger picture. Seeing it as one pearl on a longer string usually takes some of the panic out of it.",
   },
   {
     id: "8-7",
@@ -737,18 +879,20 @@ export const verses: Verse[] = [
     transliteration:
       "tasmāt sarveṣu kāleṣu mām anusmara yudhya ca, mayy arpita-mano-buddhir mām evaiṣyasy asaṁśayam",
     english:
-      "So remember me at all times, and do what needs to be done. With your mind and reason fixed on me, you will surely come to me. Have no doubt about this.",
+      "So remember me at all times, and fight. With your mind and understanding given to me, you will surely come to me. Have no doubt about this.",
     meaning:
       "Remembering and acting aren't presented as separate here. You don't have to pause your life to stay centered. The instruction is to carry that center with you into whatever you're already doing.",
     quote: "Stay centered while you act. You don't have to pause your life to remember what matters.",
     quoteHindi: "काम करते हुए भी केंद्रित रहें। जो मायने रखता है उसे याद रखने के लिए ज़िंदगी रोकने की ज़रूरत नहीं।",
     categories: ["peace", "purpose", "motivation"],
+    moment:
+      "Arjuna has asked how Krishna can be known at the moment of death. Krishna has just said that whatever a person remembers at the end is where they go. So, he concludes, remember me all the time.",
     simpleMeaning:
-      "Krishna tells Arjuna to keep him in mind constantly and also to do what the situation requires. You don't stop your life to stay centered. You carry the center into whatever you're already doing.",
+      "You don't have to step out of your life to stay connected to what matters. Keep it in mind while you do your work, even the hardest parts.",
     deeperMeaning:
-      "The verse joins two things people usually treat as a trade-off: staying inwardly connected to what matters, and being fully active in the world. Krishna's instruction is to do both at once, remember me and act. Remembrance here isn't a separate activity you schedule. It's a background steadiness held while the hands are busy. The promise attached, that this reliably leads you where you're trying to go, is meant to remove the worry that ordinary work pulls you off the path.",
+      "The Sanskrit is blunt: 'mam anusmara yudhya cha', remember me and fight. Many translations soften it.\n\nKrishna doesn't ask Arjuna to step back from the battle to stay centered. Remembering isn't a separate activity you schedule for later. It's meant to run underneath whatever the hands are doing.",
     lifeApplication:
-      "A lot of people assume they'll get to the meaningful inner work later, once the job calms down, once the kids are older, once there's time. This verse says that framing is a mistake. Whatever you're anchored to, your values, a sense of purpose, a practice, you're meant to keep it running through the busy parts, not save it for a quiet stretch that may never come. The work and the center happen in the same hours.",
+      "If you're waiting for life to calm down before you get to what matters, the verse disagrees. Pick a small anchor, like one slow breath before each meeting, and carry it into the busiest part of your day instead of saving it for a quiet one.",
   },
   {
     id: "9-26",
@@ -765,12 +909,14 @@ export const verses: Verse[] = [
     quote: "A small gift given with a whole heart is never small.",
     quoteHindi: "पूरे मन से दिया गया छोटा सा उपहार कभी छोटा नहीं होता।",
     categories: ["peace", "purpose", "life", "heart-touching"],
+    moment:
+      "Krishna has been talking about the different things people worship and what they get from it. Here he says what he himself asks for, and it's almost nothing.",
     simpleMeaning:
-      "Krishna says that whoever offers him even a leaf, a flower, a piece of fruit, or water, given with real devotion and a sincere heart, has his full acceptance. It's the spirit behind the offering that gives it worth, not the size of it.",
+      "What matters in an offering is the love behind it, not what it costs. The smallest thing given sincerely is fully accepted.",
     deeperMeaning:
-      "The items listed, leaf, flower, fruit, water, are deliberately the cheapest, most available things. The verse strips away any idea that access depends on wealth or grand gesture. What's specified instead is devotion and a pure heart, a settled, sincere intention. A small thing given wholeheartedly outweighs an expensive thing given carelessly. The measure is the quality of attention and love in the giving, which is available to everyone equally.",
+      "The four things listed are the cheapest, most available things there are. Anyone, rich or poor, can find a leaf or a cup of water.\n\nThat's the point. What the verse asks for is 'bhakti', love, and a sincere heart. Nobody can buy those, and everyone has access to them.",
     lifeApplication:
-      "This applies well beyond ritual. A short message written with real care lands harder than an expensive gift chosen in thirty seconds. Fifteen minutes of genuine attention to someone means more than an afternoon spent half-present. The verse is a reminder that people, and by its account the divine, register the sincerity behind an offering more than its cost, so the small things done with a whole heart are never actually small.",
+      "Send one short message today to someone you've been meaning to thank. Write it properly, with real attention. It costs nothing, and by the verse's measure it's worth more than a bigger gesture made carelessly.",
   },
   {
     id: "9-27",
@@ -781,18 +927,20 @@ export const verses: Verse[] = [
     transliteration:
       "yat karoṣi yad aśnāsi yaj juhoṣi dadāsi yat, yat tapasyasi kaunteya tat kuruṣva mad-arpaṇam",
     english:
-      "Whatever you do, whatever you eat, whatever you offer, whatever you give, whatever discipline you practice, do it as an offering.",
+      "Whatever you do, whatever you eat, whatever you offer, whatever you give, whatever discipline you practice, Arjuna, do it as an offering to me.",
     meaning:
       "This turns an entire ordinary day into one continuous act of devotion, not by adding rituals to it, but by changing the spirit behind what's already being done. Working, eating, giving. The same actions, held differently.",
     quote: "The same ordinary actions, held differently, become something like devotion.",
     quoteHindi: "वही साधारण काम, अलग भाव से किए जाएं, तो भक्ति जैसे बन जाते हैं।",
     categories: ["purpose", "peace", "life"],
+    moment:
+      "Right after saying a leaf or a flower is enough, Krishna widens it. The offering doesn't have to be a special act at all.",
     simpleMeaning:
-      "Krishna says to take whatever you're already doing, eating, working, giving, and do it as an offering rather than adding new rituals. Same actions, different spirit behind them. That shift is what turns an ordinary day into something like devotion.",
+      "You don't need new rituals. Doing what you already do, in the spirit of an offering, turns an ordinary day into devotion.",
     deeperMeaning:
-      "The verse is striking for how little it asks you to change on the outside. It doesn't add tasks. It reframes the ones you have. Doing something as an offering changes the internal orientation of an action from 'this is for me and my gain' to 'this is given'. The Gita's wager is that this small change in intention, applied across a whole day, adds up to a spiritual life without requiring you to withdraw from an ordinary one.",
+      "The verse doesn't add a single new task. It changes the intention behind the ones you already have. Eating, working and giving look the same from outside.\n\nWhat shifts is that each becomes something given rather than something taken from you. The Gita's bet is that this change, repeated across a whole day, adds up to a spiritual life inside an ordinary one.",
     lifeApplication:
-      "Try it with one recurring task you resent, the dishes, a commute, a report. Doing it as something offered, to your household, to the people who'll read it, rather than as a cost extracted from you, doesn't make the task shorter. It changes what the task does to you while you're in it. Over months, that reframing is the difference between a life that feels like a series of extractions and one that feels like it's being given.",
+      "Pick one chore you resent, the dishes or the commute or a dull report. For a week, do it as something you're giving to someone, your household or the people who'll read it. The task takes the same time. Notice whether it costs you as much.",
   },
   {
     id: "9-29",
@@ -809,12 +957,14 @@ export const verses: Verse[] = [
     quote: "Fairness and closeness aren't opposites. One can be the ground the other grows from.",
     quoteHindi: "निष्पक्षता और नज़दीकी विपरीत नहीं हैं। एक दूसरे की नींव बन सकती है।",
     categories: ["peace", "wisdom", "life"],
+    moment:
+      "Krishna has just promised that whoever offers their actions to him is freed from their results. Then he heads off an obvious question: does he have favorites?",
     simpleMeaning:
-      "Krishna says he's equal toward everyone, with no favorites and no one he rejects. And yet those who turn to him with devotion end up living in him, and he in them. Fairness and closeness aren't opposites here.",
+      "Krishna doesn't play favorites. But anyone who turns to him with love finds a closeness that's real, and it's open to everyone equally.",
     deeperMeaning:
-      "The verse holds together two things that usually seem to conflict. Perfect impartiality sounds cold, like a system that treats everyone identically and connects with no one. Krishna says that's not how it works. The evenness is the ground, available to all equally, and genuine closeness grows out of it for anyone who turns toward it. The relationship isn't favoritism. It's what the impartial openness becomes when someone actually engages with it.",
+      "The verse holds together two things that usually seem to clash. Total impartiality sounds cold, like a rule applied evenly to everyone.\n\nKrishna says the evenness is the ground, and closeness grows out of it for anyone who turns toward him. Sunlight falls on every plant the same, and the plant that turns toward it is the one that flowers.",
     lifeApplication:
-      "Good teachers, mentors, and parents often work this way. They're fair to everyone, no student is written off, no child is the favorite, and the ones who lean in, ask, show up, end up with a real relationship anyway. That closeness isn't unfairness. It's what the fairness makes possible for whoever meets it halfway. The door is open to everyone, and it still matters whether you walk through it.",
+      "Good teachers and parents work this way. Nobody's written off, and the ones who lean in still end up with a real relationship. If you want that kind of closeness with someone, the door is usually already open. Walking through it is up to you.",
   },
   {
     id: "10-20",
@@ -831,12 +981,14 @@ export const verses: Verse[] = [
     quote: "What you're looking for out there is also already here, at the center of you.",
     quoteHindi: "जो आप बाहर ढूंढ रहे हैं, वह आपके भीतर, आपके केंद्र में भी पहले से है।",
     categories: ["wisdom", "peace", "heart-touching"],
+    moment:
+      "Arjuna has just asked how he can recognise Krishna in the world, and in what forms to think of him. Krishna replies that his manifestations are endless but he'll name the chief ones. This is the very first: before any mountain, river, or hero, he names the Self in every heart.",
     simpleMeaning:
-      "Krishna says he isn't off somewhere distant. He's the Self seated in the heart of every living being, and the start, middle, and end of everything there is. Whatever you're searching for outside, this verse says it's also already here.",
+      "Krishna isn't describing a God who lives far away. He is the Self at the core of every living being, and he is the beginning, middle, and end of everything that exists.",
     deeperMeaning:
-      "The verse relocates the divine from out there to at the center of you. Seated in the heart of every being means the thing being sought is also the thing doing the seeking. Naming himself as beginning, middle, and end closes off the idea that you could get outside it to look for it. This is the Gita undercutting spiritual searching that always points away from where the searcher already is.",
+      "Notice the order. Asked where the divine can be found, Krishna starts with the closest place there is, the heart of the one asking, and only then goes on to the grand examples of the rest of the chapter.\n\nCalling himself beginning, middle, and end also leaves no outside vantage point to search from. The seeker is already inside what's being sought.",
     lifeApplication:
-      "Much of the effort people put into finding meaning, peace, or a sense of the sacred is aimed outward and elsewhere, the right place, the right practice, the right experience. This verse suggests some of that searching energy is better turned around. Not because the outer things are worthless, but because the thing they're pointing at is closer than any of them, already present in the one doing the looking.",
+      "Next time you catch yourself thinking peace will arrive with the right place, practice or experience, stop for a minute and turn your attention to the one doing the looking. The outer things aren't worthless. What they point to is just closer than any of them.",
   },
   {
     id: "12-13",
@@ -853,12 +1005,14 @@ export const verses: Verse[] = [
     quote: "Meet every being with kindness, and every swing of fortune with the same steady heart.",
     quoteHindi: "हर प्राणी से दया से मिलें, और भाग्य के हर उतार-चढ़ाव को एक ही स्थिर मन से स्वीकार करें।",
     categories: ["peace", "wisdom", "life"],
+    moment:
+      "Arjuna has asked which devotee is better, one who worships Krishna in a personal form or one who meditates on the formless. Krishna answers, and then begins listing the qualities of the devotee he loves.",
     simpleMeaning:
-      "Krishna starts describing the kind of person he holds dear: someone who hates no living thing, who's friendly and kind, not possessive, not run by ego, about equally steady whether things are going well or badly, and quick to forgive. It's a short sketch of a settled character.",
+      "The person Krishna loves isn't marked by special powers. They're marked by ordinary goodness: no hatred, real kindness, little ego and easy forgiveness.",
     deeperMeaning:
-      "This begins a passage listing the qualities of the devotee dear to Krishna, and what's striking is how ordinary and relational the qualities are. Not supernatural powers, but the absence of hatred, the presence of goodwill, freedom from possessiveness and ego, evenness across pleasure and pain, and forgiveness. The list treats these as the natural fruit of an inner life that's actually settled, rather than as rules to force.",
+      "This opens a list that runs for eight verses, and what stands out is how ordinary it is. There are no powers or visions on it, just goodwill, humility, steadiness and forgiveness.\n\nThe list reads less like rules to obey and more like a description of what a settled inner life looks like from the outside.",
     lifeApplication:
-      "It's worth reading a list like this as a mirror rather than a standard to fail. Where do you carry quiet hatred, hold grudges, get possessive, take everything personally, swing hard with your circumstances? None of it changes by willpower alone, but noticing it is the start. The verse describes a direction, not a bar, and the direction is toward being easier on others and less at the mercy of your own moods.",
+      "Read the list as a mirror, not a test. Where do you hold a quiet grudge, or take things too personally? Pick one and just notice it this week. The verse describes a direction to walk in, not a bar you've failed.",
   },
   {
     id: "12-15",
@@ -875,12 +1029,14 @@ export const verses: Verse[] = [
     quote: "Be someone the world doesn't unsettle, and who doesn't unsettle the world.",
     quoteHindi: "ऐसे बनें जिसे संसार विचलित न कर सके, और जो संसार को भी विचलित न करे।",
     categories: ["peace", "courage", "life", "heart-touching"],
+    moment:
+      "This is from the same list of qualities Krishna loves in a devotee, a couple of verses further in.",
     simpleMeaning:
-      "Krishna describes someone easy to be around and hard to knock off balance: they don't unsettle other people, and other people don't easily unsettle them. Free of the swings of elation, envy, fear, and anxiety. That person, he says, is dear to him.",
+      "Being dear to Krishna looks like quiet, two-way steadiness. You don't stir up trouble for others, and their trouble doesn't knock you over.",
     deeperMeaning:
-      "This is part of the list of qualities of the devotee Krishna holds dear, and it describes a two-way steadiness. Not disturbing the world means you aren't a source of friction, drama, or pressure for the people around you. Not being disturbed by the world means you have enough inner ground that other people's moods and events don't capsize you. The four things named, elation, envy, fear, anxiety, are the usual channels through which the world gets a grip, and freedom from them is what makes both directions possible.",
+      "Not disturbing the world means you aren't a source of drama or pressure for the people around you. Not being disturbed means their moods don't capsize you.\n\nThe four things named, excitement, envy, fear and anxiety, are the usual handles the world grabs you by. Without them, both kinds of steadiness come easily.",
     lifeApplication:
-      "Think about the people who lower the temperature of a room just by being in it, and are also hard to rattle. They're usually not the loudest or the most impressive. They've just stopped running on the reactivity that makes someone both agitating to others and easily agitated themselves. That's a quiet kind of strength, and it's built by working on the fear and envy underneath, not by performing calm.",
+      "Think of someone who calms a room just by being in it, and is also hard to rattle. They're rarely the loudest person there. Next time a conversation heats up, try being the one who doesn't raise the temperature, and watch what happens.",
   },
   {
     id: "14-26",
@@ -891,18 +1047,20 @@ export const verses: Verse[] = [
     transliteration:
       "māṁ ca yo 'vyabhicāreṇa bhakti-yogena sevate, sa guṇān samatītyaitān brahma-bhūyāya kalpate",
     english:
-      "One who serves me with steady, unwavering devotion rises above these three qualities of nature and becomes fit to know the eternal.",
+      "Whoever serves me with steady, unwavering devotion rises above these three qualities of nature and becomes fit to become one with the eternal.",
     meaning:
       "Steadiness is the operative word here, not intensity. A devotion that doesn't waver, even a quiet one, is what's described as carrying someone through and beyond the usual pull of moods and impulses.",
     quote: "Steadiness, not intensity, is what carries you through. A quiet, unwavering effort is enough.",
     quoteHindi: "तीव्रता नहीं, स्थिरता ही आपको आगे ले जाती है। एक शांत, अटूट प्रयास ही काफी है।",
     categories: ["peace", "detachment", "wisdom"],
+    moment:
+      "Arjuna has asked how someone gets beyond the three gunas, the qualities of nature behind every mood and impulse. Krishna has described what that person looks like, and now he says how to get there.",
     simpleMeaning:
-      "Krishna says the person whose devotion is steady and doesn't waver rises above the three forces of nature that usually pull people around, and becomes ready to know what's lasting. The key word is steady, not intense.",
+      "The way past the pull of your moods and impulses isn't a burst of willpower. It's steady, faithful devotion kept up over time.",
     deeperMeaning:
-      "In its chapter, this verse is about rising past the three gunas, the qualities of clarity, restlessness, and inertia that the Gita says shape all ordinary experience and mood. What carries a person beyond their pull isn't a burst of effort. It's unwavering devotion, something consistent and low-drama that keeps going through good stretches and bad. The Gita repeatedly favors this: a quiet practice held for years over an intense one abandoned in weeks.",
+      "The three gunas are sattva (clarity), rajas (restless activity) and tamas (heaviness). The Gita says every state of mind is some mix of them.\n\nKrishna's answer to getting beyond them isn't more effort or more knowledge. It's 'avyabhicharena', devotion that doesn't stray. Consistency is what's asked for, not intensity.",
     lifeApplication:
-      "People start things at high intensity, a new discipline, a new commitment, and burn out, because intensity is expensive and moods don't cooperate. This verse points at the alternative that actually works: something modest you can sustain no matter what kind of day it is. The unglamorous version done for years beats the dramatic version done until you crash. Steadiness compounds. Intensity spikes and fades.",
+      "If you tend to start things at full intensity and burn out, try the opposite. Choose a version so modest you could do it on your worst day, and keep it going for a month. Steady beats intense over any long stretch.",
   },
   {
     id: "15-7",
@@ -919,12 +1077,14 @@ export const verses: Verse[] = [
     quote: "Something eternal lives at the center of you, wearing the mind and senses like a garment.",
     quoteHindi: "आपके भीतर कुछ शाश्वत बसता है, जो मन और इंद्रियों को वस्त्र की तरह धारण करता है।",
     categories: ["wisdom", "life", "purpose"],
+    moment:
+      "Chapter fifteen opens with the image of an upside-down tree, roots above, standing for the world. Now Krishna turns to the individual living being inside it.",
     simpleMeaning:
-      "Krishna describes the living self as an eternal piece of him that has taken up residence in the world, gathering the mind and the five senses around itself. The core is lasting. The mind and senses are equipment it's using for now.",
+      "At your core is something eternal, a part of the divine. Your mind and senses are tools it has gathered for living in this world, not the whole of you.",
     deeperMeaning:
-      "The verse draws a line between what you are at the core and the apparatus you operate through. The self is called an eternal portion, something continuous and not produced by the body. The mind and senses are things it draws to itself, tools it picks up, not what it fundamentally is. This matters because most confusion and suffering come from identifying completely with the equipment, taking every passing sensory pull or mental state as the whole of you.",
+      "The next verse adds an image: the self carries the mind and senses from body to body the way the wind carries scent from flowers. The scent travels with the wind, but the wind isn't the scent.\n\nYou aren't your equipment. The mind and senses are things you're using, not everything you are.",
     lifeApplication:
-      "When a craving or a strong mood hits, it can feel like it's simply what you are in that moment, so you either obey it or fight it as yourself against yourself. This verse offers a small gap: the senses reporting a pull, the mind spinning a story, and something steadier that's using both and isn't identical to either. Noticing that gap, even briefly, is what makes it possible to not be jerked around by every signal.",
+      "When a craving or a strong mood hits, try naming it as a report rather than an order: 'the senses want this' or 'the mind is telling a story.' That small gap between the signal and you is often enough to choose what happens next.",
   },
   {
     id: "16-21",
@@ -935,18 +1095,20 @@ export const verses: Verse[] = [
     transliteration:
       "tri-vidhaṁ narakasyedaṁ dvāraṁ nāśanam ātmanaḥ, kāmaḥ krodhas tathā lobhas tasmād etat trayaṁ tyajet",
     english:
-      "There are three gates leading to self-destruction: lust, anger, and greed. One should give up these three.",
+      "There are three gates to hell that ruin the self: lust, anger and greed. So give up all three.",
     meaning:
       "Three habits of mind are singled out as the ones most likely to unravel a person from within. Worth noticing early, before they take hold.",
     quote: "Lust, anger, and greed are the three gates that lead a person to ruin. Walk away from them.",
     quoteHindi: "काम, क्रोध और लोभ, ये तीन द्वार हैं जो व्यक्ति को विनाश की ओर ले जाते हैं। इनसे दूर रहें।",
     categories: ["wisdom", "courage", "life"],
+    moment:
+      "Chapter sixteen contrasts two kinds of nature, one that leads toward freedom and one that leads into bondage. After describing the second at length, Krishna boils it down to three things.",
     simpleMeaning:
-      "Krishna names three things as the doors to wrecking yourself from the inside: craving, anger, and greed. His advice is blunt. Give up all three. They're worth catching early, before they set in.",
+      "Lust, anger and greed are the three openings through which a person destroys themselves. Krishna's advice is simply to turn away from all three.",
     deeperMeaning:
-      "The verse calls these gates, which is precise. They're entrances, the points where self-destruction gets in, not the destruction itself. Lust here is the wider sense of compulsive craving, anger is the reactive heat, and greed is the accumulating grip that's never satisfied. The Gita treats them as linked and as the common root of most of the harm people do to themselves and others. Naming them as a short, specific list is meant to make them easier to watch for.",
+      "Calling them gates is precise. A gate isn't the destination. It's where you go in, which means it's also where you can turn around.\n\nLust here means compulsive craving in general, not only sexual desire. The three are linked, and the Gita sees most of the harm people do to themselves passing through one of them.",
     lifeApplication:
-      "Look back at the decisions you most regret and there's usually one of these three underneath: wanting something badly enough to override your judgment, acting in heat, or grabbing and holding past the point of sense. This verse isn't asking for instant purity. It's saying that if you learn to recognize these three early, when they're a flicker rather than a fire, you catch most of the serious mistakes before they happen.",
+      "Look at the decision you most regret. There's usually one of these three under it: wanting something badly enough to override your judgment, acting in heat, or holding on past the point of sense. Learn your own early signs for each, while it's still a flicker.",
   },
   {
     id: "18-63",
@@ -963,12 +1125,14 @@ export const verses: Verse[] = [
     quote: "Reflect on it fully. Then the choice is genuinely yours to make.",
     quoteHindi: "इस पर पूरी तरह विचार करें। फिर निर्णय सच में आपका अपना है।",
     categories: ["wisdom", "purpose", "life"],
+    moment:
+      "This comes right at the end of the teaching. Krishna has said everything he has to say, and instead of giving an order, he hands the decision back to Arjuna.",
     simpleMeaning:
-      "After chapters of teaching, Krishna stops and hands the decision back to Arjuna. Think it all through carefully, he says, and then do what you decide. Not an order. Something to actually weigh, with the choice genuinely yours.",
+      "Krishna has given Arjuna everything he knows. Now the choice is Arjuna's, made after real reflection, not out of obedience.",
     deeperMeaning:
-      "This is a notable move for a teacher who has just delivered a long, authoritative teaching. Krishna doesn't close by commanding. He says reflect on it fully, without leaving anything out, and then act as you wish. The knowledge is offered, not imposed. It treats Arjuna as someone who has to arrive at his own conclusion for it to mean anything, and it trusts him with the freedom to reject it.",
+      "'Yathechchhasi tatha kuru', do as you wish. It's a surprising way for an authoritative teacher to finish.\n\nAfter all this teaching, Krishna treats Arjuna as someone who has to reach his own conclusion for it to mean anything. The teaching is offered, not imposed, and that makes Arjuna's decision to fight a real choice.",
     lifeApplication:
-      "Good advice, from a mentor, a friend, a book, works best when it's held this way. Taken as a command, you either obey resentfully or rebel against it, and neither is really yours. Taken as something to think all the way through and then decide on, it can actually become part of how you see. This verse models the handoff: here's what I've got, now it's your call, and it has to be.",
+      "When you give advice, try ending it the way Krishna does here: this is what I think, now think it through and decide. People hold on to conclusions they reached themselves far longer than instructions they were handed.",
   },
   {
     id: "18-65",
@@ -985,12 +1149,14 @@ export const verses: Verse[] = [
     quote: "Whatever else is asked of you, know this first: you are cared for.",
     quoteHindi: "और कुछ भी मांगा जाए, पहले यह जान लें: आपकी परवाह की जाती है।",
     categories: ["heart-touching", "peace", "purpose"],
+    moment:
+      "Krishna has just told Arjuna to decide for himself. Then he says he'll speak his highest word once more, because Arjuna is very dear to him, and this verse begins it.",
     simpleMeaning:
-      "Krishna asks Arjuna to keep his mind on him and stay devoted, and then gives the reason: not duty, but affection. You are dear to me. Whatever else the verse asks for, it rests first on being told plainly that you're cared for.",
+      "Krishna's last request is for Arjuna's whole heart. And the reason he gives isn't duty. It's that Arjuna is dear to him.",
     deeperMeaning:
-      "The structure matters. The instructions, keep your mind here, be devoted, offer, bow, could read as demands. But the verse grounds them in a promise and a reason, and the reason is love, not obligation. Being dear to him is the foundation the rest sits on. The Gita is saying the relationship comes first and the practices follow from it, not the other way around.",
+      "The first line repeats verse 9.34 almost word for word. What's new is the ending: a promise, and 'priyo 'si me', you are dear to me.\n\nThe instructions could read as demands. The reason given at the end changes that. Krishna puts the relationship first and the practices second.",
     lifeApplication:
-      "There's a big difference between doing something for someone because you're afraid of what happens if you don't, and doing it because you know they care about you and you care back. The first is compliance and it wears you down. The second is relationship and it tends to hold. This verse is a reminder that the durable version of commitment, to a person, a practice, a path, runs on knowing you're valued, not on pressure.",
+      "Commitment that runs on fear wears you down. Commitment that runs on knowing you're valued tends to last. If you're asking something of someone, a partner or a team or a child, make sure they've heard the second part first.",
   },
   {
     id: "18-78",
@@ -1001,18 +1167,20 @@ export const verses: Verse[] = [
     transliteration:
       "yatra yogeśvaraḥ kṛṣṇo yatra pārtho dhanur-dharaḥ, tatra śrīr vijayo bhūtir dhruvā nītir matir mama",
     english:
-      "Wherever there is Krishna, the master of yoga, and Arjuna, the skilled archer, there will surely be prosperity, victory, and sound judgment.",
+      "Wherever there is Krishna, the master of yoga, and Arjuna, the archer, there will be fortune, victory, well-being and sound judgment. That is my conviction.",
     meaning:
       "The Gita's closing verse: a statement that when wisdom and disciplined, committed action come together, good outcomes tend to follow.",
     quote: "Where wisdom and determined action meet, success naturally follows.",
     quoteHindi: "जहां ज्ञान और दृढ़ कर्म मिलते हैं, वहां सफलता स्वाभाविक रूप से आती है।",
     categories: ["success", "motivation", "positive-thinking"],
+    moment:
+      "This is the last verse of the Gita, and Krishna doesn't say it. Sanjaya does. He's been narrating the whole conversation to the blind king Dhritarashtra, whose sons are fighting Arjuna, and this is his final word to the king.",
     simpleMeaning:
-      "The Gita's final verse says that wherever Krishna, the master of yoga, and Arjuna, the skilled archer, are together, there will be prosperity, victory, and sound judgment. Where wisdom and disciplined, committed action come together, good outcomes tend to follow.",
+      "Where wisdom and skilled, committed action come together, good things follow. That's the conclusion the narrator draws from everything he's heard.",
     deeperMeaning:
-      "The closing line pairs two figures on purpose: Krishna as guidance and wisdom, Arjuna as capable, willing action. The claim is that neither alone is enough. Wisdom without someone to act on it stays abstract. Skilled action without wisdom directing it can go anywhere. It's the combination, clear understanding joined to determined effort, that the text says reliably produces good results. It's a fitting note to end on: the whole book has been Krishna supplying the first half so Arjuna can supply the second.",
+      "It reads as a quiet answer to the question the king asked at the very start of the Gita, about what his sons and the Pandavas were doing on the battlefield.\n\nSanjaya's reply, after everything, is that the side with both wisdom and skilled action will win. Krishna stands for one and Arjuna for the other, and the verse says it takes both.",
     lifeApplication:
-      "Think about any goal you've actually reached. There was usually a clear understanding of what mattered and why, and there was consistent effort to back it. When one was missing, you either had a good plan you never executed or a lot of motion with no direction. This verse is the reminder to check for both: know what you're doing and why, then commit to the work of it.",
+      "Look at a goal that's stalled. Usually one half is missing. Either you have a clear plan you're not acting on, or you're very busy without a clear sense of why. Name which half you're short of this week, and work on that one.",
   },
   {
     id: "2-11",
@@ -1029,12 +1197,14 @@ export const verses: Verse[] = [
     quote: "You keep grieving what you were never able to hold onto. The wise don't.",
     quoteHindi: "आप उस चीज़ का शोक करते रहते हैं जिसे आप कभी थाम ही नहीं सकते थे। ज्ञानी ऐसा नहीं करते।",
     categories: ["wisdom", "peace", "life", "heart-touching"],
+    moment:
+      "Arjuna has just said 'I will not fight' and fallen silent. Krishna smiles, there between the two armies, and this is how his teaching begins.",
     simpleMeaning:
-      "Krishna's first real teaching begins by pointing out a gap in Arjuna. He's speaking wise words but grieving as if he'd forgotten all of them. The wise, Krishna says, don't grieve endlessly for the living or the dead. Knowing that everything changes has to actually reach how you live.",
+      "Arjuna is mourning things that were never going to last, while talking as if he understood. Krishna's teaching begins by pointing at that gap.",
     deeperMeaning:
-      "The verse opens the Gita's philosophical core, and it opens with a mild rebuke about the distance between knowledge and practice. Arjuna speaks words of wisdom and acts against them. Krishna isn't dismissing grief itself. He's pointing at grief that runs on refusing to accept impermanence, mourning that you couldn't hold on to what was never holdable. Clear thinking, in this frame, means letting what you already know actually change your response.",
+      "The 'words of wisdom' are Arjuna's own arguments from chapter one, about family, tradition and the sin of killing kin. Krishna opens by pointing at the gap between that talk and the grief underneath it.\n\nHe isn't dismissing loss. He's pointing at grief that comes from arguing with the fact that everything changes.",
     lifeApplication:
-      "Most people can state that nothing lasts, that people age and leave, that circumstances turn over. And most people still spend real energy in a low grief over exactly those facts, as if they might have been otherwise. This verse isn't telling you not to feel loss. It's pointing at the specific suffering that comes from arguing with reality, and suggesting that the knowledge you already hold is meant to be lived, not just recited.",
+      "Notice where you're mourning something that was never going to stay the same: a stage of your kids' lives, a version of a friendship, a younger body. Let yourself feel it, then ask whether you're also arguing with the fact itself. That second part is the bit you can put down.",
   },
   {
     id: "2-15",
@@ -1051,12 +1221,14 @@ export const verses: Verse[] = [
     quote: "Stay level through the good days and the bad ones. That steadiness is what lasts.",
     quoteHindi: "अच्छे दिनों और बुरे दिनों में एक जैसा बने रहें। यही स्थिरता टिकती है।",
     categories: ["peace", "wisdom", "courage"],
+    moment:
+      "Krishna has just told Arjuna that heat and cold, pleasure and pain come and go. Here he says what bearing them steadily leads to.",
     simpleMeaning:
-      "Krishna says the person who isn't knocked over by pain or pleasure, who stays about the same through a good day and a bad one, is the one ready for something lasting. It's not that they've stopped feeling. They've stopped handing their stability to whatever the day brings.",
+      "Someone who stays steady through both pleasure and pain is ready for something that doesn't change. Steadiness is what opens the door.",
     deeperMeaning:
-      "This continues the previous verse's point about sensations coming and going, and draws the consequence: steadiness through both poles is what makes a person fit for the deathless thing the Gita keeps pointing at. The word for the steady person suggests composure rather than coldness. What's being praised isn't indifference to life. It's no longer being at the mercy of its swings, which is treated as a prerequisite for anything deeper opening up.",
+      "'Amritatvaya kalpate', fit for immortality, puts a very high reward on something that sounds modest.\n\nStaying level through good days and bad isn't treated as a nice personality trait. In the Gita's view it's the ground that freedom grows from, because a mind thrown around by every swing can't see anything that lasts.",
     lifeApplication:
-      "Track your mood against your circumstances for a week and the correlation is usually near total, good news up, bad news down, with almost no space in between where you get to choose your response. This verse points at widening that space. Not so you feel nothing, but so a rough Tuesday doesn't fully own you, and a win doesn't leave you unable to function once it fades.",
+      "For one week, note your mood each evening next to what happened that day. If they line up perfectly, good news up and bad news down, that's the space the verse wants you to widen. Not so you stop feeling, but so a rough Tuesday doesn't own you.",
   },
   {
     id: "2-37",
@@ -1067,18 +1239,20 @@ export const verses: Verse[] = [
     transliteration:
       "hato vā prāpsyasi svargaṁ jitvā vā bhokṣyase mahīm, tasmād uttiṣṭha kaunteya yuddhāya kṛta-niścayaḥ",
     english:
-      "If you are killed you will attain heaven, and if you win you will enjoy the earth. So rise up, Arjuna, resolved to act.",
+      "If you are killed, you will reach heaven. If you win, you will enjoy the earth. So rise up, Arjuna, resolved to fight.",
     meaning:
       "This is Krishna cutting through the paralysis with plain arithmetic. Arjuna is frozen because he's staring at the outcome, so Krishna walks both outcomes forward and shows that neither one is the disaster he fears. Once the result stops being the thing that decides everything, it's possible to just stand up and act.",
     quote: "Stop weighing the outcome. Stand up and do what's in front of you.",
     quoteHindi: "नतीजे को तौलना बंद करें। उठें और जो सामने है वह करें।",
     categories: ["courage", "motivation"],
+    moment:
+      "Krishna is still making his practical case, appealing to Arjuna's duty as a warrior. Here he walks Arjuna through both possible outcomes of the battle.",
     simpleMeaning:
-      "Krishna does the arithmetic for Arjuna. If you're killed, you reach heaven. If you win, you rule the earth. Either way it isn't the catastrophe you're imagining, so stand up and act. Once you stop staring at the outcome, moving becomes possible.",
+      "Neither outcome of the battle is the disaster Arjuna fears, so there's no reason to stay frozen. Krishna wants him to stand up and act.",
     deeperMeaning:
-      "In context this is Krishna working through both branches of the outcome to show that neither is the disaster Arjuna fears. The reasoning is specific to that setting, but the move is general: paralysis comes from fixating on a result you've decided you can't survive, and it breaks when you actually look at the outcomes and find that you can. Once the result stops being the thing that decides everything, the next step gets clear.",
+      "This is Krishna using Arjuna's own frame, the warrior's code of his time, to break the paralysis. It's one of the most worldly arguments in the Gita, and the teaching soon moves past it to acting with no concern for reward at all.\n\nBut it shows something useful. Fear of an outcome often shrinks once you actually look at it.",
     lifeApplication:
-      "When you're frozen before a big decision, it's usually because one outcome feels unbearable and you're refusing to look straight at it. Try actually walking it forward. If this fails, then what, concretely? Often the honest answer is that you'd cope, adjust, and carry on. Naming that out loud tends to drain the paralysis, because the thing keeping you stuck was the unexamined fear, not the situation.",
+      "When you're frozen before a decision, take the outcome you dread and walk it forward. If this fails, then what, concretely? Usually the honest answer is that you'd cope and carry on. Saying that out loud often drains the paralysis.",
   },
   {
     id: "2-50",
@@ -1093,14 +1267,16 @@ export const verses: Verse[] = [
     meaning:
       "Skill here isn't about doing the task faster or better than everyone else. It's the ability to work without being jerked around by how it turns out. When your calm doesn't depend on the result, you can give the work your full attention instead of splitting it with anxiety about the score.",
     quote: "Skill in action is doing the work without being ruled by how it turns out.",
-    quoteHindi: "कर्म में कुशलता यही है, काम करना पर नतीजे के वश में न होना।",
+    quoteHindi: "कर्म में कुशलता यही है कि काम पूरे मन से करें, और नतीजे को ख़ुद पर हावी न होने दें।",
     categories: ["karma", "success", "wisdom"],
+    moment:
+      "This is in the middle of Krishna's first explanation of the yoga of action, a few verses after he told Arjuna to act without claiming the fruits.",
     simpleMeaning:
-      "Krishna says the person with an even mind sets down both the credit and the blame while still alive, and tells Arjuna to practice yoga, which he defines here as skill in action. The skill isn't speed or polish. It's working without being jerked around by how it turns out.",
+      "Real skill is working with an even mind, not knocked off balance by success or failure. That, Krishna says, is what yoga is.",
     deeperMeaning:
-      "'Yoga is skill in action' is one of the Gita's most quoted phrases, and the skill it means is specific. It's not technical excellence. It's the ability to act without your inner state being controlled by the result. When your calm doesn't depend on the outcome, your full attention is available for the work itself, instead of being split with anxiety about the score. Letting go of good and bad deeds is part of the same move: not carrying the ledger.",
+      "'Yogah karmasu kaushalam', yoga is skill in action, is one of the most quoted lines in the Gita. The skill it means isn't technical.\n\nIt's the ability to act without your inner state hanging on the result. That counts as skill because anxiety about the score always takes some attention away from the work itself.",
     lifeApplication:
-      "Watch someone skilled do something under pressure, a surgeon, a musician, a good teacher handling a hard room. Part of what you're seeing is technical, but part of it is that they're not fighting the situation or bracing against failure. Their attention is fully on what's in front of them. That composure is trainable, and the Gita treats it as the real definition of being good at something.",
+      "Watch someone really good under pressure, a surgeon or a musician or a teacher with a hard class. Part of what you're seeing is that they aren't bracing against failure. Next time you're under pressure, put your attention on the very next action instead of the outcome.",
   },
   {
     id: "2-56",
@@ -1117,12 +1293,14 @@ export const verses: Verse[] = [
     quote: "Not dragged under by sorrow, not strung out by pleasure. That's a steady mind.",
     quoteHindi: "न दुख में डूबना, न सुख में बहक जाना। यही स्थिर मन है।",
     categories: ["peace", "wisdom", "detachment"],
+    moment:
+      "Arjuna has just asked a practical question: how does someone with steady wisdom speak, sit and walk? Krishna's answer runs to the end of chapter two, and this is near its start.",
     simpleMeaning:
-      "Krishna describes the person of steady wisdom: untroubled in sorrow, not grasping in pleasure, free of the pull of attachment, fear, and anger. It's not someone who feels nothing. It's someone who doesn't get dragged under by sadness or strung out by good feelings.",
+      "A wise person still feels sorrow and pleasure. They just aren't ruled by them, because attachment, fear and anger have lost their grip.",
     deeperMeaning:
-      "This is part of the Gita's portrait of the person settled in wisdom. The point is easy to misread as emotional flatness. What's actually described is non-reactivity: emotions arise, but they don't capture the person. Attachment, fear, and anger are singled out as the specific forces that usually do the capturing, and it's their grip that loosens. What's left isn't numbness. It's someone genuinely settled rather than performing calm.",
+      "It's easy to misread this as emotional flatness. Sorrow and pleasure still arrive. They just don't take over.\n\nAttachment, fear and anger are named as the three things that usually do the taking over. It's their grip that loosens, not the capacity to feel.",
     lifeApplication:
-      "There's a difference between a person who's suppressing a hard week behind a tight smile and a person who's actually steady through it. The first is holding a lid down. The second has less pressure under the lid to begin with, because they're not adding fear about the future and anger about the unfairness on top of the plain difficulty. That state is built by loosening those add-ons, not by clamping down harder.",
+      "In a hard week, separate the difficulty itself from what you're adding on top: fear about where it leads, anger at how unfair it is. You may not be able to change the difficulty. The add-ons are yours to work on, and they're often most of the weight.",
   },
   {
     id: "2-66",
@@ -1139,12 +1317,14 @@ export const verses: Verse[] = [
     quote: "A scattered mind finds no peace. And without peace, where would happiness even come from?",
     quoteHindi: "बिखरा हुआ मन शांति नहीं पाता। और शांति के बिना, सुख कहां से आएगा?",
     categories: ["peace", "wisdom", "life"],
+    moment:
+      "This is part of Krishna's portrait of the person with steady wisdom. He's just said that a controlled mind finds serenity, and now he describes the opposite.",
     simpleMeaning:
-      "Krishna traces a chain most people feel but never spell out. A scattered mind can't think clearly. Without clear thinking there's no steady reflection. Without that there's no peace. And without peace, where would happiness even come from?",
+      "Without a steady mind there's no clear thinking, and without that there's no peace. Happiness comes at the end of that chain, not the start.",
     deeperMeaning:
-      "The verse is a short causal sequence running from an undisciplined mind to the absence of happiness, with each step making the next one follow. The starting point matters: it isn't bad luck or hard circumstances that block happiness here, it's a mind that was never steadied, so it can't hold a clear thought long enough for peace to form. The implication is that chasing happiness directly, while skipping the work on the mind, is chasing the last link in a chain whose first links aren't in place.",
+      "The verse is a short chain of causes, and the order is what matters. Happiness is the last link, not the first.\n\nChasing it directly while skipping the earlier links (a steadied mind, clear thinking, focus) doesn't work, because the thing it depends on was never built.",
     lifeApplication:
-      "Notice how a genuinely frazzled day resists every attempt to enjoy anything. You sit down to relax and the mind is still sprinting, so the rest doesn't land. This verse says that's the normal order of things: the scattered mind has to settle before clear thinking is possible, and peace and satisfaction come after that, not before. It reframes 'I just need to unwind' as 'I need to actually steady my attention first'.",
+      "On a frazzled day, you sit down to relax and the rest doesn't land because your mind is still racing. Before trying to enjoy anything, spend five minutes settling your attention on one thing. The verse says that order isn't optional.",
   },
   {
     id: "3-8",
@@ -1161,12 +1341,14 @@ export const verses: Verse[] = [
     quote: "Doing something beats doing nothing. Start the work that's yours.",
     quoteHindi: "कुछ करना, कुछ न करने से बेहतर है। जो काम आपका है, उसे शुरू करें।",
     categories: ["motivation", "karma", "success"],
+    moment:
+      "Arjuna has asked why Krishna pushes him toward terrible action if understanding is better than action. Krishna has just answered that nobody can stop acting, even for a moment.",
     simpleMeaning:
-      "Krishna tells Arjuna to do the work he's meant to do, because doing something beats doing nothing, and even keeping your body alive takes action. Waiting to feel ready or inspired before you start usually means nothing gets done.",
+      "You can't avoid action, so you may as well do the work that's yours on purpose. Doing nothing isn't the safe option it looks like.",
     deeperMeaning:
-      "The verse is a plain argument for action over inertia. Inaction isn't a neutral, safe option in the Gita's view, it's a kind of decay, and it isn't even fully possible, since staying alive is itself continuous activity. The instruction is to do the work that's assigned to you by your role and situation, rather than opting out. The bar being set is deliberately low: not brilliance, not motivation, just starting the work that's yours.",
+      "Inaction isn't neutral in the Gita's view. It isn't even possible, since breathing and eating are already actions.\n\nSo the real choice was never between acting and not acting. It's between doing your work deliberately and drifting.",
     lifeApplication:
-      "Procrastination often hides behind waiting for the right mood. You'll write when you feel inspired, exercise when you have energy, deal with the hard thing when you're ready. This verse cuts that off. The mood usually follows the action rather than preceding it. Start the task at hand, badly if necessary, because doing nothing isn't actually keeping your options open, it's just a slower kind of loss.",
+      "If you're waiting to feel motivated before starting something, try reversing the order. Start badly for fifteen minutes and see if the motivation shows up after. It usually does, and if it doesn't, you've still done fifteen minutes.",
   },
   {
     id: "3-25",
@@ -1183,12 +1365,14 @@ export const verses: Verse[] = [
     quote: "Put in the same effort, but aim it at more than your own gain.",
     quoteHindi: "वही मेहनत करें, पर उसे सिर्फ़ अपने फ़ायदे से आगे की ओर लगाएं।",
     categories: ["karma", "purpose", "motivation"],
+    moment:
+      "Krishna has just pointed out that he has nothing to gain anywhere in the three worlds, and still he keeps working. If he stopped, he says, everything would fall into confusion.",
     simpleMeaning:
-      "Krishna says most people work with a tight grip on what they'll personally get out of it. He asks for that same effort with a looser hold, pointed at something bigger than your own return. The work stays serious. It just stops being only about you.",
+      "The wise work just as hard as anyone, but they aren't working only for themselves. Their effort is aimed at the good of everyone.",
     deeperMeaning:
-      "The verse isn't contrasting hard work with laziness. Both the unwise and the wise are working hard. The difference is what the work is fastened to. The unwise are attached to their personal stake in the outcome. The wise put in identical effort while aiming at the good of the world, a wider benefit. Loosening the personal grip doesn't reduce the quality or intensity of the work. It changes what the work is in service of.",
+      "The contrast isn't between hard work and laziness. Both kinds of people work equally hard. The difference is what the work is fastened to.\n\n'Loka-sangraha', holding the world together, is the aim Krishna gives the wise. The effort stays the same and the target widens.",
     lifeApplication:
-      "Two people build the same thing. One is tracking, the whole time, exactly what credit, money, or advancement they'll get. The other does the job just as well while mostly thinking about whether it'll actually help the people it's for. The second person usually does work that's at least as good, often better, and is far less wrecked when the personal payoff is smaller than hoped. Widening the aim past your own return is a practical move, not just a noble one.",
+      "On your next project, spend a minute on who it's actually for and how it helps them, before you think about what you'll get. You'll probably do the same work. You'll also be less flattened if the credit is smaller than you hoped.",
   },
   {
     id: "3-37",
@@ -1205,12 +1389,14 @@ export const verses: Verse[] = [
     quote: "Unfilled wanting, and the anger when it's blocked. That's the enemy, and it's inside.",
     quoteHindi: "अधूरी चाहत, और उसके रुकने पर आया गुस्सा। यही असली दुश्मन है, और यह भीतर ही है।",
     categories: ["wisdom", "courage", "life"],
+    moment:
+      "Arjuna has just asked a very human question. What makes a person do wrong even when they don't want to, as if they're being forced? This is Krishna's answer.",
     simpleMeaning:
-      "Arjuna asks what drives a person to do harm even against their own will. Krishna's answer is direct: desire, and the anger that shows up when desire is blocked. That's the enemy, he says, and it isn't outside you.",
+      "The force that pushes people into wrongdoing is inside them: desire, and the anger it turns into when it's blocked. Krishna calls it the real enemy.",
     deeperMeaning:
-      "The verse answers a specific question, what actually pushes people into destructive behavior. Krishna names it as one linked force: craving that's never satisfied, and the anger that erupts when the craving hits an obstacle. Born of the mode of passion ties it to the restless, grasping quality the Gita describes. Calling it the enemy here is deliberate. The trouble isn't primarily out in the world. It's an internal engine, and you can't deal with it until you'll admit where it lives.",
+      "Krishna names one force with two faces. Desire comes first, and anger is what desire becomes when something blocks it.\n\nIn the next verse he says it covers wisdom the way dust covers a mirror. The mirror isn't damaged. It just can't show anything until it's wiped clean.",
     lifeApplication:
-      "When there's a pattern in your life that keeps causing damage, the same kind of blowup, the same self-sabotage, it's worth tracing it back instead of blaming the circumstances each time. Usually you'll find a want that isn't being met and a flare of anger when something gets in its way. That's not a comfortable thing to locate in yourself. But it's the only place you can actually work on it.",
+      "Think of a pattern that keeps hurting you, the same kind of blowup or self-sabotage. Trace it back one step and you'll usually find a want that wasn't met. Working on that want is slower than blaming the circumstances, but it's the only part you can reach.",
   },
   {
     id: "4-20",
@@ -1224,15 +1410,17 @@ export const verses: Verse[] = [
       "Having let go of attachment to the fruits of action, ever content and needing no support, such a person does nothing at all even while fully engaged in work.",
     meaning:
       "There's a way of working hard that doesn't leave you drained, and it comes from not needing the outcome to be a certain way. When you're already content and not leaning your whole weight on the result, the effort stops feeling like a gamble. You act fully, but nothing is riding on it the way it used to be.",
-    quote: "Work fully, need nothing from it. That's when the effort stops draining you.",
-    quoteHindi: "पूरे मन से काम करें, उससे कुछ न मांगें। तभी मेहनत थकाना बंद करती है।",
+    quote: "Work fully and need nothing from it. That's when the effort stops draining you.",
+    quoteHindi: "पूरे मन से काम करें, पर उससे कुछ पाने की चाह न रखें। तब मेहनत आपको थकाती नहीं।",
     categories: ["detachment", "peace", "purpose"],
+    moment:
+      "Krishna is in the middle of describing how the wise can act without being bound by what they do. This verse describes that person.",
     simpleMeaning:
-      "Krishna describes a way of working hard that doesn't leave you empty. It comes from not needing the result to land a certain way. When you're already content and not leaning your whole weight on the outcome, you can act fully without it feeling like a gamble.",
+      "When you don't need the result to go a certain way, even hard work stops binding you. You act fully and stay free.",
     deeperMeaning:
-      "The paradox in the verse, doing nothing at all even while fully engaged, is the point. Outwardly the person is busy and effective. Inwardly they aren't 'doing' in the entangled sense, because they're not gripping the outcome, not staking their sufficiency on it, not bracing. Being ever content and needing no support is the condition that makes this possible. When your okayness doesn't depend on how the work turns out, the effort stops being a bet you could lose.",
+      "The paradox is the point. Outwardly the person is busy and effective. Inwardly they aren't 'doing' in the sense that binds, because they aren't staking their sense of being okay on how it turns out.\n\n'Nitya-tripta', always content, is what makes this possible. Contentment comes first, not as a reward at the end.",
     lifeApplication:
-      "Notice the difference between a task you do from a settled place and one you do while your whole future feels like it's riding on it. Same hours, completely different cost. The drain usually isn't the work itself. It's the constant low-level fear about the result running alongside it. Getting your sense of being okay to not depend on the outcome is what lets you put in the effort without it hollowing you out.",
+      "Notice the difference between a task done from a settled place and the same task done while your future feels like it's riding on it. The hours are the same, and the cost isn't. Before your next big piece of work, remind yourself what stays fine about your life whatever happens.",
   },
   {
     id: "4-42",
@@ -1249,12 +1437,14 @@ export const verses: Verse[] = [
     quote: "Cut through the doubt with what you know is true. Then get up.",
     quoteHindi: "जो सच आप जानते हैं, उससे संदेह को काट दें। फिर उठ खड़े हों।",
     categories: ["courage", "motivation", "positive-thinking"],
+    moment:
+      "This is the last verse of chapter four. Krishna has been praising knowledge as the greatest purifier, and he ends by telling Arjuna to use it.",
     simpleMeaning:
-      "Krishna tells Arjuna that the doubt sitting unaddressed in his heart, the kind that comes from not seeing the situation clearly, will keep him stuck longer than any outside obstacle. Cut through it with what you actually know to be true, and then get up and move.",
+      "Doubt that comes from confusion keeps you stuck. Krishna tells Arjuna to cut through it with clear understanding and get on with what he has to do.",
     deeperMeaning:
-      "The verse distinguishes doubt that comes from genuine uncertainty from doubt that comes from not seeing clearly, confusion you could resolve if you looked straight at it. Krishna's prescription for the second kind is decisive: use knowledge as a blade, cut the doubt, and act. Endless deliberation gets mistaken for being careful, but past a point it's just paralysis wearing a responsible face. At some stage you have to stand and move on what you know.",
+      "The doubt Krishna means is specific. It's born of 'ajnana', not seeing clearly, so it's the kind you could resolve by looking straight at it.\n\nFor that kind, more thinking doesn't help. It needs a decision. The sword image says the same thing: you don't untie this knot. You cut it.",
     lifeApplication:
-      "There's a kind of stuckness that feels like thoroughness but is really just circling. You've had the information for weeks. You keep re-examining it and feeling no closer. This verse says that at that point, more analysis isn't the answer, deciding is. Name what you actually know to be true, let that settle the question, and take the next step. The clarity often comes from moving, not from more sitting still.",
+      "If you've had the information for weeks and keep re-examining it without getting closer, that's this kind of doubt. Write down what you actually know is true, make the call based on it, and take the next step today.",
   },
   {
     id: "5-10",
@@ -1271,12 +1461,14 @@ export const verses: Verse[] = [
     quote: "Be in the work without being stained by how it turns out. Like a lotus leaf in water.",
     quoteHindi: "काम में रहें, पर उसके नतीजे से बेदाग़ रहें। जैसे पानी में कमल का पत्ता।",
     categories: ["karma", "detachment", "peace"],
+    moment:
+      "Arjuna has asked whether it's better to renounce action or to act. Krishna says acting is better, and here he shows how someone can act without getting caught in it.",
     simpleMeaning:
-      "Krishna says the person who does their work as an offering, without clinging to the results, stays unstained by it, the way a lotus leaf sits in water without getting wet. You can be fully involved in something and still not be marked by how it turns out.",
+      "You can be fully involved in the world without being stained by it. The key is to offer your work up rather than clutch at what it brings you.",
     deeperMeaning:
-      "The lotus leaf is a stock image in Indian thought for being in something without being soaked by it. The mechanism the verse gives is dedicating the action outward, offering it rather than gripping the outcome for yourself. When the result isn't personal property, success doesn't puff you up and failure doesn't stain you. The point isn't to care less about the work. It's to change what you're doing with the result.",
+      "The lotus leaf is a well-known image in Indian thought. It grows in water and lies on water, and drops still roll straight off it.\n\nThe leaf isn't avoiding the water. It's fully in it. That's the picture Krishna gives of a person fully engaged in work who doesn't get soaked by the results.",
     lifeApplication:
-      "Some people finish a project and are visibly changed by how it landed, a good review makes them insufferable for a week, a bad one wounds them for a month. Others do work just as invested and let the outcome roll off. The difference is whether they held the result as a verdict on themselves. Treating the work as something you offer rather than something you own is what keeps the water from soaking in.",
+      "Notice whether the reception of your work changes how you feel about yourself for days afterward. If it does, try treating the next piece as something you're giving away rather than a verdict on you. That's what lets the response roll off.",
   },
   {
     id: "5-22",
@@ -1291,14 +1483,16 @@ export const verses: Verse[] = [
     meaning:
       "The hit you get from wanting something and finally getting it always fades, and often it leaves you worse off than before. Every pleasure that depends on the outside has a start and a finish built into it. Knowing that doesn't mean refusing to enjoy anything. It means not building your life around the next hit.",
     quote: "Every pleasure that comes from outside has an expiry date. Don't build your life on the next one.",
-    quoteHindi: "बाहर से मिलने वाला हर सुख कुछ देर में ख़त्म हो जाता है। अगली ख़ुराक पर अपनी ज़िंदगी मत टिकाएं।",
+    quoteHindi: "बाहर से मिलने वाला हर सुख एक दिन ख़त्म हो जाता है। अपनी ज़िंदगी अगले सुख के सहारे न टिकाएं।",
     categories: ["detachment", "wisdom", "life"],
+    moment:
+      "Krishna has just said that someone who isn't attached to outside contacts finds happiness within. Here he explains why outside pleasures can't do the same job.",
     simpleMeaning:
-      "Krishna points out that the pleasures you get from the senses meeting the world come with pain built in. They start and they stop. Knowing that doesn't mean refusing to enjoy anything. It means not building your life around chasing the next one.",
+      "Pleasures that depend on the senses always end, and their ending brings pain. That's why the wise don't build their happiness on them.",
     deeperMeaning:
-      "The verse makes a specific claim: sense pleasures are sources of pain, they generate suffering as part of their nature, not by accident. Part of that is the letdown when they end, part is the craving to repeat them. Having a beginning and an end names the structural problem, anything dependent on external contact is temporary by design. The wise do not delight in them, not because enjoyment is forbidden, but because they've stopped treating these pleasures as a reliable foundation.",
+      "The verse doesn't say these pleasures are wicked. It says they're 'adyantavantah', things with a beginning and an end built in.\n\nThat's where the pain comes from: the letdown when they finish and the craving to repeat them. The wise still have them. They just don't build on them.",
     lifeApplication:
-      "Think about the arc of getting something you badly wanted, the phone, the trip, the approval. The wanting, the brief high, the fade, and often a small dip afterward. This verse isn't telling you to skip the trip. It's telling you not to organize your life around the next high, because that structure guarantees you spend most of your time either craving or coming down. Enjoy the thing. Just don't make it load-bearing.",
+      "Think about the last thing you badly wanted and got. There was the wanting, a short high, the fade and often a small dip afterward. Enjoy the next one fully, and don't make it the thing holding your week up.",
   },
   {
     id: "6-7",
@@ -1315,12 +1509,14 @@ export const verses: Verse[] = [
     quote: "When your mind is steady, praise and insult land the same way. Neither one runs you.",
     quoteHindi: "जब मन स्थिर हो, तो तारीफ़ और अपमान एक जैसे लगते हैं। कोई भी आप पर हावी नहीं होता।",
     categories: ["peace", "wisdom", "success"],
+    moment:
+      "Krishna has just said the mind is either your friend or your enemy. Here he describes what happens once it's become your friend.",
     simpleMeaning:
-      "Krishna says that for someone who's actually got their mind under control and is at peace, the deepest part of them stays steady and present no matter what's happening outside, cold or heat, comfort or pain, praise or insult. The events still happen. They just stop running the show.",
+      "Once you've mastered your mind, outside conditions lose their power over you. Heat and cold, pleasure and pain, praise and insult all meet the same calm.",
     deeperMeaning:
-      "The verse pairs an inner achievement with an outer result. The achievement is a mastered, peaceful mind. The result is that the deepest, steadiest layer of you stays established through all the usual pairs of opposites. Honor and dishonor are included alongside heat and cold on purpose, social standing is treated as just another swinging condition. What changes isn't the world's behavior. It's whether it can reach the center.",
+      "Look at what's on the list. Cold and heat are physical. Pleasure and pain are personal. Honor and insult are social, and Krishna puts them on the same line as the weather.\n\nPraise and criticism are treated as just another pair of conditions that come and go.",
     lifeApplication:
-      "Praise and criticism are the clearest test. Most people are visibly lifted by one and wounded by the other, which means both are effectively in charge. This verse describes a state where a compliment and an insult land on the same steady ground and neither one takes over. That's not indifference to feedback. It's that your footing isn't for sale, and it's built by working on the mind, not by pretending the words didn't sting.",
+      "Praise and criticism are the clearest test of this. Next time you get either, notice how long it moves you. You don't have to stop caring about feedback. The aim is for both to land on the same steady ground.",
   },
   {
     id: "6-26",
@@ -1337,12 +1533,14 @@ export const verses: Verse[] = [
     quote: "The mind wanders. You notice, and you bring it back. That's the practice, repeated.",
     quoteHindi: "मन भटकता है। आप ध्यान देते हैं, और उसे वापस लाते हैं। यही साधना है, बार-बार।",
     categories: ["peace", "motivation", "positive-thinking"],
+    moment:
+      "Krishna is giving practical meditation instructions here. He's just told Arjuna to settle the mind gradually, step by step.",
     simpleMeaning:
-      "Krishna's instruction for a wandering mind is simple: wherever it drifts off to, notice, and bring it back. Repeat as needed. The wandering isn't a failure. It's just what the mind does, and the returning is the practice.",
+      "The mind will wander. The practice is simply to bring it back each time, without frustration, as often as it takes.",
     deeperMeaning:
-      "The verse is almost mechanical in its plainness, and that's the point. There's no technique to master, just a loop: the mind leaves, you catch it, you bring it back under the self's direction. Done with frustration, each wandering feels like proof you can't do this. Done matter-of-factly, the same wandering is simply the raw material the practice works on. Steadiness is built by the repetitions of returning, not by somehow preventing the drift.",
+      "The instruction is almost mechanical, and that's its strength. There's no special technique, just a loop: the mind leaves, you notice, and you bring it back.\n\n'Yato yato', wherever and whenever, assumes the wandering will keep happening. The practice is in the returning, not in a mind that never drifts.",
     lifeApplication:
-      "This is the most practical meditation instruction in the Gita, and it generalizes. Your attention slides off the conversation, the task, the person in front of you, dozens of times an hour. The skill isn't a mind that never drifts, that's not on offer. It's noticing sooner and coming back without the self-criticism. Every return is a rep, and the reps are what change things.",
+      "When your attention slides off a conversation or a task, come back without the inner sigh. Treat each return as one repetition, like a rep at the gym. A day with fifty returns isn't a failed day. It's fifty reps.",
   },
   {
     id: "6-32",
@@ -1359,12 +1557,14 @@ export const verses: Verse[] = [
     quote: "Feel someone else's pain and joy as if they were your own. That's the real measure.",
     quoteHindi: "किसी और के दुख और सुख को अपना समझकर महसूस करें। यही असली पैमाना है।",
     categories: ["heart-touching", "wisdom", "life", "peace"],
+    moment:
+      "This closes Krishna's description of where meditation leads. He's described the yogi who sees the self in everyone, and this is the highest form of it.",
     simpleMeaning:
-      "Krishna says the highest yogi isn't the one who's gone furthest alone. It's the one who can feel another person's pain and joy with the same weight as their own, because they see everyone as basically like themselves.",
+      "The highest practice is feeling other people's joy and pain as if they were your own. It's measured by how you treat others, not by private calm.",
     deeperMeaning:
-      "This is a striking place to locate the peak of practice. Not in a private state of bliss or a feat of concentration, but in a specific way of relating to others: the line between your wellbeing and theirs getting thin. Seeing all beings as like yourself is the perception, and feeling their pleasure and pain as your own is what follows from it. The Gita is saying that if all the inner work doesn't produce this, it hasn't reached its highest point.",
+      "It's striking where the Gita puts the peak of practice. Not in private bliss or great feats of concentration, but in how you feel about other people.\n\n'Atmaupamyena', by comparison with yourself, is the method. You know what your own pain is like, so you take theirs just as seriously.",
     lifeApplication:
-      "It's a useful check on any kind of self-improvement. If years of practice have made you calmer and more disciplined but no more able to feel with other people, this verse suggests something's incomplete. The measure it offers is concrete: when someone else's bad news actually lands in you, and their good news genuinely lifts you, without you having to perform either, something real has shifted.",
+      "Use this as a check on any self-improvement. If years of practice have made you calmer but no better at feeling for other people, something's unfinished. Next time a friend shares bad news, notice whether it actually lands in you.",
   },
   {
     id: "9-30",
@@ -1381,12 +1581,14 @@ export const verses: Verse[] = [
     quote: "The moment you sincerely turn things around, you're already on the right path.",
     quoteHindi: "जिस पल आप सच्चे मन से ख़ुद को बदलते हैं, आप उसी पल सही राह पर होते हैं।",
     categories: ["positive-thinking", "courage", "heart-touching"],
+    moment:
+      "Krishna has just said he's the same toward everyone. Now he pushes that further, to the people you'd least expect.",
     simpleMeaning:
-      "Krishna says that even someone with a genuinely bad track record, if they turn toward him with their whole heart, should be counted as on the right path already, because they've made the right decision. The resolve is what matters. The rest follows from it.",
+      "A sincere turn toward the divine counts from the moment you make it, no matter what came before. Your past doesn't disqualify you.",
     deeperMeaning:
-      "The verse pushes back hard on the idea that you have to earn your way back over years before a change of direction counts. Krishna says the sincere turn itself, having resolved rightly, is enough to be regarded as righteous from that moment. It's not claiming the past behavior didn't happen or that change is instant. It's saying the decisive thing is the wholehearted commitment to a new direction, and that gets credited immediately, not retroactively after a probation period.",
+      "The key phrase is 'samyag vyavasitah', rightly resolved. Krishna doesn't say the past didn't happen. He says the decisive thing is the turn itself, and it counts from the moment it's made, not after years of probation.\n\nThe next verse adds that such a person quickly becomes righteous.",
     lifeApplication:
-      "People trying to change, an addiction, a pattern of harm, a way of treating people, often get told, and tell themselves, that they don't get to feel any different until they've proven it for a long time. This verse disagrees. The genuine decision to turn things around is itself the turning point, and treating it as real from day one, rather than as provisional, is part of what lets it hold. Slips afterward don't cancel the direction.",
+      "If you're trying to change something big, a habit or a way of treating people, don't wait until you've proven yourself to believe the change is real. Treating the decision as real from day one is part of what makes it hold. A slip doesn't cancel the direction.",
   },
   {
     id: "17-3",
@@ -1403,12 +1605,14 @@ export const verses: Verse[] = [
     quote: "You are made of what you believe. Whatever you put your faith in is what you become.",
     quoteHindi: "आप वही हैं जो आप मानते हैं। जिस पर आप विश्वास रखते हैं, वही आप बन जाते हैं।",
     categories: ["positive-thinking", "motivation", "purpose"],
+    moment:
+      "Arjuna has asked about people who don't follow the scriptures but still worship with faith. Krishna answers that faith comes in three kinds, depending on a person's nature.",
     simpleMeaning:
-      "Krishna says a person's faith lines up with their underlying nature, and then puts it more strongly: you are made of what you have faith in. Whatever you genuinely put your trust in is what you become. So it's worth checking what that actually is.",
+      "What you truly trust shapes who you become. A person's faith and their character are, in the end, the same thing.",
     deeperMeaning:
-      "Faith here is broader than religious belief. It's what you actually trust, orient toward, and treat as real at a gut level, whether or not you'd state it out loud. The verse's claim is that this operates as a kind of blueprint: it shapes your choices, your attention, and over time your character, until as your faith is, so are you. That makes the honest question not what you say you believe, but what you're actually living as if it were true.",
+      "Faith here is wider than religion. 'Shraddha' means what you actually trust and treat as real at gut level, whatever you'd say out loud.\n\nThe claim is that this shapes your choices and attention until it shapes you. So the useful question isn't what you believe. It's what you live as if it were true.",
     lifeApplication:
-      "People often discover their real faith by looking at their calendar and their reflexes rather than their stated values. If, under pressure, you act as though money will make you safe, or as though other people's approval decides your worth, that's a faith, and this verse says you're gradually being shaped into its image. Getting clear on what you're actually trusting is the first step to choosing it deliberately instead of drifting into it.",
+      "Look at your calendar and your reactions under pressure rather than your stated values. If you act as if money keeps you safe, or other people's approval decides your worth, that's a faith. Naming it is the first step toward choosing it on purpose.",
   },
   {
     id: "18-48",
@@ -1425,12 +1629,14 @@ export const verses: Verse[] = [
     quote: "Every effort has a flaw in it, like fire has smoke. Do your work anyway.",
     quoteHindi: "हर काम में कोई न कोई कमी होती है, जैसे आग में धुआं। फिर भी अपना काम करें।",
     categories: ["motivation", "courage", "purpose", "karma"],
+    moment:
+      "In the final chapter Krishna is describing how each person's natural work grows out of their nature. He's just repeated that your own path done imperfectly beats someone else's done well.",
     simpleMeaning:
-      "Krishna says don't abandon the work that fits your nature just because it has problems. Every effort has something wrong with it, the way every fire gives off smoke. That's not a reason to walk away from work that's genuinely yours.",
+      "Every kind of work has flaws, so flaws aren't a reason to abandon work that suits you. Do your own work, imperfections and all.",
     deeperMeaning:
-      "The verse targets a specific kind of avoidance: quitting, or never starting, because the work isn't clean or perfect. Krishna's point is that flaw is universal, every undertaking is wrapped in some defect the way fire is wrapped in smoke, so waiting for the flawless version is waiting forever. The relevant question isn't whether the work has problems. It's whether the work is suited to your nature. If it is, the flaws come with the territory and you do it anyway.",
+      "The fire and smoke image makes flaws universal. There's no fire without smoke, so waiting for a smokeless one means never lighting anything.\n\nThat changes the question. It isn't whether the work has problems, since all work does. It's whether this work is genuinely yours.",
     lifeApplication:
-      "People abandon good paths, careers, projects, relationships, on the grounds that they've spotted real problems, as if the existence of problems were the signal to leave. This verse reframes that. Problems are the smoke, present in every fire. The thing to actually evaluate is fit: is this genuinely mine to do? If it is, expecting it to be flawless first is just a way of never doing it.",
+      "If you're thinking of quitting something because you've found real problems in it, check whether the problems are the smoke or the fire. Every path has smoke. The thing to decide is whether this one fits you.",
   },
   {
     id: "18-58",
@@ -1445,14 +1651,424 @@ export const verses: Verse[] = [
     meaning:
       "With your attention steady on what matters, obstacles that looked impossible turn out to be crossable. The warning attached is just as plain: if your ego won't let you listen and adjust, you're the thing that sinks you. It's the same choice most hard moments come down to.",
     quote: "Focus on what matters and you'll get through. Let ego stop you from listening, and you won't.",
-    quoteHindi: "जो मायने रखता है उस पर ध्यान रखें, तो आप पार हो जाएंगे। अहंकार को सुनने से रोकने दें, तो नहीं।",
+    quoteHindi: "जो मायने रखता है उस पर ध्यान रखें, तो आप हर मुश्किल पार कर लेंगे। पर अगर अहंकार आपको सुनने न दे, तो नहीं।",
     categories: ["courage", "motivation", "success"],
+    moment:
+      "Near the end, Krishna has told Arjuna to offer all his actions to him. Now he spells out the two ways this can go.",
     simpleMeaning:
-      "Krishna tells Arjuna that with his attention held steady on what matters, obstacles that looked impossible turn out to be crossable. The warning comes right after: if ego won't let you listen and adjust, you're the thing that sinks you.",
+      "With your attention on the divine, you'll get through every obstacle. The real danger isn't the obstacles. It's ego refusing to listen.",
     deeperMeaning:
-      "The verse lays out a fork. One path is attention fixed on the center, which is paired with getting through every obstacle. The other is ego refusing to hear, which ends in being lost. What's notable is that the failure mode isn't the difficulty of the obstacles, it's the ego blocking the input that would help. Most hard moments come down to some version of this choice: stay open and adjustable, or let pride wall off the thing you need to hear.",
+      "The failure Krishna describes isn't about the size of the obstacles. It's ego blocking the help.\n\nThe next verse makes it concrete. If Arjuna decides out of pride that he won't fight, his own nature will force him to anyway. Refusing to listen doesn't avoid the situation. It just means facing it without guidance.",
     lifeApplication:
-      "Think of a time you were stuck and someone told you something true that you couldn't take in because it stung your pride. The obstacle wasn't really the situation at that point. It was the refusal to listen. This verse frames staying coachable, keeping your attention on the goal rather than on defending your self-image, as the actual difference between getting through and going under.",
+      "Think of a time someone told you something true that you couldn't take because it hurt your pride. Next time feedback stings, wait a day before rejecting it. The sting is often a sign it's worth hearing.",
+  },
+  {
+    id: "2-7",
+    chapter: 2,
+    verse: 7,
+    sanskrit:
+      "कार्पण्यदोषोपहतस्वभावः पृच्छामि त्वां धर्मसम्मूढचेताः। यच्छ्रेयः स्यान्निश्चितं ब्रूहि तन्मे शिष्यस्तेऽहं शाधि मां त्वां प्रपन्नम्॥",
+    transliteration:
+      "kārpaṇya-doṣopahata-svabhāvaḥ pṛcchāmi tvāṁ dharma-sammūḍha-cetāḥ, yac chreyaḥ syān niścitaṁ brūhi tan me śiṣyas te 'haṁ śādhi māṁ tvāṁ prapannam",
+    english:
+      "My nature is overcome by weakness and pity, and my mind is confused about what is right. I ask you to tell me clearly what is best for me. I am your student. Teach me, for I have come to you for refuge.",
+    meaning:
+      "This is the turning point of the Gita. Arjuna stops arguing and admits he doesn't know. Asking honestly for guidance is where the real teaching begins.",
+    quote: "Admitting you don't know is where real guidance begins.",
+    quoteHindi: "यह मान लेना कि आप नहीं जानते, सच्चे मार्गदर्शन की शुरुआत है।",
+    categories: ["wisdom", "courage", "life"],
+    moment:
+      "Arjuna has spent the end of chapter one and the start of chapter two arguing that fighting is wrong. Here he stops arguing, and for the first time he asks Krishna to teach him.",
+    simpleMeaning:
+      "Arjuna admits he's lost. His usual strength has given way, and he can't tell what's right anymore. So he does the hardest thing for a proud warrior: he asks to be taught.",
+    deeperMeaning:
+      "This verse is why the Gita exists at all. Until now Krishna has been Arjuna's friend and charioteer. Here Arjuna calls himself 'shishya', a student, and the relationship changes.\n\nThe teaching only starts once he admits he doesn't know. Up to this point he's been the one telling Krishna what's right.",
+    lifeApplication:
+      "Next time you're stuck on a hard decision, notice whether you're asking for advice or asking for agreement. Try saying plainly to someone you trust, 'I don't know what to do here.' It often opens up help that defending your position never would.",
+  },
+  {
+    id: "2-27",
+    chapter: 2,
+    verse: 27,
+    sanskrit:
+      "जातस्य हि ध्रुवो मृत्युर्ध्रुवं जन्म मृतस्य च। तस्मादपरिहार्येऽर्थे न त्वं शोचितुमर्हसि॥",
+    transliteration:
+      "jātasya hi dhruvo mṛtyur dhruvaṁ janma mṛtasya ca, tasmād aparihārye 'rthe na tvaṁ śocitum arhasi",
+    english:
+      "Death is certain for whoever is born, and birth is certain for whoever dies. So you shouldn't grieve over what can't be avoided.",
+    meaning:
+      "Some things can't be changed, and death is the clearest of them. Grieving is human. Fighting the fact itself only adds suffering.",
+    quote: "What is born will die. Don't spend your life grieving what can't be avoided.",
+    quoteHindi: "जो जन्मा है, उसकी मृत्यु निश्चित है। जो टाला नहीं जा सकता, उस पर जीवन भर शोक न करें।",
+    categories: ["life", "wisdom", "peace"],
+    moment:
+      "Krishna has been giving Arjuna spiritual reasons not to grieve. Here he adds a plain, practical one: even if you don't accept that the self is eternal, death still comes to everyone.",
+    simpleMeaning:
+      "Everyone who's born will die, and in the Gita's view everyone who dies is born again. That cycle can't be stopped, so grieving as though it could is a mistake.",
+    deeperMeaning:
+      "This argument works even if you set the spiritual claims aside. In the verse before, Krishna says 'even if you think the self is born and dies', and then gives this reason anyway.\n\nThe word 'aparihārya', unavoidable, carries the point. Grief for a loss is natural. Grief that refuses the fact itself has nowhere to go.",
+    lifeApplication:
+      "If you're carrying grief that feels like an argument with what happened, try saying the plain fact out loud: this happened, and it couldn't have been otherwise. It won't stop the sadness. It can stop the second layer of suffering that comes from fighting reality.",
+  },
+  {
+    id: "2-58",
+    chapter: 2,
+    verse: 58,
+    sanskrit:
+      "यदा संहरते चायं कूर्मोऽङ्गानीव सर्वशः। इन्द्रियाणीन्द्रियार्थेभ्यस्तस्य प्रज्ञा प्रतिष्ठिता॥",
+    transliteration:
+      "yadā saṁharate cāyaṁ kūrmo 'ṅgānīva sarvaśaḥ, indriyāṇīndriyārthebhyas tasya prajñā pratiṣṭhitā",
+    english:
+      "When someone can draw their senses back from the objects of the senses, the way a tortoise draws in its limbs, their wisdom is steady.",
+    meaning:
+      "A steady mind isn't one that never meets temptation. It's one that can pull back when it needs to, as easily as a tortoise pulls into its shell.",
+    quote: "Like a tortoise drawing in its limbs, learn to pull your senses back when you need to.",
+    quoteHindi: "जैसे कछुआ अपने अंग समेट लेता है, वैसे ही ज़रूरत पड़ने पर अपनी इंद्रियों को समेटना सीखें।",
+    categories: ["peace", "detachment", "wisdom"],
+    moment:
+      "Arjuna has asked what a person of steady wisdom is like. Krishna is answering, and this is the image he uses for how that person handles the pull of the senses.",
+    simpleMeaning:
+      "The wise person can withdraw their attention from whatever is pulling at it, whenever they choose. That ability is what makes their wisdom steady.",
+    deeperMeaning:
+      "The tortoise is a careful choice. It doesn't lose its limbs or stop using them. It walks, eats and moves through the world, and it pulls in when there's danger.\n\nSo the verse isn't about giving up the senses. It's about being able to withdraw at will, which is a skill you can practice.",
+    lifeApplication:
+      "Pick one pull that runs your day, probably your phone. Practice drawing back from it for short, planned stretches, like the first half hour after waking. The goal isn't to never use it. It's to be the one deciding when.",
+  },
+  {
+    id: "2-69",
+    chapter: 2,
+    verse: 69,
+    sanskrit:
+      "या निशा सर्वभूतानां तस्यां जागर्ति संयमी। यस्यां जाग्रति भूतानि सा निशा पश्यतो मुनेः॥",
+    transliteration:
+      "yā niśā sarva-bhūtānāṁ tasyāṁ jāgarti saṁyamī, yasyāṁ jāgrati bhūtāni sā niśā paśyato muneḥ",
+    english:
+      "What is night for all beings is the time of waking for the self-controlled. And what all beings are awake to is night for the sage who sees.",
+    meaning:
+      "The wise are awake to what most people sleep through, and unmoved by what most people chase. They live by a different clock.",
+    quote: "What the world sleeps through, the wise are awake to.",
+    quoteHindi: "जिसमें दुनिया सोई रहती है, उसमें ज्ञानी जागते हैं।",
+    categories: ["wisdom", "life", "purpose"],
+    moment:
+      "This is near the end of Krishna's long portrait of the person with steady wisdom. Here he describes how differently that person sees the world.",
+    simpleMeaning:
+      "The things most people ignore, the wise pay full attention to. The things most people are absorbed in, the wise barely notice. Their priorities run almost opposite to everyone else's.",
+    deeperMeaning:
+      "The night here is a figure of speech. Most people are awake to pleasure, status and possessions, and asleep to the self. For the sage it's the reverse.\n\nThe verse is also a gentle warning that real clarity can look odd from the outside. Someone awake to different things will seem asleep to yours.",
+    lifeApplication:
+      "Look at what took most of your attention yesterday. Then ask what you were asleep to while you did it: a person, your health, a question that matters. That second list is often where the verse wants you to wake up.",
+  },
+  {
+    id: "3-19",
+    chapter: 3,
+    verse: 19,
+    sanskrit:
+      "तस्मादसक्तः सततं कार्यं कर्म समाचर। असक्तो ह्याचरन्कर्म परमाप्नोति पूरुषः॥",
+    transliteration:
+      "tasmād asaktaḥ satataṁ kāryaṁ karma samācara, asakto hy ācaran karma param āpnoti pūruṣaḥ",
+    english:
+      "So always do the work that needs doing, without attachment. By working without attachment, a person reaches the highest.",
+    meaning:
+      "You don't have to step away from work to grow. Doing what needs doing, without clinging to what you'll get, is itself the path.",
+    quote: "Do the work that needs doing, without clinging. That is the path.",
+    quoteHindi: "जो काम ज़रूरी है, उसे बिना आसक्ति के करें। यही मार्ग है।",
+    categories: ["karma", "purpose", "detachment"],
+    moment:
+      "Arjuna has asked why he should act at all if understanding is higher than action. Krishna has spent several verses arguing that action can't be avoided, and here he draws his conclusion.",
+    simpleMeaning:
+      "Work isn't an obstacle to spiritual growth. Done without clinging to results, the work itself takes you to the highest goal.",
+    deeperMeaning:
+      "The word 'kāryam', what ought to be done, matters. Krishna isn't saying do anything at all. He means the work that genuinely falls to you.\n\nThe next verse gives King Janaka as proof: a ruler who reached perfection while still running a kingdom. Freedom isn't kept for people who leave the world.",
+    lifeApplication:
+      "Pick a task you've been treating as a distraction from the life you'd rather be living. Do it today as if it were the practice itself, with full attention and no running commentary on what it gets you. Notice whether it feels lighter.",
+  },
+  {
+    id: "4-39",
+    chapter: 4,
+    verse: 39,
+    sanskrit:
+      "श्रद्धावाँल्लभते ज्ञानं तत्परः संयतेन्द्रियः। ज्ञानं लब्ध्वा परां शान्तिमचिरेणाधिगच्छति॥",
+    transliteration:
+      "śraddhāvāl labhate jñānaṁ tat-paraḥ saṁyatendriyaḥ, jñānaṁ labdhvā parāṁ śāntim acireṇādhigacchati",
+    english:
+      "Someone with faith, devoted to it and in control of their senses, gains knowledge. And having gained it, they soon reach the highest peace.",
+    meaning:
+      "Real understanding comes to people who trust the path, commit to it and keep their senses in check. Peace follows soon after.",
+    quote: "Faith, focus and self-control bring knowledge. And knowledge brings peace.",
+    quoteHindi: "श्रद्धा, लगन और संयम से ज्ञान मिलता है, और ज्ञान से शांति।",
+    categories: ["wisdom", "peace", "motivation"],
+    moment:
+      "Krishna has just said that nothing in the world purifies like knowledge. Here he tells Arjuna who actually gets that knowledge.",
+    simpleMeaning:
+      "Three things open the door to real understanding: trust in the path, steady commitment and self-control. Once that understanding comes, deep peace isn't far behind.",
+    deeperMeaning:
+      "'Shraddhāvān labhate jnānam', the person with faith gains knowledge, is one of the most quoted lines in the Gita. Faith here doesn't mean believing without thinking.\n\nIt means trusting the process enough to keep going before you see results. Learning almost anything hard needs that trust, because the understanding arrives after the effort, not before it.",
+    lifeApplication:
+      "Think of something you gave up on because it wasn't working yet: a skill, a practice, a book. Ask whether you stopped before the understanding had time to arrive. Pick one and give it a set period of real commitment before you judge it.",
+  },
+  {
+    id: "4-40",
+    chapter: 4,
+    verse: 40,
+    sanskrit:
+      "अज्ञश्चाश्रद्दधानश्च संशयात्मा विनश्यति। नायं लोकोऽस्ति न परो न सुखं संशयात्मनः॥",
+    transliteration:
+      "ajñaś cāśraddadhānaś ca saṁśayātmā vinaśyati, nāyaṁ loko 'sti na paro na sukhaṁ saṁśayātmanaḥ",
+    english:
+      "But someone who is ignorant, without faith and full of doubt, is lost. For the doubter there is no happiness, not in this world or the next.",
+    meaning:
+      "Some doubt is healthy. Doubt that never settles into a decision eats away at your peace and keeps you from moving at all.",
+    quote: "Endless doubt brings no happiness, here or anywhere.",
+    quoteHindi: "अंतहीन संदेह से कोई सुख नहीं मिलता, न यहाँ, न कहीं और।",
+    categories: ["wisdom", "courage", "life"],
+    moment:
+      "This comes right after the verse about faith leading to knowledge and peace. Here Krishna describes the opposite.",
+    simpleMeaning:
+      "Someone who doubts everything and trusts nothing can't build anything, inside or out. They don't find happiness anywhere, because the doubt goes with them.",
+    deeperMeaning:
+      "'Samshayātmā vinashyati', the doubting self is lost, is the famous line here. The word describes someone whose very self has become doubt, not someone who simply has questions.\n\nThe Gita isn't against questioning. Arjuna asks questions all the way through. It's against doubt that never resolves, because that keeps a person from ever committing to a path.",
+    lifeApplication:
+      "If you've been undecided about something for a long time, set a date to decide. Gather what you need before then, and when the day comes, choose and commit. You can adjust later. Living in permanent doubt costs more than a choice that turns out imperfect.",
+  },
+  {
+    id: "5-18",
+    chapter: 5,
+    verse: 18,
+    sanskrit:
+      "विद्याविनयसम्पन्ने ब्राह्मणे गवि हस्तिनि। शुनि चैव श्वपाके च पण्डिताः समदर्शिनः॥",
+    transliteration:
+      "vidyā-vinaya-sampanne brāhmaṇe gavi hastini, śuni caiva śva-pāke ca paṇḍitāḥ sama-darśinaḥ",
+    english:
+      "The wise look with the same eye on a learned and humble priest, a cow, an elephant, a dog and the person society has cast out.",
+    meaning:
+      "Real wisdom sees the same worth in every being, whatever their status or form. It doesn't rank souls.",
+    quote: "The wise see the same light in every being, high or low.",
+    quoteHindi: "ज्ञानी हर प्राणी में एक ही प्रकाश देखते हैं, चाहे वह ऊँचा हो या नीचा।",
+    categories: ["wisdom", "peace", "heart-touching"],
+    moment:
+      "Krishna is describing people who have found inner freedom through knowledge. This verse names the clearest sign of it: how they see others.",
+    simpleMeaning:
+      "Someone who truly understands sees the same self in everyone. The respected scholar, the animals and the person the world looks down on are all equal in their eyes.",
+    deeperMeaning:
+      "The list was deliberately shocking for its time. It puts a learned priest, the most honored person in that society, next to animals and someone treated as untouchable.\n\nThe word is 'sama-darshinah', those who see equally. It's not that the wise can't see differences. They see past them to what's the same in everyone.",
+    lifeApplication:
+      "Notice who you treat with extra warmth and who you barely see: the boss and the cleaner, the person who can help you and the one who can't. For one day, try giving everyone the same attention. It's harder than it sounds, and that's the point.",
+  },
+  {
+    id: "6-34",
+    chapter: 6,
+    verse: 34,
+    sanskrit:
+      "चञ्चलं हि मनः कृष्ण प्रमाथि बलवद्दृढम्। तस्याहं निग्रहं मन्ये वायोरिव सुदुष्करम्॥",
+    transliteration:
+      "cañcalaṁ hi manaḥ kṛṣṇa pramāthi balavad dṛḍham, tasyāhaṁ nigrahaṁ manye vāyor iva su-duṣkaram",
+    english:
+      "The mind is restless, Krishna, turbulent, strong and stubborn. I think controlling it is as hard as controlling the wind.",
+    meaning:
+      "Arjuna says what everyone who's tried to calm their mind has felt: it seems impossible. The Gita takes that honesty seriously.",
+    quote: "The mind is as restless as the wind. Admitting that is the first step.",
+    quoteHindi: "मन हवा जितना चंचल है। यह मान लेना पहला कदम है।",
+    categories: ["peace", "wisdom", "life"],
+    moment:
+      "Krishna has just described the yogi whose mind is perfectly steady. Arjuna pushes back, and this is his honest objection.",
+    simpleMeaning:
+      "Arjuna tells Krishna plainly that the mind is restless, powerful and hard to pin down. Trying to control it feels like trying to hold the wind.",
+    deeperMeaning:
+      "It matters that this objection is in the Gita at all. Arjuna isn't a beginner. He's a disciplined warrior, and he still finds his mind ungovernable.\n\nKrishna doesn't scold him for it. In the very next verse he agrees, then explains how it can be done anyway. The honesty comes first, then the method.",
+    lifeApplication:
+      "If you've tried meditating and felt like a failure, you're in good company. Write down one sentence describing how your mind actually behaves, without judging it. Seeing it clearly is the start of working with it.",
+  },
+  {
+    id: "6-40",
+    chapter: 6,
+    verse: 40,
+    sanskrit:
+      "पार्थ नैवेह नामुत्र विनाशस्तस्य विद्यते। न हि कल्याणकृत्कश्चिद्दुर्गतिं तात गच्छति॥",
+    transliteration:
+      "pārtha naiveha nāmutra vināśas tasya vidyate, na hi kalyāṇa-kṛt kaścid durgatiṁ tāta gacchati",
+    english:
+      "Arjuna, someone on this path is never destroyed, in this world or the next. No one who does good ever comes to a bad end, my friend.",
+    meaning:
+      "Effort toward the good is never wasted, even if you don't finish the journey. Whatever you build stays with you.",
+    quote: "No one who does good ever comes to a bad end.",
+    quoteHindi: "जो भला करता है, उसका कभी बुरा अंत नहीं होता।",
+    categories: ["positive-thinking", "motivation", "peace"],
+    moment:
+      "Arjuna has just asked what happens to someone who starts this path sincerely but falls away before reaching the goal. Do they lose everything? This is Krishna's reassurance.",
+    simpleMeaning:
+      "If you sincerely try to live well and fall short, you haven't lost anything. Krishna promises that someone who does good never ends up badly, in this life or after it.",
+    deeperMeaning:
+      "Krishna calls Arjuna 'tāta' here, a warm word, roughly 'my dear'. It's one of the gentlest moments in the conversation.\n\nThe verses after this explain the promise. Someone who falls away is born again in good circumstances and picks up where they left off. No sincere effort is ever cancelled.",
+    lifeApplication:
+      "If you've abandoned a good effort, a habit or a change you were making, and feel like it was all wasted, it wasn't. Start again from where you are now. The verse's whole point is that the earlier work still counts.",
+  },
+  {
+    id: "7-19",
+    chapter: 7,
+    verse: 19,
+    sanskrit:
+      "बहूनां जन्मनामन्ते ज्ञानवान्मां प्रपद्यते। वासुदेवः सर्वमिति स महात्मा सुदुर्लभः॥",
+    transliteration:
+      "bahūnāṁ janmanām ante jñānavān māṁ prapadyate, vāsudevaḥ sarvam iti sa mahātmā su-durlabhaḥ",
+    english:
+      "After many births, the one who truly knows comes to me, realizing that Vasudeva is everything. Such a great soul is very rare.",
+    meaning:
+      "Real understanding takes a long time to ripen, and when it does, it sees the divine in everything. That's why such people are rare.",
+    quote: "After a long journey, the wise see the divine in everything. Such a person is rare.",
+    quoteHindi: "लंबी यात्रा के बाद ज्ञानी हर चीज़ में ईश्वर को देखते हैं। ऐसा व्यक्ति दुर्लभ है।",
+    categories: ["wisdom", "purpose", "heart-touching"],
+    moment:
+      "Krishna has been describing four kinds of people who turn to him: the distressed, the curious, those who want something and the wise. Here he says what the wisest of them finally sees.",
+    simpleMeaning:
+      "Understanding the divine isn't a quick event. After a very long journey, the wise person sees that everything is the divine. People who get there are rare.",
+    deeperMeaning:
+      "'Vāsudevah sarvam iti', Vasudeva is everything, is the heart of the verse. Vasudeva is a name for Krishna, so the claim is that nothing stands outside him.\n\nThe phrase 'after many births' sets realistic expectations. The Gita doesn't promise sudden enlightenment. It describes something that ripens slowly, over a very long time.",
+    lifeApplication:
+      "If spiritual or personal growth feels slow, this verse is a reminder that slowness is normal. Pick a practice you can see yourself doing for years, not weeks, and judge it on that timescale.",
+  },
+  {
+    id: "9-34",
+    chapter: 9,
+    verse: 34,
+    sanskrit:
+      "मन्मना भव मद्भक्तो मद्याजी मां नमस्कुरु। मामेवैष्यसि युक्त्वैवमात्मानं मत्परायणः॥",
+    transliteration:
+      "man-manā bhava mad-bhakto mad-yājī māṁ namaskuru, mām evaiṣyasi yuktvaivam ātmānaṁ mat-parāyaṇaḥ",
+    english:
+      "Fix your mind on me, be devoted to me, offer to me and bow to me. Joining yourself to me this way, with me as your goal, you will come to me.",
+    meaning:
+      "The whole path in one line: keep the divine in mind, love it, offer to it and bow to it. The rest follows.",
+    quote: "Fix your mind on the divine, love it, and you will arrive.",
+    quoteHindi: "अपना मन ईश्वर पर लगाइए, उससे प्रेम कीजिए, और आप उस तक पहुँच जाएँगे।",
+    categories: ["wisdom", "peace", "heart-touching"],
+    moment:
+      "This is the last verse of chapter nine, which Krishna calls the royal secret. After explaining how close he is to everyone who turns to him, he sums up the whole path.",
+    simpleMeaning:
+      "Krishna gives four simple instructions: think of me, love me, offer to me and bow to me. Living that way, you'll reach him.",
+    deeperMeaning:
+      "This verse comes back almost word for word near the very end of the Gita, as 18.65. Krishna repeats it because it's the simplest form of everything he teaches.\n\nNone of the four steps needs special skill or learning. Thinking, loving, offering and bowing are open to anyone, which fits chapter nine's theme that this path is easy to follow.",
+    lifeApplication:
+      "Choose one small daily act for each of the four: a moment of remembering, something done with love, something offered, a moment of bowing your head. Keep each one tiny and do them every day for a week.",
+  },
+  {
+    id: "10-8",
+    chapter: 10,
+    verse: 8,
+    sanskrit:
+      "अहं सर्वस्य प्रभवो मत्तः सर्वं प्रवर्तते। इति मत्वा भजन्ते मां बुधा भावसमन्विताः॥",
+    transliteration:
+      "ahaṁ sarvasya prabhavo mattaḥ sarvaṁ pravartate, iti matvā bhajante māṁ budhā bhāva-samanvitāḥ",
+    english:
+      "I am the source of everything, and everything comes from me. The wise, understanding this, worship me with all their heart.",
+    meaning:
+      "Everything that exists has one source. Seeing that clearly turns, quite naturally, into love and reverence.",
+    quote: "Everything comes from one source. Seeing that turns knowledge into love.",
+    quoteHindi: "सब कुछ एक ही स्रोत से आता है। यह देखना ज्ञान को प्रेम में बदल देता है।",
+    categories: ["wisdom", "heart-touching", "peace"],
+    moment:
+      "Chapter ten is where Krishna describes his divine glories. This verse opens a group of four that some teachers call the essence of the whole Gita.",
+    simpleMeaning:
+      "Krishna says he's the origin of everything, and all of creation unfolds from him. The wise understand this and respond with heartfelt devotion.",
+    deeperMeaning:
+      "The verse moves from knowing to loving. 'Iti matvā', having understood this, leads straight to 'bhajante', they worship.\n\nThe Gita doesn't treat knowledge and devotion as rival paths here. Real understanding of where everything comes from naturally becomes love for that source.",
+    lifeApplication:
+      "Next time you enjoy something, a meal or a view or a friend's kindness, take a moment to ask where it came from, and where that came from. Following the chain back a few steps tends to turn enjoyment into gratitude.",
+  },
+  {
+    id: "11-12",
+    chapter: 11,
+    verse: 12,
+    sanskrit:
+      "दिवि सूर्यसहस्रस्य भवेद्युगपदुत्थिता। यदि भाः सदृशी सा स्याद्भासस्तस्य महात्मनः॥",
+    transliteration:
+      "divi sūrya-sahasrasya bhaved yugapad utthitā, yadi bhāḥ sadṛśī sā syād bhāsas tasya mahātmanaḥ",
+    english:
+      "If the light of a thousand suns were to blaze up in the sky all at once, it might resemble the brilliance of that great being.",
+    meaning:
+      "When Arjuna sees Krishna's universal form, the only comparison that comes close is a thousand suns rising at once.",
+    quote: "If a thousand suns rose at once, it might come close to that light.",
+    quoteHindi: "अगर आकाश में एक साथ हज़ार सूरज उग जाएँ, तो शायद वह उस प्रकाश के समान हो।",
+    categories: ["wisdom", "heart-touching", "life"],
+    moment:
+      "Arjuna has asked to see Krishna's universal form, and Krishna has given him divine sight to see it. In this verse the narrator, Sanjaya, tries to describe what Arjuna sees.",
+    simpleMeaning:
+      "What Arjuna sees is so bright that ordinary words fail. The best Sanjaya can offer is that a thousand suns blazing in the sky at once might come close.",
+    deeperMeaning:
+      "The verse became famous far outside India in 1945. J. Robert Oppenheimer is said to have thought of this line while watching the first atomic bomb test. Years later he quoted another verse from the same chapter, 'Now I am become death'.\n\nIn the Gita itself, the image is about scale. The divine is too vast for human sight, so Krishna has to give Arjuna special eyes just to see it.",
+    lifeApplication:
+      "When something moves you so much you can't describe it, a birth or a mountain or a piece of music, let it stay beyond words for a moment. The Gita's own narrator runs out of language here, and doesn't pretend otherwise.",
+  },
+  {
+    id: "15-1",
+    chapter: 15,
+    verse: 1,
+    sanskrit:
+      "ऊर्ध्वमूलमधःशाखमश्वत्थं प्राहुरव्ययम्। छन्दांसि यस्य पर्णानि यस्तं वेद स वेदवित्॥",
+    transliteration:
+      "ūrdhva-mūlam adhaḥ-śākham aśvatthaṁ prāhur avyayam, chandāṁsi yasya parṇāni yas taṁ veda sa veda-vit",
+    english:
+      "They speak of an eternal ashvattha tree with its roots above and its branches below. Its leaves are the Vedic hymns. Whoever knows this tree knows the Vedas.",
+    meaning:
+      "The world is pictured as a giant upside-down tree, rooted in the divine above. Understanding how it grows is understanding what all scripture is for.",
+    quote: "The world is a tree rooted above. Know its roots, and you know the rest.",
+    quoteHindi: "संसार एक ऐसा पेड़ है जिसकी जड़ें ऊपर हैं। जड़ों को जान लें, तो बाकी सब समझ आ जाता है।",
+    categories: ["wisdom", "life", "purpose"],
+    moment:
+      "Chapter fifteen opens with this image. Krishna has just finished describing how to rise above the three qualities of nature, and now he gives a picture of the world those qualities make.",
+    simpleMeaning:
+      "The world is like a huge sacred fig tree turned upside down. Its roots are in the divine above, its branches spread down into the world, and its leaves are the sacred hymns.",
+    deeperMeaning:
+      "The ashvattha is the sacred fig, or peepal, still honored across India. Picturing it upside down puts the source of the world above, in the divine, and its growth below, in everyday life.\n\nThe image also appears in the Katha Upanishad. Two verses later Krishna says the tree has to be cut down with the axe of detachment, which is why it's an image to understand, not just admire.",
+    lifeApplication:
+      "Pick one part of your life that feels tangled, a habit or a worry, and trace it back to its root instead of trimming the branches. Asking 'where does this actually come from?' usually shows you the one place change would work.",
+  },
+  {
+    id: "15-15",
+    chapter: 15,
+    verse: 15,
+    sanskrit:
+      "सर्वस्य चाहं हृदि सन्निविष्टो मत्तः स्मृतिर्ज्ञानमपोहनं च। वेदैश्च सर्वैरहमेव वेद्यो वेदान्तकृद्वेदविदेव चाहम्॥",
+    transliteration:
+      "sarvasya cāhaṁ hṛdi sanniviṣṭo mattaḥ smṛtir jñānam apohanaṁ ca, vedaiś ca sarvair aham eva vedyo vedānta-kṛd veda-vid eva cāham",
+    english:
+      "I am seated in the hearts of all. Memory, knowledge and forgetting come from me. I am what all the Vedas aim to know. I am the author of Vedanta and the knower of the Vedas.",
+    meaning:
+      "The divine isn't far away. It lives in every heart and is the source of everything we remember, know and forget.",
+    quote: "Everything you know, remember and forget begins in the heart.",
+    quoteHindi: "जो कुछ आप जानते हैं, याद रखते हैं और भूलते हैं, वह सब हृदय से शुरू होता है।",
+    categories: ["wisdom", "heart-touching", "peace"],
+    moment:
+      "Krishna has been describing how his presence sustains the world: as the light of the sun and moon, the strength that holds up the earth and the fire that digests food. Here he moves from the world into the human heart.",
+    simpleMeaning:
+      "Krishna lives in every heart. He's where memory, understanding and even forgetting come from. All scripture is ultimately about knowing him.",
+    deeperMeaning:
+      "The surprising word is 'apohanam', forgetting. Krishna claims not only memory and knowledge but forgetting too.\n\nThat makes sense if you've ever been grateful to forget something painful. Forgetting is part of how a mind heals, and the verse treats it as coming from the same source as knowing.",
+    lifeApplication:
+      "Next time you can't stop replaying something painful, try treating forgetting as something you're allowed to receive rather than a failure. Stop rehearsing it on purpose, and give your mind room to let it go.",
+  },
+  {
+    id: "18-61",
+    chapter: 18,
+    verse: 61,
+    sanskrit:
+      "ईश्वरः सर्वभूतानां हृद्देशेऽर्जुन तिष्ठति। भ्रामयन्सर्वभूतानि यन्त्रारूढानि मायया॥",
+    transliteration:
+      "īśvaraḥ sarva-bhūtānāṁ hṛd-deśe 'rjuna tiṣṭhati, bhrāmayan sarva-bhūtāni yantrārūḍhāni māyayā",
+    english:
+      "The Lord dwells in the heart of every being, Arjuna, turning them all by his power, as if they were mounted on a machine.",
+    meaning:
+      "Every being is moved by forces deeper than its own will. The divine sits at the heart of it all, turning the great wheel.",
+    quote: "The divine lives in every heart, quietly turning the wheel of the world.",
+    quoteHindi: "ईश्वर हर हृदय में बसते हैं और चुपचाप संसार का चक्र घुमाते हैं।",
+    categories: ["wisdom", "life", "peace"],
+    moment:
+      "Near the end, Krishna has just warned Arjuna that his own nature will drive him to fight even if he refuses. This verse explains where that driving force finally comes from.",
+    simpleMeaning:
+      "Krishna says the divine lives in every heart and moves all beings through its power, as if they were riding on a machine that turns them.",
+    deeperMeaning:
+      "The machine image, 'yantra', isn't meant to make people sound like robots. It describes how much of what we do comes from nature, habit and causes we didn't choose.\n\nThe next verse gives the response: take refuge in that inner Lord with your whole being. If something deeper is already turning the wheel, trust is wiser than resistance.",
+    lifeApplication:
+      "Notice one pattern you keep repeating even though you've decided not to. Rather than fighting it by willpower alone, ask what deeper need is driving it. Working with that need tends to go further than wrestling the wheel.",
   },
 ]
 

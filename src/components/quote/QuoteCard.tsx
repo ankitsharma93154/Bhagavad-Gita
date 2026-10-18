@@ -123,7 +123,7 @@ export function QuoteCard({ verse, featured = false, defaultLang = "en" }: Quote
           </div>
 
           <div className="relative z-10">
-            <QuoteActions verse={verse} />
+            <QuoteActions verse={verse} lang={quoteLang} />
           </div>
         </div>
       </div>

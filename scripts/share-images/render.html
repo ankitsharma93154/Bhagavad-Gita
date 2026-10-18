@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+  Draws share images with src/lib/shareImage.ts outside the site. Served by the Vite dev server,
+  never part of the site build.
+    ?id=2-47&format=story&lang=en&theme=light   one image at 1:1 size, for checking a layout
+    ?id=2-47&grid=1                             every format, language and theme for one verse
+    ?all=og                                     used by build.mjs: draws every verse's
+                                                link-preview card and posts it back to be saved
+  e.g. http://localhost:5173/scripts/share-images/render.html?id=2-47&grid=1
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body { margin: 0; background: #222; }
+      canvas { display: block; }
+      .grid { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; align-items: flex-start; }
+      .grid canvas { height: 640px; width: auto; }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import { verses } from "/src/data/verses.ts"
+      import { renderShareImage } from "/src/lib/shareImage.ts"
+
+      const q = new URLSearchParams(location.search)
+
+      if (q.get("all") === "og") {
+        for (const v of verses) {
+          const canvas = await renderShareImage(v, { format: "og", lang: "en", theme: "light" })
+          const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88))
+          await fetch(`/__save-og?id=${v.id}`, { method: "POST", body: blob })
+        }
+      } else {
+        const verse = verses.find((v) => v.id === (q.get("id") ?? "2-47"))
+        if (!verse) throw new Error("Unknown verse id")
+        if (q.get("grid")) {
+          document.body.className = "grid"
+          for (const format of ["story", "wallpaper", "og"])
+            for (const theme of ["light", "dark"])
+              for (const lang of format === "og" ? ["en"] : ["en", "hi"])
+                document.body.append(await renderShareImage(verse, { format, lang, theme }))
+        } else {
+          const canvas = await renderShareImage(verse, {
+            format: q.get("format") ?? "story",
+            lang: q.get("lang") ?? "en",
+            theme: q.get("theme") ?? "light",
+          })
+          document.body.append(canvas)
+        }
+      }
+      document.title = "rendered"
+    </script>
+  </body>
+</html>

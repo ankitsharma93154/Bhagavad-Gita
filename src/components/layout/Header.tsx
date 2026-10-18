@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom"
 import { Menu, Search, Heart, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSavedQuotes } from "@/hooks/useSavedQuotes"
+import { ThemeToggle } from "./ThemeToggle"
 
 const navLinks = [
   { to: "/", label: "Home", end: true },
@@ -111,17 +112,25 @@ export function Header() {
               aria-hidden
             />
           </Link>
+          <ThemeToggle />
         </div>
 
-        <button
-          type="button"
-          onClick={() => setMobileOpen((open) => !open)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full text-ink md:hidden"
-        >
-          {mobileOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
-        </button>
+        <div className="flex items-center md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full text-ink"
+          >
+            {mobileOpen ? (
+              <X className="h-5 w-5" aria-hidden />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden />
+            )}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (

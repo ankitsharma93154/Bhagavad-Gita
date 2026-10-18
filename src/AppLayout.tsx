@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { ScrollToTop } from "@/components/layout/ScrollToTop"
@@ -28,6 +29,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </main>
       <Footer />
       <Analytics />
+      {/* Real-visitor Core Web Vitals, reported to Vercel Speed Insights. Loads its own small script
+          after the page, so it doesn't affect the metrics it measures. */}
+      <SpeedInsights />
     </div>
   )
 }

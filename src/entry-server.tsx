@@ -3,7 +3,8 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter } from "react-router-dom"
 import { AppLayout } from "./AppLayout"
 import { AppRoutesServer } from "./AppRoutes.server"
-import { SITE_NAME, SITE_URL } from "./lib/seo"
+import { SITE_NAME } from "./lib/seo"
+import { THEME_COLORS, THEME_INIT_SCRIPT } from "./lib/theme"
 
 export interface RenderInput {
   url: string
@@ -28,13 +29,12 @@ export function render({ url, cssHref, scriptSrc }: RenderInput): string {
         <link rel="apple-touch-icon" href="/favicon-192.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#fbeedf" />
+        <meta name="theme-color" content={THEME_COLORS.light} />
+        {/* eslint-disable-next-line react/no-danger -- static, first-party theme bootstrap */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <meta property="og:site_name" content={SITE_NAME} />
-        <meta property="og:image" content={`${SITE_URL}/og-image.jpg`} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="800" />
+        {/* og:image / twitter:image come from each page's <Seo>, so verse pages get their own card. */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`${SITE_URL}/og-image.jpg`} />
         <link
           rel="preload"
           href="/fonts/inter-latin.woff2"

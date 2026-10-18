@@ -114,6 +114,60 @@
   }
 }
 
+/*
+ * Dark mode: a warm night version of the same palette, swapped in by redefining the tokens,
+ * so every utility follows without per-component `dark:` classes. The "-deep" tones are used
+ * as emphasis text, so in dark mode they go lighter, not darker; "-soft" tones are tinted
+ * fills, so they go dark. The inline script in index.html / entry-server.tsx sets
+ * data-theme on <html> before first paint (stored choice, else the OS setting); the media
+ * query covers visitors without JS.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@utility dark-tokens {
+  --color-paper: #17120e;
+  --color-paper-dim: #211a14;
+  --color-surface: #261e17;
+  --color-surface-soft: #2e251d;
+
+  --color-ink: #f3e7d6;
+  --color-ink-soft: #cdb9a0;
+  --color-ink-faint: #a8937a;
+
+  --color-line: #3a2e23;
+  --color-line-soft: #2c231b;
+  --color-line-strong: #8a7350;
+
+  --color-clay: #e57d90;
+  --color-clay-deep: #f3a9b6;
+  --color-clay-soft: #3d1d25;
+
+  --color-teal: #a99be0;
+  --color-teal-deep: #d2c9f3;
+  --color-teal-soft: #272040;
+
+  --color-gold: #e2bd6e;
+  --color-gold-deep: #e9c983;
+  --color-gold-soft: #33291a;
+
+  --color-saffron: #e5925e;
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 4px 8px rgba(0, 0, 0, 0.35), 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 8px 20px -4px rgba(229, 125, 144, 0.3), 0 4px 14px -6px rgba(229, 146, 94, 0.25);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="dark"] {
+  @apply dark-tokens;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @apply dark-tokens;
+  }
+}
+
 @utility container-page {
   width: 100%;
   max-width: 68rem;
@@ -184,13 +238,27 @@
 
   body {
     background-color: var(--color-paper);
-    background-image: linear-gradient(
-      160deg,
-      var(--color-clay-soft) 0%,
-      var(--color-paper) 30%,
-      var(--color-paper) 70%,
-      var(--color-gold-soft) 100%
-    );
+    /* A rose bloom from the top corners over the diagonal clay→paper→gold wash. The blooms mix a
+       little clay into clay-soft so the pink reads clearly, in both themes, without touching the
+       tokens the cards use. */
+    background-image:
+      radial-gradient(
+        90% 55% at 0% 0%,
+        color-mix(in oklab, var(--color-clay-soft), var(--color-clay) 14%) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        70% 45% at 100% 0%,
+        color-mix(in oklab, var(--color-clay-soft), transparent 35%) 0%,
+        transparent 70%
+      ),
+      linear-gradient(
+        160deg,
+        var(--color-clay-soft) 0%,
+        var(--color-paper) 48%,
+        var(--color-paper) 72%,
+        var(--color-gold-soft) 100%
+      );
     background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
