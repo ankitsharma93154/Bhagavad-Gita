@@ -1,5 +1,5 @@
 const SITE_NAME = "Bhagavad Gita Quotes"
-const SITE_URL = "https://bhagvadgitaquotes.com"
+const SITE_URL = "https://www.bhagvadgitaquotes.com"
 
 export interface BreadcrumbItem {
   name: string

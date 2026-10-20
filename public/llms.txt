@@ -6,16 +6,16 @@
 
 ## Main pages
 
-- [Home](https://bhagvadgitaquotes.com/): A featured verse for the day plus entry points into the collection.
-- [All quotes](https://bhagvadgitaquotes.com/quotes): The full browsable list of verses with search.
-- [Themes](https://bhagvadgitaquotes.com/themes): Verses grouped by topic such as karma, peace, purpose, courage, and detachment.
-- [Hindi quotes](https://bhagvadgitaquotes.com/languages/hindi): Selected verses with Hindi renderings.
-- [About](https://bhagvadgitaquotes.com/about): How the translations and meanings are sourced, and how they differ.
+- [Home](https://www.bhagvadgitaquotes.com/): A featured verse for the day plus entry points into the collection.
+- [All quotes](https://www.bhagvadgitaquotes.com/quotes): The full browsable list of verses with search.
+- [Themes](https://www.bhagvadgitaquotes.com/themes): Verses grouped by topic such as karma, peace, purpose, courage, and detachment.
+- [Hindi quotes](https://www.bhagvadgitaquotes.com/languages/hindi): Selected verses with Hindi renderings.
+- [About](https://www.bhagvadgitaquotes.com/about): How the translations and meanings are sourced, and how they differ.
 
 ## Reference
 
-- [Sitemap](https://bhagvadgitaquotes.com/sitemap.xml): Every indexable URL, including one page per verse and per theme.
-- [Individual verse pages](https://bhagvadgitaquotes.com/quotes): Linked from the quotes list; each has the form /quotes/&lt;chapter&gt;-&lt;verse&gt;-&lt;slug&gt; with Sanskrit, transliteration, translation, and meaning.
+- [Sitemap](https://www.bhagvadgitaquotes.com/sitemap.xml): Every indexable URL, including one page per verse and per theme.
+- [Individual verse pages](https://www.bhagvadgitaquotes.com/quotes): Linked from the quotes list; each has the form /quotes/&lt;chapter&gt;-&lt;verse&gt;-&lt;slug&gt; with Sanskrit, transliteration, translation, and meaning.
 
 ## Notes
 

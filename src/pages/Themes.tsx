@@ -15,7 +15,7 @@ export function Themes() {
           Explore by theme
         </h1>
         <p className="mt-3 text-ink-soft">
-          Ten threads running through the Gita. Pick the one that matches where you are today.
+          {themes.length} threads running through the Gita. Pick the one that matches where you are today.
         </p>
       </header>
       <div className="mt-10">

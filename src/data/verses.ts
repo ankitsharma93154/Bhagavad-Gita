@@ -40,6 +40,8 @@ export interface Verse {
   verse: number
   sanskrit: string
   transliteration?: string
+  /** Popular romanized opening words ("Karmanye Vadhikaraste"), for well-known verses people search by name. */
+  shlokaName?: string
   english: string
   hindi?: string
   meaning: string
@@ -56,6 +58,7 @@ export interface Verse {
 export const verses: Verse[] = [
   {
     id: "2-47",
+    shlokaName: "Karmanye Vadhikaraste",
     chapter: 2,
     verse: 47,
     sanskrit:
@@ -80,6 +83,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-22",
+    shlokaName: "Vasansi Jirnani Yatha Vihaya",
     chapter: 2,
     verse: 22,
     sanskrit:
@@ -104,6 +108,7 @@ export const verses: Verse[] = [
   },
   {
     id: "18-66",
+    shlokaName: "Sarva Dharman Parityajya",
     chapter: 18,
     verse: 66,
     sanskrit:
@@ -128,6 +133,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-3",
+    shlokaName: "Klaibyam Ma Sma Gamah",
     chapter: 2,
     verse: 3,
     sanskrit:
@@ -152,6 +158,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-14",
+    shlokaName: "Matra Sparshas Tu Kaunteya",
     chapter: 2,
     verse: 14,
     sanskrit:
@@ -200,6 +207,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-20",
+    shlokaName: "Na Jayate Mriyate Va",
     chapter: 2,
     verse: 20,
     sanskrit:
@@ -224,6 +232,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-23",
+    shlokaName: "Nainam Chindanti Shastrani",
     chapter: 2,
     verse: 23,
     sanskrit:
@@ -248,6 +257,7 @@ export const verses: Verse[] = [
   },
   {
     id: "11-32",
+    shlokaName: "Kalo Asmi Loka Kshaya Krit",
     chapter: 11,
     verse: 32,
     sanskrit:
@@ -296,6 +306,7 @@ export const verses: Verse[] = [
   },
   {
     id: "4-7",
+    shlokaName: "Yada Yada Hi Dharmasya",
     chapter: 4,
     verse: 7,
     sanskrit:
@@ -320,6 +331,7 @@ export const verses: Verse[] = [
   },
   {
     id: "4-24",
+    shlokaName: "Brahmarpanam Brahma Havir",
     chapter: 4,
     verse: 24,
     sanskrit:
@@ -344,6 +356,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-13",
+    shlokaName: "Dehino Asmin Yatha Dehe",
     chapter: 2,
     verse: 13,
     sanskrit:
@@ -368,6 +381,7 @@ export const verses: Verse[] = [
   },
   {
     id: "9-22",
+    shlokaName: "Ananyas Chintayanto Mam",
     chapter: 9,
     verse: 22,
     sanskrit:
@@ -440,6 +454,7 @@ export const verses: Verse[] = [
   },
   {
     id: "6-5",
+    shlokaName: "Uddhared Atmanatmanam",
     chapter: 6,
     verse: 5,
     sanskrit:
@@ -464,6 +479,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-62",
+    shlokaName: "Dhyayato Vishayan Pumsah",
     chapter: 2,
     verse: 62,
     sanskrit:
@@ -488,6 +504,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-63",
+    shlokaName: "Krodhad Bhavati Sammohah",
     chapter: 2,
     verse: 63,
     sanskrit:
@@ -512,6 +529,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-48",
+    shlokaName: "Yogastha Kuru Karmani",
     chapter: 2,
     verse: 48,
     sanskrit:
@@ -584,6 +602,7 @@ export const verses: Verse[] = [
   },
   {
     id: "3-21",
+    shlokaName: "Yad Yad Acharati Shreshthah",
     chapter: 3,
     verse: 21,
     sanskrit:
@@ -632,6 +651,7 @@ export const verses: Verse[] = [
   },
   {
     id: "3-35",
+    shlokaName: "Shreyan Swadharmo Vigunah",
     chapter: 3,
     verse: 35,
     sanskrit:
@@ -656,6 +676,7 @@ export const verses: Verse[] = [
   },
   {
     id: "4-8",
+    shlokaName: "Paritranaya Sadhunam",
     chapter: 4,
     verse: 8,
     sanskrit:
@@ -704,6 +725,7 @@ export const verses: Verse[] = [
   },
   {
     id: "4-34",
+    shlokaName: "Tad Viddhi Pranipatena",
     chapter: 4,
     verse: 34,
     sanskrit:
@@ -896,6 +918,7 @@ export const verses: Verse[] = [
   },
   {
     id: "9-26",
+    shlokaName: "Patram Pushpam Phalam Toyam",
     chapter: 9,
     verse: 26,
     sanskrit:
@@ -920,6 +943,7 @@ export const verses: Verse[] = [
   },
   {
     id: "9-27",
+    shlokaName: "Yat Karoshi Yad Ashnasi",
     chapter: 9,
     verse: 27,
     sanskrit:
@@ -1136,6 +1160,7 @@ export const verses: Verse[] = [
   },
   {
     id: "18-65",
+    shlokaName: "Manmana Bhava Madbhakto",
     chapter: 18,
     verse: 65,
     sanskrit:
@@ -1160,6 +1185,7 @@ export const verses: Verse[] = [
   },
   {
     id: "18-78",
+    shlokaName: "Yatra Yogeshwarah Krishno",
     chapter: 18,
     verse: 78,
     sanskrit:
@@ -1688,6 +1714,7 @@ export const verses: Verse[] = [
   },
   {
     id: "2-27",
+    shlokaName: "Jatasya Hi Dhruvo Mrityur",
     chapter: 2,
     verse: 27,
     sanskrit:
@@ -1856,6 +1883,7 @@ export const verses: Verse[] = [
   },
   {
     id: "6-34",
+    shlokaName: "Chanchalam Hi Manah Krishna",
     chapter: 6,
     verse: 34,
     sanskrit:

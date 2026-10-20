@@ -50,9 +50,15 @@ export function QuoteDetail() {
   // is worked into the title because that's the intent people actually search for on a verse
   // number; the primary theme still varies it so the set doesn't read as 60 identical titles.
   const primaryTheme = getThemeBySlug(verse.categories[0])
-  const seoTitle = primaryTheme ? `${reference} Meaning · ${primaryTheme.title}` : `${reference} Meaning`
+  // Well-known verses lead with their opening words, since that's how people search them
+  // ("karmanye vadhikaraste meaning") more often than by number.
+  const seoTitle = verse.shlokaName
+    ? `${verse.shlokaName} Meaning (${reference})`
+    : primaryTheme
+      ? `${reference} Meaning · ${primaryTheme.title}`
+      : `${reference} Meaning`
   const seoDescription = truncate(
-    `${reference} (BG ${verse.chapter}.${verse.verse}) meaning, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" With the Sanskrit, translation, and a plain-English explanation.`,
+    `${verse.shlokaName ? `${verse.shlokaName}: ` : ""}${reference} (BG ${verse.chapter}.${verse.verse}) meaning, on ${primaryTheme?.title.toLowerCase() ?? "the Gita"}: "${verse.quote}" With the Sanskrit, translation, and a plain-English explanation.`,
     155,
   )
 
@@ -86,10 +92,17 @@ export function QuoteDetail() {
         <p className="mb-3 text-xs font-semibold tracking-[0.15em] text-ink-faint uppercase sm:text-sm">
           {reference} · BG {verse.chapter}.{verse.verse}
         </p>
-        <h1 className="inline-flex items-center gap-3 font-serif text-4xl text-ink sm:text-5xl">
-          Chapter {verse.chapter}
-          <Flower2 className="h-7 w-7 shrink-0 text-clay sm:h-8 sm:w-8" aria-hidden />
-          Verse {verse.verse}
+        <h1 className="font-serif text-ink">
+          {verse.shlokaName && (
+            <span className="mb-2 block text-2xl text-ink-soft italic sm:text-3xl">
+              {verse.shlokaName}
+            </span>
+          )}
+          <span className="inline-flex items-center gap-3 text-4xl sm:text-5xl">
+            Chapter {verse.chapter}
+            <Flower2 className="h-7 w-7 shrink-0 text-clay sm:h-8 sm:w-8" aria-hidden />
+            Verse {verse.verse}
+          </span>
         </h1>
         <DiamondDivider className="mt-5" />
         {chapterTitle && (

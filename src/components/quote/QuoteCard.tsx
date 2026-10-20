@@ -75,12 +75,18 @@ export function QuoteCard({ verse, featured = false, defaultLang = "en" }: Quote
             featured ? "mt-6 p-5" : "mt-5 p-4",
           )}
         >
-          <SegmentedToggle
-            options={quoteLangOptions}
-            value={quoteLang}
-            onChange={setQuoteLang}
-            className="z-10 w-fit"
-          />
+          {/* Labelled so the interpretation isn't mistaken for a translation of the Sanskrit above. */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[10px] font-semibold tracking-[0.14em] text-ink-faint uppercase">
+              Reflection · not a literal translation
+            </p>
+            <SegmentedToggle
+              options={quoteLangOptions}
+              value={quoteLang}
+              onChange={setQuoteLang}
+              className="z-10 w-fit"
+            />
+          </div>
           <p
             lang={quoteLang === "hi" ? "hi" : "en"}
             className={cn(

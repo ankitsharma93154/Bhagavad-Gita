@@ -23,6 +23,7 @@ export function searchVerses(verses: Verse[], rawQuery: string): Verse[] {
       v.meaning,
       v.quote,
       v.transliteration ?? "",
+      v.shlokaName ?? "",
       v.sanskrit,
       `chapter ${v.chapter} verse ${v.verse}`,
       `${v.chapter}.${v.verse}`,

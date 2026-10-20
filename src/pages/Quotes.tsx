@@ -2,27 +2,11 @@ import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Search, X } from "lucide-react"
 import { QuoteGrid } from "@/components/quote/QuoteGrid"
-import { themes, type Theme, type ThemeSlug } from "@/data/themes"
+import { themes, type ThemeSlug } from "@/data/themes"
 import { verses } from "@/data/verses"
 import { searchVerses } from "@/lib/search"
 import { Seo } from "@/lib/seo"
 import { cn, truncate } from "@/lib/utils"
-
-/** Kept short enough to lay out on a single line at the container's max width. */
-const quickFilterSlugs: ThemeSlug[] = [
-  "karma",
-  "motivation",
-  "success",
-  "peace",
-  "wisdom",
-  "courage",
-  "detachment",
-  "purpose",
-  "life",
-]
-const quickFilterThemes = quickFilterSlugs
-  .map((slug) => themes.find((theme) => theme.slug === slug))
-  .filter((theme): theme is Theme => theme !== undefined)
 
 export function Quotes() {
   const [params, setParams] = useSearchParams()
@@ -103,7 +87,7 @@ export function Quotes() {
           role="group"
           aria-label="Filter by theme"
         >
-          {quickFilterThemes.map((theme) => (
+          {themes.map((theme) => (
             <button
               key={theme.slug}
               type="button"
