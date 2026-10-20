@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { Route, Routes } from "react-router-dom"
 import {
   AboutPage,
+  HindiQuoteDetailPage,
   HomePage,
   LanguagesHindiPage,
   NotFoundPage,
@@ -24,6 +25,7 @@ export function AppRoutes() {
         <Route path="/" element={<HomePage />} />
         <Route path="/quotes" element={<QuotesPage />} />
         <Route path="/quotes/:slug" element={<QuoteDetailPage />} />
+        <Route path="/hi/quotes/:slug" element={<HindiQuoteDetailPage />} />
         <Route path="/themes" element={<ThemesPage />} />
         <Route path="/themes/:slug" element={<ThemePage />} />
         <Route path="/languages/hindi" element={<LanguagesHindiPage />} />

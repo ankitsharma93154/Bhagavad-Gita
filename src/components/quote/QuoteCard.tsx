@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import type { Verse } from "@/data/verses"
-import { verseSlug } from "@/data/verses"
+import { verseHref } from "@/data/versesHindi"
 import { getThemeBySlug } from "@/data/themes"
 import { Badge } from "@/components/ui/Badge"
 import { SegmentedToggle } from "@/components/ui/SegmentedToggle"
@@ -22,7 +22,7 @@ interface QuoteCardProps {
 
 /** The central, reusable card for presenting a single verse — used across Home, Quotes, and Theme pages. */
 export function QuoteCard({ verse, featured = false, defaultLang = "en" }: QuoteCardProps) {
-  const href = `/quotes/${verseSlug(verse)}`
+  const href = verseHref(verse, defaultLang)
   const [quoteLang, setQuoteLang] = useState<"en" | "hi">(defaultLang)
 
   return (
@@ -78,7 +78,7 @@ export function QuoteCard({ verse, featured = false, defaultLang = "en" }: Quote
           {/* Labelled so the interpretation isn't mistaken for a translation of the Sanskrit above. */}
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-[10px] font-semibold tracking-[0.14em] text-ink-faint uppercase">
-              Reflection · not a literal translation
+              {quoteLang === "hi" ? "विचार · शब्दशः अनुवाद नहीं" : "Reflection · not a literal translation"}
             </p>
             <SegmentedToggle
               options={quoteLangOptions}

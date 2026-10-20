@@ -1,5 +1,6 @@
 import { ThemeGrid } from "@/components/theme/ThemeGrid"
-import { themes } from "@/data/themes"
+import { situationThemes, topicalThemes } from "@/data/themes"
+import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Seo } from "@/lib/seo"
 
 export function Themes() {
@@ -7,7 +8,7 @@ export function Themes() {
     <div className="container-page pt-8 sm:pt-12 pb-12 sm:pb-16">
       <Seo
         title="Browse Bhagavad Gita Quotes by Theme"
-        description="Explore Bhagavad Gita quotes grouped by theme: karma, peace, purpose, courage, wisdom, heart-touching, and more."
+        description="Explore Bhagavad Gita quotes by theme and by situation: karma, peace, courage, plus verses for students, anger, grief, stress, love and more."
         path="/themes"
       />
       <header className="mx-auto max-w-2xl text-center">
@@ -15,12 +16,21 @@ export function Themes() {
           Explore by theme
         </h1>
         <p className="mt-3 text-ink-soft">
-          {themes.length} threads running through the Gita. Pick the one that matches where you are today.
+          {topicalThemes.length} threads running through the Gita. Pick the one that matches where you are today.
         </p>
       </header>
       <div className="mt-10">
-        <ThemeGrid themes={themes} />
+        <ThemeGrid themes={topicalThemes} />
       </div>
+      <section className="mt-16">
+        <SectionHeading size="lg">For where you are right now</SectionHeading>
+        <p className="mt-4 max-w-2xl text-ink-soft">
+          Hand-picked verses for a particular moment: an exam, a loss, a temper you'd like to keep.
+        </p>
+        <div className="mt-8">
+          <ThemeGrid themes={situationThemes} />
+        </div>
+      </section>
     </div>
   )
 }

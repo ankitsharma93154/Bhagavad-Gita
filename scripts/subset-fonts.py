@@ -9,7 +9,7 @@ adds a new Devanagari glyph:
 
 It downloads the current Google Fonts woff2 sources and subsets them:
   - Inter            -> variable (wght 400-600), Latin only
-  - Noto Serif Devanagari 400 -> only the Devanagari codepoints used in src/data/verses.ts
+  - Noto Serif Devanagari 400 -> only the Devanagari codepoints used anywhere in src/
   - Crimson Pro 500  -> Latin only. Not used by the site's CSS: it's the serif the share
                         images (src/lib/shareImage.ts) are drawn in, so they look the same on
                         every device instead of falling back to whatever serif the phone has.
@@ -57,12 +57,17 @@ def main() -> None:
     tmp = ROOT / ".fonttmp"
     tmp.mkdir(exist_ok=True)
 
-    verses = (ROOT / "src" / "data" / "verses.ts").read_text(encoding="utf-8")
+    # All of src, not just verses.ts: Hindi pages and labels use the same font.
+    text = "".join(
+        p.read_text(encoding="utf-8")
+        for p in sorted((ROOT / "src").rglob("*"))
+        if p.suffix in (".ts", ".tsx")
+    )
     deva = [
-        ord(c) for c in verses
+        ord(c) for c in text
         if 0x0900 <= ord(c) <= 0x097F or 0x1CD0 <= ord(c) <= 0x1CFF or ord(c) in (0x200C, 0x200D)
     ]
-    print(f"{len(set(deva))} distinct Devanagari codepoints in verses.ts")
+    print(f"{len(set(deva))} distinct Devanagari codepoints in src/")
 
     fetch(INTER_SRC, tmp / "inter.woff2")
     fetch(NSD_SRC, tmp / "nsd.woff2")

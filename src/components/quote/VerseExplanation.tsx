@@ -1,5 +1,4 @@
 import { ChevronDown } from "lucide-react"
-import type { Verse } from "@/data/verses"
 
 /** Splits a field into paragraphs on blank lines, so a section can run longer when it needs to. */
 function Prose({ text }: { text: string }) {
@@ -24,57 +23,94 @@ function SectionHeading({ children }: { children: string }) {
   )
 }
 
+export interface ExplanationContent {
+  moment?: string
+  meaning: string
+  deeper?: string
+  life?: string
+}
+
+export interface ExplanationLabels {
+  section: string
+  moment: string
+  meaning: string
+  deeper: string
+  life: string
+}
+
+export const englishExplanationLabels: ExplanationLabels = {
+  section: "Understanding this verse",
+  moment: "The moment",
+  meaning: "What it means",
+  deeper: "Going deeper",
+  life: "In your life",
+}
+
+export const hindiExplanationLabels: ExplanationLabels = {
+  section: "इस श्लोक को समझें",
+  moment: "प्रसंग",
+  meaning: "इसका अर्थ",
+  deeper: "गहराई से",
+  life: "आपके जीवन में",
+}
+
 /**
  * The reading path below the verse: where it sits in the story, what it means, the idea
  * underneath (collapsed, for readers who want it), and how it lands in daily life. Each
- * section says something the others don't — `simpleMeaning` replaces `meaning` here rather
- * than repeating it, since `meaning` is the short version written for cards.
+ * section says something the others don't. On the English page `meaning` is the verse's
+ * `simpleMeaning`, not the shorter card `meaning`, so the two never repeat.
  * Every section past "What it means" is optional. Section ids are the targets of the
- * page's SectionNav (see verseSections in QuoteDetail). Collapsed content is still in the
- * prerendered HTML, so it stays indexable.
+ * page's SectionNav. Collapsed content is still in the prerendered HTML, so it stays indexable.
+ * Shared by the English and Hindi verse pages, which pass their own content and labels.
  */
-export function VerseExplanation({ verse }: { verse: Verse }) {
+export function VerseExplanation({
+  content,
+  labels = englishExplanationLabels,
+}: {
+  content: ExplanationContent
+  labels?: ExplanationLabels
+}) {
   return (
-    <section aria-label="Understanding this verse" className="space-y-10">
-      {verse.moment && (
+    <section aria-label={labels.section} className="space-y-10">
+      {content.moment && (
         <div id="moment" className="scroll-mt-24 rounded-2xl bg-teal-soft/50 px-5 py-4 sm:px-6">
           <p className="text-xs font-semibold tracking-[0.15em] text-teal-deep uppercase">
-            The moment
+            {labels.moment}
           </p>
-          <p className="mt-2 leading-relaxed text-ink-soft">{verse.moment}</p>
+          <p className="mt-2 leading-relaxed text-ink-soft">{content.moment}</p>
         </div>
       )}
 
       <div id="meaning" className="scroll-mt-24">
-        <SectionHeading>What it means</SectionHeading>
+        <SectionHeading>{labels.meaning}</SectionHeading>
         <div className="mt-4">
-          <Prose text={verse.simpleMeaning ?? verse.meaning} />
+          <Prose text={content.meaning} />
         </div>
       </div>
 
-      {verse.deeperMeaning && (
+      {content.deeper && (
         <details
           id="deeper"
           className="group scroll-mt-24 rounded-2xl border border-line-soft px-5 py-4 sm:px-6"
         >
           <summary className="focus-ring flex cursor-pointer list-none items-center justify-between gap-3 rounded-md font-serif text-lg text-ink [&::-webkit-details-marker]:hidden">
-            Going deeper
+            {labels.deeper}
             <ChevronDown
               className="h-5 w-5 shrink-0 text-clay transition-transform duration-200 group-open:rotate-180"
               aria-hidden
             />
           </summary>
           <div className="mt-4">
-            <Prose text={verse.deeperMeaning} />
+            <Prose text={content.deeper} />
           </div>
         </details>
       )}
 
-      {verse.lifeApplication && (
+      {content.life && (
         <div id="life" className="scroll-mt-24">
-          <SectionHeading>In your life</SectionHeading>
+          <SectionHeading>{labels.life}</SectionHeading>
           <div className="mt-4">
-            <Prose text={verse.lifeApplication} />
+            <Prose text={content.life} />
           </div>
         </div>
       )}

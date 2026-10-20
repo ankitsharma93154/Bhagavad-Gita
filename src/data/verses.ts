@@ -1,4 +1,4 @@
-import type { ThemeSlug } from "./themes"
+import type { Theme, ThemeSlug } from "./themes"
 
 /**
  * Content model for a single Bhagavad Gita verse.
@@ -26,9 +26,9 @@ import type { ThemeSlug } from "./themes"
  * `relatedVerses` is an optional hand-picked list of verse ids. When omitted,
  * the detail page falls back to shared-theme matching (see getRelatedVersesFor).
  *
- * `hindi` is a plain Hindi translation of the verse (parallel to `english`)
- * and isn't populated yet. `quoteHindi` is a Hindi rendering of `quote`,
- * shown by the Hindi/English toggle on the quote card.
+ * `quoteHindi` is a Hindi rendering of `quote`, shown by the Hindi/English
+ * toggle on the quote card. The full Hindi reading path (translation, meaning,
+ * "in your life") lives in versesHindi.ts and powers the /hi/quotes pages.
  *
  * Array order is curated, not chronological: the most well-known and most
  * searched verses lead the list, since Home's "More reflections" and the
@@ -43,7 +43,6 @@ export interface Verse {
   /** Popular romanized opening words ("Karmanye Vadhikaraste"), for well-known verses people search by name. */
   shlokaName?: string
   english: string
-  hindi?: string
   meaning: string
   quote: string
   quoteHindi?: string
@@ -2110,6 +2109,26 @@ export function getVerseBySlug(slug: string): Verse | undefined {
 
 export function getVersesByTheme(theme: ThemeSlug): Verse[] {
   return verses.filter((v) => v.categories.includes(theme))
+}
+
+/** A theme page's verses: its hand-picked list for situational themes, else every verse tagged with it. */
+export function getThemeVerses(theme: Pick<Theme, "slug" | "verseIds">): Verse[] {
+  if (theme.verseIds) {
+    return theme.verseIds
+      .map((id) => verses.find((v) => v.id === id))
+      .filter((v): v is Verse => v !== undefined)
+  }
+  return getVersesByTheme(theme.slug)
+}
+
+/** The topical themes most common among a set of verses, for linking out of a situational page. */
+export function getTopThemesAmong(list: Verse[], count = 3): ThemeSlug[] {
+  const counts = new Map<ThemeSlug, number>()
+  for (const v of list) for (const c of v.categories) counts.set(c, (counts.get(c) ?? 0) + 1)
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, count)
+    .map(([slug]) => slug)
 }
 
 export function getRelatedVerses(v: Verse, count = 3): Verse[] {

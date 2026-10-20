@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Search, X } from "lucide-react"
 import { QuoteGrid } from "@/components/quote/QuoteGrid"
-import { themes, type ThemeSlug } from "@/data/themes"
+import { topicalThemes, type ThemeSlug } from "@/data/themes"
 import { verses } from "@/data/verses"
 import { searchVerses } from "@/lib/search"
 import { Seo } from "@/lib/seo"
@@ -41,6 +41,10 @@ export function Quotes() {
           155,
         )}
         path="/quotes"
+        alternates={[
+          { lang: "en", path: "/quotes" },
+          { lang: "hi", path: "/languages/hindi" },
+        ]}
       />
       <header className="mx-auto max-w-2xl text-center">
         <h1 className="bg-gradient-brand bg-clip-text font-serif text-4xl text-transparent sm:text-5xl">
@@ -87,7 +91,7 @@ export function Quotes() {
           role="group"
           aria-label="Filter by theme"
         >
-          {themes.map((theme) => (
+          {topicalThemes.map((theme) => (
             <button
               key={theme.slug}
               type="button"
@@ -114,7 +118,7 @@ export function Quotes() {
             <p className="font-serif text-xl text-ink">No wisdom found for that search.</p>
             <p className="mt-2 text-ink-soft">Try a different word, or explore a theme instead.</p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
-              {themes.slice(0, 5).map((theme) => (
+              {topicalThemes.slice(0, 5).map((theme) => (
                 <button
                   key={theme.slug}
                   type="button"

@@ -5,7 +5,7 @@
  * TLS handshakes + ~200 KB on the critical path). Files live in public/fonts and are
  * generated from the Google woff2 sources, subset to the glyphs this site actually uses:
  *   - Inter: variable (wght 400-600), Latin only
- *   - Noto Serif Devanagari: weight 400, only the Devanagari codepoints in src/data/verses.ts
+ *   - Noto Serif Devanagari: weight 400, only the Devanagari codepoints used in src/
  */
 @font-face {
   font-family: "Inter";

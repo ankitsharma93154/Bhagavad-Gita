@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/Badge"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs"
 import { getThemeBySlug } from "@/data/themes"
-import { getRelatedThemes, getVersesByTheme, verseSlug } from "@/data/verses"
+import { getRelatedThemes, getThemeVerses, getTopThemesAmong, verseSlug } from "@/data/verses"
 import { Seo, SITE_URL, buildBreadcrumbList } from "@/lib/seo"
 import { truncate } from "@/lib/utils"
 
@@ -16,8 +16,10 @@ export function Theme() {
     return <Navigate to="/themes" replace />
   }
 
-  const themeVerses = getVersesByTheme(theme.slug)
-  const relatedSlugs = getRelatedThemes(theme.slug)
+  const themeVerses = getThemeVerses(theme)
+  // A situational page has no verses tagged with its slug, so it links out to the topics its verses share.
+  const relatedSlugs = theme.verseIds ? getTopThemesAmong(themeVerses) : getRelatedThemes(theme.slug)
+  const heading = theme.heading ?? `Bhagavad Gita Quotes About ${theme.title}`
   const relatedThemes = relatedSlugs.map(getThemeBySlug).filter((t) => t !== undefined)
   const breadcrumbItems = [
     { name: "Home", path: "/" },
@@ -42,7 +44,7 @@ export function Theme() {
           {
             "@context": "https://schema.org",
             "@type": "ItemList",
-            name: `${theme.title} Bhagavad Gita Quotes`,
+            name: heading,
             itemListElement: themeVerses.map((v, index) => ({
               "@type": "ListItem",
               position: index + 1,
@@ -68,9 +70,11 @@ export function Theme() {
       <Breadcrumbs items={breadcrumbItems} />
 
       <header className="mx-auto mt-6 max-w-2xl text-center">
-        <p className="text-xs font-semibold tracking-wider text-clay-deep uppercase">Theme</p>
+        <p className="text-xs font-semibold tracking-wider text-clay-deep uppercase">
+          {theme.verseIds ? "Collection" : "Theme"}
+        </p>
         <h1 className="bg-gradient-brand mt-2 bg-clip-text font-serif text-4xl text-transparent sm:text-5xl">
-          Bhagavad Gita Quotes About {theme.title}
+          {heading}
         </h1>
         <p className="mt-4 text-ink-soft">{theme.description}</p>
       </header>
@@ -83,7 +87,9 @@ export function Theme() {
         <section className="reading-width mx-auto mt-16 space-y-10 text-ink-soft">
           {theme.intro && (
             <div className="space-y-4">
-              <SectionHeading>{theme.title} in the Bhagavad Gita</SectionHeading>
+              <SectionHeading>
+                {theme.verseIds ? "About these verses" : `${theme.title} in the Bhagavad Gita`}
+              </SectionHeading>
               {theme.intro.map((paragraph) => (
                 <p key={paragraph} className="leading-relaxed">
                   {paragraph}

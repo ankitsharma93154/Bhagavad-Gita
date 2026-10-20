@@ -11,10 +11,17 @@ import {
   Compass,
   Leaf,
   Heart,
+  GraduationCap,
+  CloudLightning,
+  Sunset,
+  HeartHandshake,
+  Waves,
+  MessageCircle,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react"
 import type { Theme, ThemeSlug } from "@/data/themes"
-import { getVersesByTheme } from "@/data/verses"
+import { getThemeVerses } from "@/data/verses"
 import { cn } from "@/lib/utils"
 
 const themeIcons: Record<ThemeSlug, LucideIcon> = {
@@ -29,6 +36,13 @@ const themeIcons: Record<ThemeSlug, LucideIcon> = {
   purpose: Compass,
   life: Leaf,
   "heart-touching": Heart,
+  students: GraduationCap,
+  anger: CloudLightning,
+  "death-and-loss": Sunset,
+  love: HeartHandshake,
+  stress: Waves,
+  "short-quotes": MessageCircle,
+  krishna: Sparkles,
 }
 
 /** Rotates the three accent hues across themes so the theme grid reads as varied, not monochrome. */
@@ -44,6 +58,13 @@ const themeTones: Record<ThemeSlug, "clay" | "teal" | "gold"> = {
   purpose: "clay",
   life: "teal",
   "heart-touching": "clay",
+  students: "gold",
+  anger: "clay",
+  "death-and-loss": "teal",
+  love: "clay",
+  stress: "teal",
+  "short-quotes": "gold",
+  krishna: "gold",
 }
 
 const toneClasses = {
@@ -60,7 +81,7 @@ interface ThemeCardProps {
 export function ThemeCard({ theme, className }: ThemeCardProps) {
   const Icon = themeIcons[theme.slug]
   const tone = toneClasses[themeTones[theme.slug]]
-  const count = getVersesByTheme(theme.slug).length
+  const count = getThemeVerses(theme).length
 
   return (
     <Link

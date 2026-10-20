@@ -1,5 +1,6 @@
 import { themes } from "@/data/themes"
 import { verses, verseSlug } from "@/data/verses"
+import { hasHindiPage } from "@/data/versesHindi"
 
 export interface StaticRouteMeta {
   path: string
@@ -23,6 +24,8 @@ export function getStaticRoutePaths(): StaticRouteMeta[] {
     { path: "/languages/hindi", priority: 0.6 },
     { path: "/about", priority: 0.3 },
     ...verses.map((v) => ({ path: `/quotes/${verseSlug(v)}`, priority: 0.7 })),
+    // Hindi verse pages exist only once a verse has Hindi content (src/data/versesHindi.ts).
+    ...verses.filter(hasHindiPage).map((v) => ({ path: `/hi/quotes/${verseSlug(v)}`, priority: 0.7 })),
     ...themes.map((t) => ({ path: `/themes/${t.slug}`, priority: 0.6 })),
   ]
 }

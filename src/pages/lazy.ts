@@ -24,6 +24,9 @@ export const QuotesPage = page(() => import("@/pages/Quotes").then((m) => ({ def
 export const QuoteDetailPage = page(() =>
   import("@/pages/QuoteDetail").then((m) => ({ default: m.QuoteDetail })),
 )
+export const HindiQuoteDetailPage = page(() =>
+  import("@/pages/QuoteDetail").then((m) => ({ default: m.HindiQuoteDetail })),
+)
 export const ThemesPage = page(() => import("@/pages/Themes").then((m) => ({ default: m.Themes })))
 export const ThemePage = page(() => import("@/pages/Theme").then((m) => ({ default: m.Theme })))
 export const LanguagesHindiPage = page(() =>
@@ -40,6 +43,7 @@ export const routePreloaders: { path: string; preload: Loader }[] = [
   { path: "/", preload: HomePage.preload },
   { path: "/quotes", preload: QuotesPage.preload },
   { path: "/quotes/:slug", preload: QuoteDetailPage.preload },
+  { path: "/hi/quotes/:slug", preload: HindiQuoteDetailPage.preload },
   { path: "/themes", preload: ThemesPage.preload },
   { path: "/themes/:slug", preload: ThemePage.preload },
   { path: "/languages/hindi", preload: LanguagesHindiPage.preload },

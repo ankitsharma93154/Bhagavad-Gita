@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { Route, Routes } from "react-router-dom"
 import { Home } from "@/pages/Home"
 import { Quotes } from "@/pages/Quotes"
-import { QuoteDetail } from "@/pages/QuoteDetail"
+import { HindiQuoteDetail, QuoteDetail } from "@/pages/QuoteDetail"
 import { Themes } from "@/pages/Themes"
 import { Theme } from "@/pages/Theme"
 import { LanguagesHindi } from "@/pages/LanguagesHindi"
@@ -26,6 +26,7 @@ export function AppRoutesServer() {
         <Route path="/" element={<Home />} />
         <Route path="/quotes" element={<Quotes />} />
         <Route path="/quotes/:slug" element={<QuoteDetail />} />
+        <Route path="/hi/quotes/:slug" element={<HindiQuoteDetail />} />
         <Route path="/themes" element={<Themes />} />
         <Route path="/themes/:slug" element={<Theme />} />
         <Route path="/languages/hindi" element={<LanguagesHindi />} />

@@ -17,6 +17,11 @@ export interface SeoProps {
   noindex?: boolean
   /** Link-preview image (site-relative path) and its pixel size. Defaults to the site-wide card. */
   image?: { path: string; width: number; height: number }
+  /**
+   * Language versions of this page, including itself, emitted as hreflang links. Only pass it
+   * when a real translated page exists. The English version doubles as x-default.
+   */
+  alternates?: { lang: "en" | "hi"; path: string }[]
 }
 
 const DEFAULT_IMAGE = { path: "/og-image.jpg", width: 1200, height: 800 }
@@ -27,7 +32,15 @@ const DEFAULT_IMAGE = { path: "/og-image.jpg", width: 1200, height: 800 }
  * both on the client and during server-side renderToString — so this works identically
  * for prerendering and for normal client navigation, unlike the old useEffect-based version.
  */
-export function Seo({ title, description, path, structuredData, noindex, image = DEFAULT_IMAGE }: SeoProps) {
+export function Seo({
+  title,
+  description,
+  path,
+  structuredData,
+  noindex,
+  image = DEFAULT_IMAGE,
+  alternates,
+}: SeoProps) {
   // Skip the site-name suffix when the title already contains it, so keyword-led titles like
   // "Bhagavad Gita Quotes on Karma" don't end up repeating the phrase.
   const fullTitle = title.includes(SITE_NAME) ? title : `${title}: ${SITE_NAME}`
@@ -44,6 +57,14 @@ export function Seo({ title, description, path, structuredData, noindex, image =
       <meta name="description" content={description} />
       {noindex && <meta name="robots" content="noindex, follow" />}
       {url && <link rel="canonical" href={url} />}
+      {alternates?.map((alt) => (
+        <link key={alt.lang} rel="alternate" hrefLang={alt.lang} href={`${SITE_URL}${alt.path}`} />
+      ))}
+      {alternates
+        ?.filter((alt) => alt.lang === "en")
+        .map((alt) => (
+          <link key="x-default" rel="alternate" hrefLang="x-default" href={`${SITE_URL}${alt.path}`} />
+        ))}
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />

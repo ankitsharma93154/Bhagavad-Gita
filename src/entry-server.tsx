@@ -18,9 +18,14 @@ export interface RenderInput {
  * <title>/<meta>/<link> hoisting has a real <head> in the same render tree to hoist into — the
  * per-page <Seo> tags rendered deep inside <App/> end up in <head> below.
  */
+/** Routes whose main content is Hindi, so the prerendered <html lang> matches the page. */
+function isHindiRoute(url: string): boolean {
+  return url.startsWith("/hi/") || url === "/languages/hindi"
+}
+
 export function render({ url, cssHref, scriptSrc }: RenderInput): string {
   const doc = (
-    <html lang="en">
+    <html lang={isHindiRoute(url) ? "hi" : "en"}>
       <head>
         <meta charSet="UTF-8" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
