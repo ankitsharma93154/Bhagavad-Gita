@@ -23,6 +23,8 @@ export function getStaticRoutePaths(): StaticRouteMeta[] {
     { path: "/themes", priority: 0.8 },
     { path: "/languages/hindi", priority: 0.6 },
     { path: "/about", priority: 0.3 },
+    // Seasonal: Gita Jayanti falls in December. Kept live all year so it builds up ranking.
+    { path: "/gita-jayanti", priority: 0.8 },
     ...verses.map((v) => ({ path: `/quotes/${verseSlug(v)}`, priority: 0.7 })),
     // Hindi verse pages exist only once a verse has Hindi content (src/data/versesHindi.ts).
     ...verses.filter(hasHindiPage).map((v) => ({ path: `/hi/quotes/${verseSlug(v)}`, priority: 0.7 })),

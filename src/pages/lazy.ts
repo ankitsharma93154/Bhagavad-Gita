@@ -34,6 +34,9 @@ export const LanguagesHindiPage = page(() =>
 )
 export const SavedPage = page(() => import("@/pages/Saved").then((m) => ({ default: m.Saved })))
 export const AboutPage = page(() => import("@/pages/About").then((m) => ({ default: m.About })))
+export const GitaJayantiPage = page(() =>
+  import("@/pages/GitaJayanti").then((m) => ({ default: m.GitaJayanti })),
+)
 export const NotFoundPage = page(() =>
   import("@/pages/NotFound").then((m) => ({ default: m.NotFound })),
 )
@@ -49,4 +52,5 @@ export const routePreloaders: { path: string; preload: Loader }[] = [
   { path: "/languages/hindi", preload: LanguagesHindiPage.preload },
   { path: "/saved", preload: SavedPage.preload },
   { path: "/about", preload: AboutPage.preload },
+  { path: "/gita-jayanti", preload: GitaJayantiPage.preload },
 ]

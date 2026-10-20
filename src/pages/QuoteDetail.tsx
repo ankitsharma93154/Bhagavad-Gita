@@ -2,11 +2,11 @@ import { useEffect } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import { ChevronLeft, ChevronRight, Flower2, Languages, Quote } from "lucide-react"
 import { VerseDisplay } from "@/components/quote/VerseDisplay"
+import { VerseExplanation } from "@/components/quote/VerseExplanation"
 import {
-  VerseExplanation,
   englishExplanationLabels,
   hindiExplanationLabels,
-} from "@/components/quote/VerseExplanation"
+} from "@/components/quote/explanationLabels"
 import { QuoteActions } from "@/components/quote/QuoteActions"
 import { SectionNav } from "@/components/quote/SectionNav"
 import { VerseArt } from "@/components/quote/VerseArt"

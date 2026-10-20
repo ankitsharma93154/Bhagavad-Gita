@@ -8,6 +8,7 @@ import { Theme } from "@/pages/Theme"
 import { LanguagesHindi } from "@/pages/LanguagesHindi"
 import { Saved } from "@/pages/Saved"
 import { About } from "@/pages/About"
+import { GitaJayanti } from "@/pages/GitaJayanti"
 import { NotFound } from "@/pages/NotFound"
 
 /**
@@ -32,6 +33,7 @@ export function AppRoutesServer() {
         <Route path="/languages/hindi" element={<LanguagesHindi />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/about" element={<About />} />
+        <Route path="/gita-jayanti" element={<GitaJayanti />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

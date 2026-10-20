@@ -41,6 +41,14 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link
+                to="/gita-jayanti"
+                className="focus-ring rounded text-ink-soft hover:text-clay-deep"
+              >
+                Gita Jayanti 2026
+              </Link>
+            </li>
+            <li>
               <Link to="/saved" className="focus-ring rounded text-ink-soft hover:text-clay-deep">
                 Saved quotes
               </Link>

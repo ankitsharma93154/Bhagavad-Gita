@@ -17,6 +17,7 @@ function pageModuleForRoute(routePath) {
   if (routePath === "/themes") return "src/pages/Themes.tsx"
   if (routePath === "/languages/hindi") return "src/pages/LanguagesHindi.tsx"
   if (routePath === "/about") return "src/pages/About.tsx"
+  if (routePath === "/gita-jayanti") return "src/pages/GitaJayanti.tsx"
   if (routePath.startsWith("/quotes/") || routePath.startsWith("/hi/quotes/")) {
     return "src/pages/QuoteDetail.tsx"
   }
