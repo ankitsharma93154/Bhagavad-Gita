@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Pinterest bulk-upload CSVs (regenerate: node scripts/share-images/build.mjs pins)
+pinterest/

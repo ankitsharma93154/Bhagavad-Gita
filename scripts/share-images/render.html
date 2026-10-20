@@ -6,6 +6,8 @@
     ?id=2-47&grid=1                             every format, language and theme for one verse
     ?all=og                                     used by build.mjs: draws every verse's
                                                 link-preview card and posts it back to be saved
+    ?all=pin                                    used by build.mjs pins: same, for every verse's
+                                                Pinterest pin in English and Hindi
   e.g. http://localhost:5173/scripts/share-images/render.html?id=2-47&grid=1
 -->
 <html lang="en">
@@ -29,14 +31,22 @@
         for (const v of verses) {
           const canvas = await renderShareImage(v, { format: "og", lang: "en", theme: "light" })
           const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88))
-          await fetch(`/__save-og?id=${v.id}`, { method: "POST", body: blob })
+          await fetch(`/__save?id=${v.id}`, { method: "POST", body: blob })
+        }
+      } else if (q.get("all") === "pin") {
+        for (const v of verses) {
+          for (const lang of ["en", "hi"]) {
+            const canvas = await renderShareImage(v, { format: "pin", lang, theme: "light" })
+            const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.86))
+            await fetch(`/__save?id=${v.id}-${lang}`, { method: "POST", body: blob })
+          }
         }
       } else {
         const verse = verses.find((v) => v.id === (q.get("id") ?? "2-47"))
         if (!verse) throw new Error("Unknown verse id")
         if (q.get("grid")) {
           document.body.className = "grid"
-          for (const format of ["story", "wallpaper", "og"])
+          for (const format of ["story", "wallpaper", "pin", "og"])
             for (const theme of ["light", "dark"])
               for (const lang of format === "og" ? ["en"] : ["en", "hi"])
                 document.body.append(await renderShareImage(verse, { format, lang, theme }))

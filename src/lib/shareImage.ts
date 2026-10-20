@@ -2,8 +2,9 @@ import type { Verse } from "@/data/verses"
 
 /**
  * Draws a verse as a shareable image on a canvas: an Instagram story / WhatsApp status
- * (1080×1920), a phone wallpaper (1080×2340), or a link-preview card (1200×630, rendered
- * ahead of time into public/og/ by scripts/share-images/build.mjs).
+ * (1080×1920), a phone wallpaper (1080×2340), a Pinterest pin (1000×1500), or a link-preview
+ * card (1200×630). Link-preview cards and pins are rendered ahead of time into public/og/ and
+ * public/pins/ by scripts/share-images/build.mjs.
  *
  * Kept free of React and of the page's CSS so the result is identical everywhere: colors are
  * copied from the theme tokens in index.css, the serif is Crimson Pro (loaded here, not used
@@ -11,7 +12,7 @@ import type { Verse } from "@/data/verses"
  * Loaded lazily, only when someone opens the "Save as image" dialog.
  */
 
-export type ShareFormat = "story" | "wallpaper" | "og"
+export type ShareFormat = "story" | "wallpaper" | "pin" | "og"
 export type ShareLang = "en" | "hi"
 export type ShareTheme = "light" | "dark"
 
@@ -24,6 +25,7 @@ export interface ShareImageOptions {
 export const SHARE_SIZES: Record<ShareFormat, { width: number; height: number }> = {
   story: { width: 1080, height: 1920 },
   wallpaper: { width: 1080, height: 2340 },
+  pin: { width: 1000, height: 1500 },
   og: { width: 1200, height: 630 },
 }
 
@@ -322,6 +324,50 @@ function referenceLabel(verse: Verse, lang: ShareLang): string {
   return lang === "hi" ? `भगवद् गीता ${verse.chapter}.${verse.verse}` : `BHAGAVAD GITA ${verse.chapter}.${verse.verse}`
 }
 
+/**
+ * Sizes for the portrait formats. Safe areas: Instagram covers ~250px at the top and bottom of
+ * a story. A lock screen's clock and widgets cover roughly the top 40% of a wallpaper, its
+ * shortcuts the bottom ~10%. A pin has no overlays, so it uses nearly the full height.
+ */
+const PORTRAIT_LAYOUTS = {
+  story: {
+    region: { top: 250, bottom: 1580 },
+    brandY: 1670,
+    artSize: 400,
+    labelSize: 30,
+    maxWidth: 860,
+    quoteMax: 84,
+    quoteLines: 6,
+    sanskritMax: 42,
+    brandSize: 30,
+    frameInset: 48,
+  },
+  wallpaper: {
+    region: { top: 940, bottom: 2020 },
+    brandY: 2120,
+    artSize: 320,
+    labelSize: 26,
+    maxWidth: 860,
+    quoteMax: 68,
+    quoteLines: 5,
+    sanskritMax: 36,
+    brandSize: 24,
+    frameInset: 48,
+  },
+  pin: {
+    region: { top: 120, bottom: 1330 },
+    brandY: 1408,
+    artSize: 340,
+    labelSize: 28,
+    maxWidth: 800,
+    quoteMax: 78,
+    quoteLines: 6,
+    sanskritMax: 38,
+    brandSize: 28,
+    frameInset: 40,
+  },
+}
+
 /** Renders the image onto a new canvas. Call from the browser only. */
 export async function renderShareImage(verse: Verse, { format, lang, theme }: ShareImageOptions): Promise<HTMLCanvasElement> {
   const p = PALETTES[theme]
@@ -356,15 +402,9 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
     return canvas
   }
 
-  const isStory = format === "story"
   const cx = w / 2
-  const maxWidth = 860
-  // Safe areas: Instagram covers ~250px at the top and bottom of a story. A lock screen's clock
-  // and widgets cover roughly the top 40% of a wallpaper, its shortcuts the bottom ~10%.
-  const region = isStory ? { top: 250, bottom: 1580 } : { top: 940, bottom: 2020 }
-  const brandY = isStory ? 1670 : 2120
-  const artSize = isStory ? 400 : 320
-  const labelSize = isStory ? 30 : 26
+  const { region, brandY, artSize, labelSize, maxWidth, quoteMax, quoteLines, sanskritMax, brandSize, frameInset } =
+    PORTRAIT_LAYOUTS[format]
 
   const quote = fitText(
     ctx,
@@ -372,13 +412,13 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
     quoteFamily,
     quoteLang === "hi" ? "400" : "500",
     maxWidth,
-    isStory ? 84 : 68,
+    quoteMax,
     46,
-    isStory ? 6 : 5,
+    quoteLines,
     quoteLang === "hi" ? 1.45 : 1.26,
     p.ink,
   )
-  const sanskrit = fitText(ctx, verse.sanskrit, DEVANAGARI, "400", maxWidth, isStory ? 42 : 36, 30, 3, 1.55, p.saffron)
+  const sanskrit = fitText(ctx, verse.sanskrit, DEVANAGARI, "400", maxWidth, sanskritMax, 30, 3, 1.55, p.saffron)
 
   // Stack: drawing, label, divider, quote, then the Sanskrit if it fits. Centered in the region.
   const gapArt = 70
@@ -390,7 +430,7 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
   const total = head + blockHeight(quote) + (withSanskrit ? gapSanskrit + blockHeight(sanskrit) : 0)
   let y = region.top + Math.max(0, (region.bottom - region.top - total) / 2)
 
-  drawFrame(ctx, w, h, 48, p)
+  drawFrame(ctx, w, h, frameInset, p)
   drawArt(ctx, art, cx, y + artSize / 2, artSize, p)
   y += artSize + gapArt + labelSize / 2
   drawLabel(ctx, referenceLabel(verse, quoteLang), cx, y, labelSize, p.goldDeep, quoteLang)
@@ -404,7 +444,7 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
     drawBlock(ctx, sanskrit, cx, y + gapSanskrit)
   }
 
-  drawBrand(ctx, logo, cx, brandY, isStory ? 30 : 24, p)
+  drawBrand(ctx, logo, cx, brandY, brandSize, p)
   return canvas
 }
 
