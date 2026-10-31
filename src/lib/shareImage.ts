@@ -173,20 +173,22 @@ function paintBackground(ctx: CanvasRenderingContext2D, w: number, h: number, p:
 }
 
 /** Greedy word wrap. Splits on spaces, which works for both English and Hindi. */
+/** Word-wraps to `maxWidth`. A "\n" in the text always starts a new line. */
 function wrap(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
-  const words = text.split(/\s+/).filter(Boolean)
   const lines: string[] = []
-  let line = ""
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word
-    if (line && ctx.measureText(next).width > maxWidth) {
-      lines.push(line)
-      line = word
-    } else {
-      line = next
+  for (const paragraph of text.split("\n")) {
+    let line = ""
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      const next = line ? `${line} ${word}` : word
+      if (line && ctx.measureText(next).width > maxWidth) {
+        lines.push(line)
+        line = word
+      } else {
+        line = next
+      }
     }
+    if (line) lines.push(line)
   }
-  if (line) lines.push(line)
   return lines
 }
 
@@ -455,6 +457,11 @@ export async function renderShareImage(verse: Verse, { format, lang, theme, head
   return canvas
 }
 
+/** Breaks a shloka after its first danda, so each half-verse starts on its own line. */
+function splitShloka(text: string): string {
+  return text.replace(/।\s*/, "।\n")
+}
+
 /**
  * A Pinterest pin. Unlike a story, it has to sell itself in a feed thumbnail: a topic line and
  * the verse's name up top say what it's about at a glance, the quote fills the middle, and a
@@ -495,8 +502,10 @@ function drawPin(
   const bottom = 1300
   const artSize = 230
   const labelSize = 24
-  const quote = fitText(ctx, quoteText(verse, lang), family, weight, maxWidth, 80, 44, 6, lang === "hi" ? 1.42 : 1.24, p.ink)
-  const sanskrit = fitText(ctx, verse.sanskrit, DEVANAGARI, "400", maxWidth, 34, 28, 3, 1.55, p.saffron)
+  const quote = fitText(ctx, quoteText(verse, lang), family, weight, maxWidth, 76, 44, 6, lang === "hi" ? 1.42 : 1.24, p.ink)
+  // The shloka is what many people come for, so it stays large enough to read in a feed
+  // thumbnail (pins show at roughly a quarter size), and splits at its half-verse mark.
+  const sanskrit = fitText(ctx, splitShloka(verse.sanskrit), DEVANAGARI, "400", maxWidth, 44, 34, 4, 1.5, p.saffron)
   const head = artSize + 44 + labelSize + 44 + 40
   const withSanskrit = head + blockHeight(quote) + 52 + blockHeight(sanskrit) <= bottom - top
   const total = head + blockHeight(quote) + (withSanskrit ? 52 + blockHeight(sanskrit) : 0)
