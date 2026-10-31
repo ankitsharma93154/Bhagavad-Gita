@@ -20,6 +20,8 @@ export interface ShareImageOptions {
   format: ShareFormat
   lang: ShareLang
   theme: ShareTheme
+  /** Pins only: a topic line and the verse's name, printed as a headline above the verse. */
+  heading?: { topic?: string; name?: string }
 }
 
 export const SHARE_SIZES: Record<ShareFormat, { width: number; height: number }> = {
@@ -369,7 +371,7 @@ const PORTRAIT_LAYOUTS = {
 }
 
 /** Renders the image onto a new canvas. Call from the browser only. */
-export async function renderShareImage(verse: Verse, { format, lang, theme }: ShareImageOptions): Promise<HTMLCanvasElement> {
+export async function renderShareImage(verse: Verse, { format, lang, theme, heading }: ShareImageOptions): Promise<HTMLCanvasElement> {
   const p = PALETTES[theme]
   const { width: w, height: h } = SHARE_SIZES[format]
   const [, art, logo] = await Promise.all([
@@ -399,6 +401,11 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
     drawLabel(ctx, referenceLabel(verse, "en"), x, blockTop - 20, 22, p.goldDeep, "en", "left")
     drawBlock(ctx, quote, x, blockTop + 16, "left")
     drawBrand(ctx, logo, w - 64, h - 56, 22, p, "right")
+    return canvas
+  }
+
+  if (format === "pin") {
+    drawPin(ctx, w, h, p, verse, quoteLang, art, logo, heading)
     return canvas
   }
 
@@ -446,6 +453,76 @@ export async function renderShareImage(verse: Verse, { format, lang, theme }: Sh
 
   drawBrand(ctx, logo, cx, brandY, brandSize, p)
   return canvas
+}
+
+/**
+ * A Pinterest pin. Unlike a story, it has to sell itself in a feed thumbnail: a topic line and
+ * the verse's name up top say what it's about at a glance, the quote fills the middle, and a
+ * call to read the full meaning sits above the site name, since the pin's job is the click.
+ */
+function drawPin(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  p: Palette,
+  verse: Verse,
+  lang: ShareLang,
+  art: HTMLImageElement | null,
+  logo: HTMLImageElement | null,
+  heading: ShareImageOptions["heading"],
+) {
+  const cx = w / 2
+  const maxWidth = 820
+  const family = lang === "hi" ? DEVANAGARI : SERIF
+  const weight = lang === "hi" ? "400" : "500"
+  drawFrame(ctx, w, h, 40, p)
+
+  // Headline: topic, then the verse's name, both sized to read in a small feed thumbnail.
+  let y = 112
+  if (heading?.topic) {
+    // Devanagari has no caps or letter spacing to carry it, so it gets a larger size instead.
+    drawLabel(ctx, lang === "en" ? heading.topic.toUpperCase() : heading.topic, cx, y, lang === "en" ? 28 : 34, p.clay, lang)
+    y += 36
+  }
+  if (heading?.name) {
+    const name = fitText(ctx, heading.name, family, weight, maxWidth, 66, 44, 1, 1.25, p.ink)
+    drawBlock(ctx, name, cx, y)
+    y += blockHeight(name)
+  }
+  const top = heading ? y + 44 : 120
+
+  // Body: drawing, reference, quote, Sanskrit (if it fits), centered in what's left.
+  const bottom = 1300
+  const artSize = 230
+  const labelSize = 24
+  const quote = fitText(ctx, quoteText(verse, lang), family, weight, maxWidth, 80, 44, 6, lang === "hi" ? 1.42 : 1.24, p.ink)
+  const sanskrit = fitText(ctx, verse.sanskrit, DEVANAGARI, "400", maxWidth, 34, 28, 3, 1.55, p.saffron)
+  const head = artSize + 44 + labelSize + 44 + 40
+  const withSanskrit = head + blockHeight(quote) + 52 + blockHeight(sanskrit) <= bottom - top
+  const total = head + blockHeight(quote) + (withSanskrit ? 52 + blockHeight(sanskrit) : 0)
+  y = top + Math.max(0, (bottom - top - total) / 2)
+
+  drawArt(ctx, art, cx, y + artSize / 2, artSize, p)
+  y += artSize + 44 + labelSize / 2
+  drawLabel(ctx, referenceLabel(verse, lang), cx, y, labelSize, p.goldDeep, lang)
+  y += labelSize / 2 + 44
+  drawDivider(ctx, cx, y - 22 + 6, 80, p)
+  y += 40 - 22
+  drawBlock(ctx, quote, cx, y)
+  y += blockHeight(quote)
+  if (withSanskrit) {
+    drawDivider(ctx, cx, y + 26, 36, p)
+    drawBlock(ctx, sanskrit, cx, y + 52)
+  }
+
+  // Call to action, then the site.
+  const cta = lang === "hi" ? "पूरा अर्थ पढ़ें  →" : "Read the full meaning  →"
+  ctx.font = lang === "hi" ? `400 34px ${DEVANAGARI}` : `600 28px ${SANS}`
+  ctx.fillStyle = p.clay
+  ctx.textAlign = "center"
+  ctx.textBaseline = "middle"
+  ctx.fillText(cta, cx, 1352)
+  drawBrand(ctx, logo, cx, 1418, 26, p)
 }
 
 export function canvasToBlob(canvas: HTMLCanvasElement, type = "image/png", quality?: number): Promise<Blob> {

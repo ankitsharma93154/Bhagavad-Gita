@@ -5,9 +5,9 @@
 //     Every verse's link-preview card (1200×630) into public/og/<id>.jpg, the og:image /
 //     twitter:image for that verse's page.
 //
-//   node scripts/share-images/build.mjs pins [--start 2026-10-21] [--theme dark]
+//   node scripts/share-images/build.mjs pins [--start 2026-10-21] [--theme light]
 //     Every verse's Pinterest pin (1000×1500), in English and Hindi, into
-//     public/pins/<id>-<lang>.jpg (or <id>-<lang>-dark.jpg with --theme dark), plus Pinterest bulk-upload CSVs in pinterest/ (one per week,
+//     public/pins/<id>-<lang>-dark.jpg (or <id>-<lang>.jpg with --theme light), plus Pinterest bulk-upload CSVs in pinterest/ (one per week,
 //     three pins a day from --start, default tomorrow) and the board list they refer to.
 //     The CSVs point at the live site, so deploy the pins before uploading them.
 //
@@ -50,7 +50,7 @@ const startArg = process.argv.indexOf("--start")
 const start = startArg > 0 ? new Date(`${process.argv[startArg + 1]}T00:00:00`) : tomorrow()
 if (Number.isNaN(start.getTime())) throw new Error("--start must be a date like 2026-10-21")
 const themeArg = process.argv.indexOf("--theme")
-const theme = themeArg > 0 ? process.argv[themeArg + 1] : "light"
+const theme = themeArg > 0 ? process.argv[themeArg + 1] : mode === "pin" ? "dark" : "light"
 if (theme !== "light" && theme !== "dark") throw new Error("--theme must be light or dark")
 // Dark pins get their own filenames, so pins already scheduled with the light ones keep working.
 const pinSuffix = theme === "dark" ? "-dark" : ""

@@ -24,6 +24,14 @@
     <script type="module">
       import { verses } from "/src/data/verses.ts"
       import { renderShareImage } from "/src/lib/shareImage.ts"
+      import { versesHindi } from "/src/data/versesHindi.ts"
+      import { pinTopic } from "/src/data/pinTopics.ts"
+
+      /** A pin's headline: its topic, and the verse's name where it's known by one. */
+      const pinHeading = (v, lang) => ({
+        topic: pinTopic(v, lang),
+        name: lang === "hi" ? versesHindi[v.id]?.name : v.shlokaName,
+      })
 
       const q = new URLSearchParams(location.search)
 
@@ -37,7 +45,7 @@
         const theme = q.get("theme") === "dark" ? "dark" : "light"
         for (const v of verses) {
           for (const lang of ["en", "hi"]) {
-            const canvas = await renderShareImage(v, { format: "pin", lang, theme })
+            const canvas = await renderShareImage(v, { format: "pin", lang, theme, heading: pinHeading(v, lang) })
             const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.86))
             await fetch(`/__save?id=${v.id}-${lang}${theme === "dark" ? "-dark" : ""}`, { method: "POST", body: blob })
           }
@@ -52,10 +60,13 @@
               for (const lang of format === "og" ? ["en"] : ["en", "hi"])
                 document.body.append(await renderShareImage(verse, { format, lang, theme }))
         } else {
+          const format = q.get("format") ?? "story"
+          const lang = q.get("lang") ?? "en"
           const canvas = await renderShareImage(verse, {
-            format: q.get("format") ?? "story",
-            lang: q.get("lang") ?? "en",
+            format,
+            lang,
             theme: q.get("theme") ?? "light",
+            heading: format === "pin" ? pinHeading(verse, lang) : undefined,
           })
           document.body.append(canvas)
         }
