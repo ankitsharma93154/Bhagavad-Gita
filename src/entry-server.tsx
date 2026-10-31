@@ -38,6 +38,8 @@ export function render({ url, cssHref, scriptSrc }: RenderInput): string {
         {/* eslint-disable-next-line react/no-danger -- static, first-party theme bootstrap */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <meta property="og:site_name" content={SITE_NAME} />
+        {/* Pinterest website claim (business account "Bhagavad Gita Quotes"). */}
+        <meta name="p:domain_verify" content="b7c53af0b34824f90346fbc626dd5f76" />
         {/* og:image / twitter:image come from each page's <Seo>, so verse pages get their own card. */}
         <meta name="twitter:card" content="summary_large_image" />
         <link
