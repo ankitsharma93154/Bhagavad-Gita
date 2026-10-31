@@ -6,7 +6,7 @@
     ?id=2-47&grid=1                             every format, language and theme for one verse
     ?all=og                                     used by build.mjs: draws every verse's
                                                 link-preview card and posts it back to be saved
-    ?all=pin                                    used by build.mjs pins: same, for every verse's
+    ?all=pin[&theme=dark]                       used by build.mjs pins: same, for every verse's
                                                 Pinterest pin in English and Hindi
   e.g. http://localhost:5173/scripts/share-images/render.html?id=2-47&grid=1
 -->
@@ -34,11 +34,12 @@
           await fetch(`/__save?id=${v.id}`, { method: "POST", body: blob })
         }
       } else if (q.get("all") === "pin") {
+        const theme = q.get("theme") === "dark" ? "dark" : "light"
         for (const v of verses) {
           for (const lang of ["en", "hi"]) {
-            const canvas = await renderShareImage(v, { format: "pin", lang, theme: "light" })
+            const canvas = await renderShareImage(v, { format: "pin", lang, theme })
             const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.86))
-            await fetch(`/__save?id=${v.id}-${lang}`, { method: "POST", body: blob })
+            await fetch(`/__save?id=${v.id}-${lang}${theme === "dark" ? "-dark" : ""}`, { method: "POST", body: blob })
           }
         }
       } else {

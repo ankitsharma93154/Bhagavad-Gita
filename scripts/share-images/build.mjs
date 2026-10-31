@@ -5,9 +5,9 @@
 //     Every verse's link-preview card (1200×630) into public/og/<id>.jpg, the og:image /
 //     twitter:image for that verse's page.
 //
-//   node scripts/share-images/build.mjs pins [--start 2026-10-21]
+//   node scripts/share-images/build.mjs pins [--start 2026-10-21] [--theme dark]
 //     Every verse's Pinterest pin (1000×1500), in English and Hindi, into
-//     public/pins/<id>-<lang>.jpg, plus Pinterest bulk-upload CSVs in pinterest/ (one per week,
+//     public/pins/<id>-<lang>.jpg (or <id>-<lang>-dark.jpg with --theme dark), plus Pinterest bulk-upload CSVs in pinterest/ (one per week,
 //     three pins a day from --start, default tomorrow) and the board list they refer to.
 //     The CSVs point at the live site, so deploy the pins before uploading them.
 //
@@ -49,6 +49,11 @@ const OUT = path.join(ROOT, mode === "pin" ? "public/pins" : "public/og")
 const startArg = process.argv.indexOf("--start")
 const start = startArg > 0 ? new Date(`${process.argv[startArg + 1]}T00:00:00`) : tomorrow()
 if (Number.isNaN(start.getTime())) throw new Error("--start must be a date like 2026-10-21")
+const themeArg = process.argv.indexOf("--theme")
+const theme = themeArg > 0 ? process.argv[themeArg + 1] : "light"
+if (theme !== "light" && theme !== "dark") throw new Error("--theme must be light or dark")
+// Dark pins get their own filenames, so pins already scheduled with the light ones keep working.
+const pinSuffix = theme === "dark" ? "-dark" : ""
 
 const BROWSERS = [
   process.env.BROWSER,
@@ -75,7 +80,7 @@ const server = await createServer({
       configureServer(dev) {
         dev.middlewares.use("/__save", async (req, res) => {
           const id = new URL(req.url ?? "", "http://x").searchParams.get("id") ?? ""
-          if (!/^\d+-\d+(-en|-hi)?$/.test(id)) {
+          if (!/^\d+-\d+(-en|-hi)?(-dark)?$/.test(id)) {
             res.statusCode = 400
             res.end()
             return
@@ -92,7 +97,7 @@ const server = await createServer({
 })
 await server.listen()
 
-const url = `http://localhost:${PORT}/scripts/share-images/render.html?all=${mode}`
+const url = `http://localhost:${PORT}/scripts/share-images/render.html?all=${mode}&theme=${theme}`
 await new Promise((resolve, reject) => {
   const proc = spawn(browser, ["--headless=new", "--disable-gpu", "--virtual-time-budget=600000", "--dump-dom", url], {
     stdio: ["ignore", "ignore", "ignore"],
@@ -139,7 +144,7 @@ async function writePinterestFiles() {
       title: v.shlokaName
         ? `${v.shlokaName} Meaning | Bhagavad Gita ${ref}`
         : `Bhagavad Gita ${ref} Quote on ${getThemeBySlug(v.categories[0])?.title ?? "Life"}`,
-      media: `${SITE}/pins/${v.id}-en.jpg`,
+      media: `${SITE}/pins/${v.id}-en${pinSuffix}.jpg`,
       board: boardFor(v).name,
       description: `"${v.quote}" ${v.simpleMeaning ?? v.meaning} Read the Sanskrit shloka, translation and meaning of Bhagavad Gita ${ref}.`,
       link: `${SITE}/quotes/${slug}`,
@@ -155,7 +160,7 @@ async function writePinterestFiles() {
     if (hi) {
       pins.push({
         title: `${hi.name} का अर्थ | भगवद गीता ${ref} हिंदी में`,
-        media: `${SITE}/pins/${v.id}-hi.jpg`,
+        media: `${SITE}/pins/${v.id}-hi${pinSuffix}.jpg`,
         board: HINDI_BOARD.name,
         description: `"${v.quoteHindi ?? v.quote}" ${hi.meaning.replace(/\n\n+/g, " ")} श्लोक का संस्कृत पाठ, हिंदी अनुवाद और पूरा अर्थ पढ़ें।`,
         link: `${SITE}/hi/quotes/${slug}`,
